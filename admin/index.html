@@ -1030,19 +1030,34 @@
   /* ============================================================
      PARTE 4: ABA PORTFOLIO
      ============================================================ */
+  /* As marcas dos produtos que voce usa nos conteudos autorais.
+     Para incluir uma marca nova, basta acrescentar aqui. */
+  var MARCAS_PRODUTO = [
+    "Tokstok", "Camicado", "Brastemp", "Brinox", "L'envie",
+    "Petiko", "Meli+", "Flo", "Matos e Lopes", "Ritúalia"
+  ];
+
   var CAMPOS_VIDEO = [
-    { nome: "titulo",   rotulo: "Titulo do video", tipo: "text" },
-    { nome: "link",     rotulo: "Link do video",   tipo: "text" },
-    { nome: "marca",    rotulo: "Marca",           tipo: "text" },
-    { nome: "nicho",    rotulo: "Nicho",           tipo: "select", opcoes: [
+    { nome: "tipo_midia", rotulo: "Isto e uma foto ou um video?", tipo: "select", opcoes: [
+        { valor: "foto",  texto: "Foto" },
+        { valor: "video", texto: "Video" }
+      ], padrao: "foto" },
+    { nome: "titulo",    rotulo: "Titulo", tipo: "text" },
+    { nome: "descricao", rotulo: "Legenda (ex: Fotografia e composicao com um produto da minha rotina)", tipo: "textarea" },
+    { nome: "marca",     rotulo: "Marca do produto", tipo: "select",
+      opcoes: [{ valor: "", texto: "Sem marca" }].concat(MARCAS_PRODUTO.map(function(m){
+        return { valor: m, texto: m };
+      })), padrao: "" },
+    { nome: "imagem",    rotulo: "Imagem (nome do arquivo na pasta fotos, ou link completo)", tipo: "text" },
+    { nome: "link",      rotulo: "Link do video (deixe vazio para foto)", tipo: "text" },
+    { nome: "nicho",     rotulo: "Nicho", tipo: "select", opcoes: [
         { valor: "casa", texto: "Casa e decoracao" },
         { valor: "pet",  texto: "Pet" },
         { valor: "tech", texto: "Tech" }
       ], padrao: "casa" },
-    { nome: "formato",  rotulo: "Formato",  tipo: "text", padrao: "video 9:16" },
-    { nome: "destaque", rotulo: "Destaque (ex: 2,4M views)", tipo: "text" },
-    { nome: "ordem",    rotulo: "Ordem na pagina", tipo: "number", padrao: 0 },
-    { nome: "visivel",  rotulo: "Aparecer no site", tipo: "checkbox", padrao: true }
+    { nome: "formato",   rotulo: "Formato", tipo: "text", padrao: "foto 4:5" },
+    { nome: "ordem",     rotulo: "Ordem na pagina", tipo: "number", padrao: 0 },
+    { nome: "visivel",   rotulo: "Aparecer no site", tipo: "checkbox", padrao: true }
   ];
 
   async function telaPortfolio(){
@@ -1094,7 +1109,7 @@
     html += '<div class="faixa-numeros">' +
       '<div class="num-item"><div class="num-valor">' + visitas14 + '</div><div class="num-rotulo">Visitas em 14 dias</div></div>' +
       '<div class="num-item"><div class="num-valor">' + visitasHoje + '</div><div class="num-rotulo">Visitas hoje</div></div>' +
-      '<div class="num-item"><div class="num-valor">' + noAr + '</div><div class="num-rotulo">Videos no ar</div></div>' +
+      '<div class="num-item"><div class="num-valor">' + noAr + '</div><div class="num-rotulo">Conteudos no ar</div></div>' +
       '<div class="num-item"><div class="num-valor">' + esc(nichoTop ? (nomeNicho[nichoTop] || nichoTop) : "sem dado") + '</div><div class="num-rotulo">Nicho com mais vídeos</div></div>' +
       '<div class="num-item"><div class="num-valor">' + esc(origemTop || "sem dado") + '</div><div class="num-rotulo">De onde mais vem</div></div>' +
     '</div>';
@@ -1135,23 +1150,25 @@
     html += '</div></div>';
 
     /* tabela de videos */
-    html += '<div class="barra-acoes"><div class="cresce"><strong style="font-weight:500">Meus videos</strong>' +
+    html += '<div class="barra-acoes"><div class="cresce"><strong style="font-weight:500">Minhas fotos e videos</strong>' +
             '<div class="topo-sub">Arraste pela alcinha para mudar a ordem no site</div></div>' +
-            '<button class="btn btn-cheio" id="btn-novo-video">' + icone("mais") + 'Adicionar video</button></div>';
+            '<button class="btn btn-cheio" id="btn-novo-video">' + icone("mais") + 'Adicionar conteudo</button></div>';
 
     if(videos.length === 0){
-      html += blocoVazio("Voce ainda nao tem nenhum video cadastrado. Clique em adicionar video para comecar.");
+      html += blocoVazio("Voce ainda nao tem nenhuma foto ou video cadastrado. Clique em adicionar conteudo para comecar.");
     } else {
       html += '<div class="rolagem"><table><thead><tr>' +
-        '<th style="width:32px"></th><th>Titulo</th><th>Marca</th><th>Nicho</th><th>Destaque</th><th>Ordem</th><th style="text-align:right">Acoes</th>' +
+        '<th style="width:32px"></th><th>Tipo</th><th>Titulo</th><th>Marca</th><th>Nicho</th><th>Ordem</th><th style="text-align:right">Acoes</th>' +
         '</tr></thead><tbody id="corpo-videos">';
       videos.forEach(function(v){
+        var ehFoto = (v.tipo_midia === "foto");
         html += '<tr data-id="' + esc(v.id) + '" draggable="true">' +
           '<td class="alca" title="Arraste para reordenar">' + icone("arrasta") + '</td>' +
-          '<td>' + esc(v.titulo || "sem titulo") + '</td>' +
+          '<td><span class="pilula ' + (ehFoto ? "p-conteudo" : "p-publicidade") + '">' + (ehFoto ? "Foto" : "Video") + '</span></td>' +
+          '<td>' + esc(v.titulo || "sem titulo") +
+            (v.descricao ? '<div class="lista-gancho">' + esc(String(v.descricao).slice(0, 60)) + (String(v.descricao).length > 60 ? "..." : "") + '</div>' : "") + '</td>' +
           '<td>' + esc(v.marca || "") + '</td>' +
           '<td>' + esc(nomeNicho[v.nicho] || v.nicho || "") + '</td>' +
-          '<td>' + esc(v.destaque || "") + '</td>' +
           '<td>' + esc(v.ordem) + '</td>' +
           '<td><div class="acoes-linha">' +
             '<button class="icone-btn ' + (v.visivel ? "" : "apagado") + '" data-ver="' + esc(v.id) + '" title="' + (v.visivel ? "Esconder do site" : "Mostrar no site") + '">' + icone(v.visivel ? "olho" : "olhoOff") + '</button>' +
@@ -1165,10 +1182,10 @@
 
     document.getElementById("btn-novo-video").addEventListener("click", function(){
       abrirFormulario({
-        titulo: "Novo video",
+        titulo: "Novo conteudo",
         tabela: "videos",
         campos: CAMPOS_VIDEO,
-        antesDeSalvar: function(d){ if(!d.titulo) return "Escreva um titulo para o video."; },
+        antesDeSalvar: function(d){ if(!d.titulo) return "Escreva um titulo para o conteudo."; },
         depois: telaPortfolio
       });
     });
@@ -1178,11 +1195,11 @@
         var id = btn.getAttribute("data-editar");
         var v = videos.filter(function(x){ return String(x.id) === id; })[0];
         abrirFormulario({
-          titulo: "Editar video",
+          titulo: "Editar conteudo",
           tabela: "videos",
           campos: CAMPOS_VIDEO,
           registro: v,
-          antesDeSalvar: function(d){ if(!d.titulo) return "Escreva um titulo para o video."; },
+          antesDeSalvar: function(d){ if(!d.titulo) return "Escreva um titulo para o conteudo."; },
           depois: telaPortfolio
         });
       });
