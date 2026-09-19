@@ -244,7 +244,7 @@
     padding-bottom: 1.2rem;
   }
   /* Troque este bloco por uma <img> real: <img src="sua-foto.jpg" alt="Priscila Honorato"> */
-  .hero-photo{ aspect-ratio: 4 / 5; width: 100%; }
+  .hero-photo{ aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border: 1px solid var(--linha); }
 
   .hero-stats{
     display:grid;
@@ -714,8 +714,8 @@
             <a class="btn btn-marrom" href="#trabalhos">Ver os trabalhos</a>
           </div>
         </div>
-        <!-- Troque por uma foto real: <img class="hero-photo" src="foto-priscila.jpg" alt="Priscila Honorato sorrindo para a câmera"> -->
-        <div class="ph-block hero-photo" role="img" aria-label="Foto da creator Priscila Honorato, proporção 4 por 5">foto da creator 4:5</div>
+        <!-- Foto real da capa. Para trocar, substitua o arquivo foto-priscila-capa.webp na pasta do projeto ou troque o "src" abaixo. -->
+        <img class="hero-photo" src="foto-priscila-capa.webp" alt="Priscila Honorato sentada em uma cadeira de madeira, sorrindo, em uma sala com cortinas claras">
       </div>
 
       <div class="hero-stats reveal">
