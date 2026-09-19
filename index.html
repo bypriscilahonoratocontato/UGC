@@ -764,7 +764,7 @@
           <h2 data-i18n="contatoTitulo">Vamos falar sobre o seu projeto</h2>
           <p data-i18n="contatoSub">Me conta um pouco sobre a sua marca, o produto e o tipo de conteúdo que você precisa. A partir disso, consigo entender a proposta e pensar no melhor formato para a produção.</p>
 
-          <form id="form-contato" novalidate>
+          <form id="form-contato">
             <div class="campo">
               <label for="campo-nome" data-i18n="labelNome">Nome</label>
               <input type="text" id="campo-nome" name="nome" data-i18n-ph="phNome" placeholder="Seu nome" required>
@@ -777,10 +777,10 @@
               <label for="campo-mensagem" data-i18n="labelMensagem">Mensagem</label>
               <textarea id="campo-mensagem" name="mensagem" data-i18n-ph="phMensagem" placeholder="Conte sobre a sua marca e o que você precisa" required></textarea>
             </div>
-            <button type="submit" class="btn btn-marrom btn-block" data-i18n="btnEnviar">Enviar mensagem</button>
+            <button type="submit" class="btn btn-marrom btn-block" data-i18n="btnEnviar">Continuar no Gmail</button>
           </form>
           <div class="form-confirmacao" id="form-confirmacao" role="status" data-i18n="confirmacao">
-            Mensagem recebida! Obrigada pelo contato, eu respondo em breve por e-mail ou WhatsApp.
+            Revise e envie sua mensagem no Gmail. O envio só acontece quando você clicar em Enviar por lá.
           </div>
         </div>
 
@@ -788,8 +788,8 @@
           <div>
             <span class="eyebrow" data-i18n="canaisTitulo">Fale direto comigo</span>
             <div class="canais-lista">
-              <a class="btn btn-marrom" href="https://wa.me/5532987112913" target="_blank" rel="noopener">WhatsApp</a>
-              <a class="btn btn-marrom" href="mailto:bypriscilahonorato.contato@gmail.com" data-i18n="canalEmail">E-mail</a>
+              <a class="btn btn-marrom" href="https://wa.me/5532987132911" target="_blank" rel="noopener">WhatsApp</a>
+              <a class="btn btn-marrom" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=bypriscilahonorato.contato%40gmail.com" target="_blank" rel="noopener" data-i18n="canalEmail">E-mail</a>
               <a class="btn btn-marrom" href="https://instagram.com/bypriscilahonorato" target="_blank" rel="noopener">Instagram</a>
             </div>
           </div>
@@ -810,8 +810,8 @@
       <span class="footer-nome">Priscila Honorato</span>
       <div class="footer-redes">
         <a href="https://instagram.com/bypriscilahonorato" target="_blank" rel="noopener">@bypriscilahonorato</a>
-        <a href="https://wa.me/5532987112913" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="mailto:bypriscilahonorato.contato@gmail.com" data-i18n="canalEmail">E-mail</a>
+        <a href="https://wa.me/5532987132911" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=bypriscilahonorato.contato%40gmail.com" target="_blank" rel="noopener" data-i18n="canalEmail">E-mail</a>
       </div>
       <span class="footer-ano" id="footer-ano"></span>
     </div>
@@ -822,7 +822,7 @@
   <div class="capture-card">
     <button class="capture-close" id="capture-close" data-i18n-aria="fechar" aria-label="Fechar">&times;</button>
     <h3 class="capture-title" id="capture-title" data-i18n="capturaTitulo">Quer meu mídia kit completo?</h3>
-    <p data-i18n="capturaTexto">Deixe seu nome e e-mail que eu envio direitinho.</p>
+    <p data-i18n="capturaTexto">Preencha seus dados e envie o pedido pelo Gmail.</p>
     <form id="form-captura">
       <div class="campo">
         <label for="captura-nome" class="sr-only" data-i18n="labelNome">Nome</label>
@@ -858,7 +858,7 @@
      marca que tiver pelo menos um conteúdo cadastrado. */
   var marcas = [
     "Tokstok", "Camicado", "Brastemp", "Brinox", "L'envie",
-    "Petiko", "Meli+", "Flo", "Matos e Lopes", "Ritúalia"
+    "Petiko", "Meli+", "Flo", "Matos e Lopes", "Rituália", "Fórmula Natural Life"
   ];
 
   /* Fotos e vídeos de reserva. Ficam vazios de propósito:
@@ -1060,14 +1060,14 @@
       labelMensagem: "Mensagem",
       phNome: "Seu nome",
       phMensagem: "Conte sobre a sua marca e o que você precisa",
-      btnEnviar: "Enviar mensagem",
-      confirmacao: "Mensagem recebida! Obrigada pelo contato, eu respondo em breve por e-mail ou WhatsApp.",
+      btnEnviar: "Continuar no Gmail",
+      confirmacao: "Revise e envie sua mensagem no Gmail. O envio só acontece quando você clicar em Enviar por lá.",
       canaisTitulo: "Fale direto comigo",
       canalEmail: "E-mail",
       localTitulo: "Localização",
       localTexto: "Atendo marcas de todo o Brasil de forma remota e também realizo produções na região de Ubá, MG.",
       capturaTitulo: "Quer meu mídia kit completo?",
-      capturaTexto: "Deixe seu nome e e-mail que eu envio direitinho.",
+      capturaTexto: "Preencha seus dados e envie o pedido pelo Gmail.",
       capturaBtn: "Quero receber",
       fechar: "Fechar"
     },
@@ -1126,14 +1126,14 @@
       labelMensagem: "Message",
       phNome: "Your name",
       phMensagem: "Tell me about your brand and what you need",
-      btnEnviar: "Send message",
-      confirmacao: "Message received! Thank you for reaching out, I will reply soon by email or WhatsApp.",
+      btnEnviar: "Continue in Gmail",
+      confirmacao: "Review and send your message in Gmail. It is only sent when you click Send there.",
       canaisTitulo: "Talk to me directly",
       canalEmail: "Email",
       localTitulo: "Location",
       localTexto: "I work remotely with brands all over Brazil and also produce on location in the Ubá region, in Minas Gerais.",
       capturaTitulo: "Want my full media kit?",
-      capturaTexto: "Leave your name and email and I will send it over.",
+      capturaTexto: "Fill in your details and send your request through Gmail.",
       capturaBtn: "Send it to me",
       fechar: "Close"
     }
@@ -1423,6 +1423,11 @@
   var formContato = document.getElementById("form-contato");
   var confirmacao = document.getElementById("form-confirmacao");
 
+  function abrirEmail(assunto, corpo){
+    var url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent("bypriscilahonorato.contato@gmail.com") + "&su=" + encodeURIComponent(assunto) + "&body=" + encodeURIComponent(corpo);
+    window.open(url, "_blank", "noopener");
+  }
+
   formContato.addEventListener("submit", async function(e){
     e.preventDefault();
 
@@ -1430,7 +1435,9 @@
     var email = document.getElementById("campo-email").value.trim();
     var mensagem = document.getElementById("campo-mensagem").value.trim();
 
-    formContato.classList.add("is-hidden");
+    if(!formContato.reportValidity()) return;
+    abrirEmail(idioma === "pt" ? "Contato pelo portfólio — " + nome : "Portfolio inquiry — " + nome,
+      nome + "\n" + email + "\n\n" + mensagem);
     confirmacao.classList.add("is-visible");
 
     if(window.sb){
@@ -1473,6 +1480,9 @@
     e.preventDefault();
     var nome = document.getElementById("captura-nome").value.trim();
     var email = document.getElementById("captura-email").value.trim();
+    if(!formCaptura.reportValidity()) return;
+    abrirEmail(idioma === "pt" ? "Pedido de mídia kit" : "Media kit request",
+      nome + "\n" + email + "\n\n" + (idioma === "pt" ? "Olá, Priscila! Gostaria de receber seu mídia kit." : "Hi Priscila! I would like to receive your media kit."));
     fecharCaptura();
     if(window.sb){
       try {
