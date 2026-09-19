@@ -11,13 +11,13 @@
 <style>
   /* ===================== VARIÁVEIS ===================== */
   :root{
-    --areia: #efe9e1;
-    --off-white: #fdfcfa;
-    --marrom: #8a7461;
-    --nude: #c9b5a3;
-    --tinta: #3a332c;
-    --tinta-suave: #6b6058;
-    --linha: rgba(58, 51, 44, 0.18);
+    --fundo: #5B3039;
+    --superficie: #4B2730;
+    --destaque: #EDCBD0;
+    --detalhe: #DFB8C0;
+    --tinta: #FFF8F2;
+    --tinta-suave: #EADCDE;
+    --linha: rgba(255, 248, 242, 0.28);
     --serif: "DM Serif Display", serif;
     --corpo: "Montserrat", sans-serif;
     --max: 1180px;
@@ -33,7 +33,7 @@
 
   body{
     margin:0;
-    background: var(--areia);
+    background: var(--fundo);
     color: var(--tinta);
     font-family: var(--corpo);
     font-weight: 300;
@@ -73,7 +73,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--marrom);
+    color: var(--destaque);
     margin-bottom: 1.1rem;
   }
 
@@ -85,7 +85,7 @@
   button:focus-visible,
   input:focus-visible,
   textarea:focus-visible{
-    outline: 2px solid var(--marrom);
+    outline: 2px solid var(--destaque);
     outline-offset: 3px;
   }
 
@@ -93,11 +93,11 @@
     position:absolute;
     left: -9999px;
     top: auto;
-    background: var(--off-white);
+    background: var(--superficie);
     color: var(--tinta);
     padding: 0.8em 1.4em;
     z-index: 999;
-    border: 1px solid var(--marrom);
+    border: 1px solid var(--destaque);
   }
   .skip-link:focus{ left: 1rem; top: 1rem; }
 
@@ -119,9 +119,9 @@
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     white-space: nowrap;
   }
-  .btn:hover{ background: var(--tinta); color: var(--off-white); }
-  .btn-marrom{ border-color: var(--marrom); color: var(--marrom); }
-  .btn-marrom:hover{ background: var(--marrom); color: var(--off-white); }
+  .btn:hover{ background: var(--tinta); color: var(--superficie); }
+  .btn-marrom{ border-color: var(--destaque); color: var(--destaque); }
+  .btn-marrom:hover{ background: var(--destaque); color: var(--superficie); }
   .btn-small{ padding: 0.7em 1.4em; font-size: 0.7rem; }
   .btn-block{ width:100%; }
 
@@ -130,7 +130,7 @@
     position: fixed;
     top:0; left:0; right:0;
     z-index: 500;
-    background: rgba(253, 252, 250, 0.92);
+    background: rgba(91, 48, 57, 0.96);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--linha);
   }
@@ -158,7 +158,7 @@
     border-bottom: 1px solid transparent;
     transition: border-color 0.25s ease, color 0.25s ease;
   }
-  .nav-links a:hover{ border-color: var(--marrom); color: var(--marrom); }
+  .nav-links a:hover{ border-color: var(--destaque); color: var(--destaque); }
 
   .hamburger{
     display:none;
@@ -189,7 +189,7 @@
       top: 100%;
       left:0; right:0;
       flex-direction:column;
-      background: var(--off-white);
+      background: var(--superficie);
       border-bottom: 1px solid var(--linha);
       padding: 1.5rem clamp(1.25rem, 5vw, 3rem) 2rem;
       gap: 1.1rem;
@@ -233,13 +233,13 @@
     margin: 2rem 0 3rem;
   }
   .ph-block{
-    background: linear-gradient(155deg, var(--nude) 0%, var(--areia) 55%, var(--off-white) 100%);
+    background: linear-gradient(155deg, #784550 0%, var(--fundo) 55%, var(--superficie) 100%);
     border: 1px solid var(--linha);
     display:flex;
     align-items:flex-end;
     justify-content:center;
     text-align:center;
-    color: var(--marrom);
+    color: var(--destaque);
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -259,7 +259,7 @@
   .stat-num{
     font-family: var(--corpo);
     font-size: clamp(1.8rem, 4vw, 2.6rem);
-    color: var(--marrom);
+    color: var(--destaque);
     margin-bottom: 0.3rem;
     display:block;
   }
@@ -300,7 +300,7 @@
   }
 
   /* ===================== SOBRE ===================== */
-  #sobre{ background: var(--off-white); }
+  #sobre{ background: var(--superficie); }
   .sobre-inner{
     display:grid;
     grid-template-columns: 0.8fr 1.2fr;
@@ -320,7 +320,7 @@
   .promessas li:last-child{ border-bottom: 1px solid var(--linha); }
   .promessas .marcador{
     font-family: var(--corpo);
-    color: var(--marrom);
+    color: var(--destaque);
     flex-shrink:0;
   }
   .assinatura{
@@ -328,7 +328,7 @@
     font-weight: 400;
     font-size: 1.4rem;
     margin-top: 1.5rem;
-    color: var(--marrom);
+    color: var(--destaque);
   }
 
   @media (max-width: 860px){
@@ -344,11 +344,11 @@
   }
   .destaque-card{
     display:block;
-    background: var(--off-white);
+    background: var(--superficie);
     border: 1px solid var(--linha);
     transition: transform 0.3s ease, border-color 0.3s ease;
   }
-  .destaque-card:hover{ transform: translateY(-4px); border-color: var(--marrom); }
+  .destaque-card:hover{ transform: translateY(-4px); border-color: var(--destaque); }
   .destaque-cover{
     position:relative;
     aspect-ratio: 9 / 16;
@@ -359,18 +359,18 @@
     top:50%; left:50%;
     transform: translate(-50%,-50%);
     width: 58px; height: 58px;
-    border: 1px solid var(--off-white);
+    border: 1px solid var(--tinta);
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
   }
-  .destaque-cover .play svg{ width:16px; height:16px; fill: var(--off-white); margin-left:2px; }
+  .destaque-cover .play svg{ width:16px; height:16px; fill: var(--tinta); margin-left:2px; }
   .destaque-body{ padding: 1.4rem; }
   .destaque-num{
     font-family: var(--corpo);
     font-size: 1.6rem;
-    color: var(--marrom);
+    color: var(--destaque);
     display:block;
   }
   .destaque-num-label{
@@ -389,7 +389,7 @@
   }
 
   /* ===================== TRABALHOS / FILTRO ===================== */
-  #trabalhos{ background: var(--off-white); }
+  #trabalhos{ background: var(--superficie); }
   .filtros{
     display:flex;
     flex-wrap:wrap;
@@ -407,11 +407,11 @@
     cursor:pointer;
     transition: border-color 0.25s ease, color 0.25s ease;
   }
-  .filtro-btn:hover{ border-color: var(--marrom); color: var(--marrom); }
+  .filtro-btn:hover{ border-color: var(--destaque); color: var(--destaque); }
   .filtro-btn[aria-pressed="true"]{
-    border-color: var(--marrom);
-    color: var(--off-white);
-    background: var(--marrom);
+    border-color: var(--destaque);
+    color: var(--superficie);
+    background: var(--destaque);
   }
   .trabalhos-grid{
     display:grid;
@@ -419,7 +419,7 @@
     gap: clamp(1.25rem, 3vw, 2rem);
   }
   .trabalho-card{
-    background: var(--areia);
+    background: var(--fundo);
     border: 1px solid var(--linha);
   }
   .trabalho-cover{ aspect-ratio: 4 / 5; }
@@ -428,7 +428,7 @@
     font-size: 0.65rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--marrom);
+    color: var(--destaque);
     display:block;
     margin-bottom: 0.4rem;
   }
@@ -452,12 +452,12 @@
     border: 1px solid var(--linha);
   }
   .servico-card{
-    background: var(--areia);
+    background: var(--fundo);
     padding: clamp(1.8rem, 3vw, 2.4rem);
   }
   .servico-num{
     font-family: var(--corpo);
-    color: var(--nude);
+    color: var(--detalhe);
     font-size: 1.6rem;
     display:block;
     margin-bottom: 1rem;
@@ -473,7 +473,7 @@
   }
 
   /* ===================== NÚMEROS E DEPOIMENTOS ===================== */
-  #numeros{ background: var(--off-white); }
+  #numeros{ background: var(--superficie); }
   .metricas-grid{
     display:grid;
     grid-template-columns: repeat(4, 1fr);
@@ -485,7 +485,7 @@
   .metrica-valor{
     font-family: var(--corpo);
     font-size: clamp(2rem, 4.4vw, 2.8rem);
-    color: var(--marrom);
+    color: var(--destaque);
     display:block;
     margin-bottom: 0.4rem;
   }
@@ -501,7 +501,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--marrom);
+    color: var(--destaque);
     margin-bottom: 1.6rem;
   }
 
@@ -523,7 +523,7 @@
   .resultado-valor{
     font-family: var(--corpo);
     font-size: 1.9rem;
-    color: var(--marrom);
+    color: var(--destaque);
     display:block;
     margin-bottom: 0.4rem;
   }
@@ -535,7 +535,7 @@
     gap: clamp(1.25rem, 3vw, 2rem);
   }
   .depoimento-card{
-    background: var(--areia);
+    background: var(--fundo);
     border: 1px solid var(--linha);
     padding: clamp(1.6rem, 3vw, 2.2rem);
   }
@@ -572,7 +572,7 @@
   .campo textarea{
     width:100%;
     padding: 0.9em 1em;
-    background: var(--off-white);
+    background: var(--superficie);
     border: 1px solid var(--linha);
     color: var(--tinta);
     font-family: var(--corpo);
@@ -580,15 +580,15 @@
   }
   .campo textarea{ resize: vertical; min-height: 120px; }
   .campo input::placeholder,
-  .campo textarea::placeholder{ color: var(--tinta-suave); opacity: 0.6; }
+  .campo textarea::placeholder{ color: var(--tinta-suave); opacity: 1; }
 
   .contato-canais{ display:flex; flex-direction:column; gap: 3rem; }
   .canais-lista{ display:flex; flex-wrap:wrap; gap: 1rem; }
   .form-confirmacao{
     display:none;
-    border: 1px solid var(--marrom);
+    border: 1px solid var(--destaque);
     padding: 1.6rem;
-    color: var(--marrom);
+    color: var(--destaque);
     font-size: 0.9rem;
   }
   .form-confirmacao.is-visible{ display:block; }
@@ -619,7 +619,7 @@
     color: var(--tinta-suave);
     border-bottom: 1px solid transparent;
   }
-  .footer-redes a:hover{ color: var(--marrom); border-color: var(--marrom); }
+  .footer-redes a:hover{ color: var(--destaque); border-color: var(--destaque); }
   .footer-ano{ font-size: 0.75rem; color: var(--tinta-suave); width:100%; text-align:center; margin-top: 1rem; }
 
   /* ===================== ANIMAÇÃO DE ENTRADA ===================== */
@@ -637,7 +637,7 @@
   .capture-overlay{
     position: fixed;
     inset: 0;
-    background: rgba(58, 51, 44, 0.55);
+    background: rgba(30, 12, 18, 0.72);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -650,7 +650,7 @@
   .capture-overlay.is-open{ opacity:1; pointer-events:auto; }
   .capture-card{
     position:relative;
-    background: var(--off-white);
+    background: var(--superficie);
     border: 1px solid var(--linha);
     max-width: 420px;
     width:100%;
