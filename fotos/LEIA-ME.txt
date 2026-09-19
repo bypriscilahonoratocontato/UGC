@@ -1,0 +1,22 @@
+COMO COLOCAR AS SUAS FOTOS AQUI
+
+1. Salve a foto nesta pasta, com um nome simples, sem acento
+   e sem espaco. Exemplos bons:
+       cozinha-tokstok.jpg
+       pote-brinox.jpg
+       cama-petiko.jpg
+
+2. No painel, em Portfolio, clique em Adicionar conteudo.
+
+3. No campo "Imagem", escreva apenas o nome do arquivo,
+   do jeito que voce salvou. Exemplo:
+       cozinha-tokstok.jpg
+
+4. Salve. A foto aparece no site na hora.
+
+DICAS
+   Use fotos de no maximo 1200 pixels de largura, para o
+   site abrir rapido no celular.
+   Formato 4:5 (em pe) fica melhor na galeria de fotos.
+   Se preferir, voce tambem pode colar um link completo
+   comecando com https:// no lugar do nome do arquivo.
