@@ -801,7 +801,7 @@
         <div class="reveal">
           <span class="eyebrow" data-i18n="sobreEyebrow">01 · Sobre mim</span>
           <h2 data-i18n="sobreTitulo">Prazer, eu sou a Priscila</h2>
-          <p data-i18n="sobreTexto">Sou a Priscila e trago um olhar de mulher madura para as escolhas do dia a dia. Entre a casa, a decoração, os cuidados com os pets e a tecnologia, gosto de descobrir o que torna a rotina mais gostosa, prática e cheia de personalidade — e transformar essas experiências em histórias para compartilhar.</p>
+          <p data-i18n="sobreTexto">Sou a Priscila e trago um olhar de mulher madura para as escolhas do dia a dia. Entre a casa, a decoração, os cuidados com os pets e a tecnologia, gosto de descobrir o que torna a rotina mais gostosa, prática e cheia de personalidade, e transformar essas experiências em histórias para compartilhar.</p>
           <p data-i18n="sobreTexto2">Antes de gravar, gosto de experimentar e encontrar os detalhes que merecem ser mostrados. Assim, crio conteúdo com minhas próprias palavras, cuidado em cada cena e a naturalidade de quem tem uma experiência para contar.</p>
           <ul class="promessas">
             <li><span class="marcador">01</span> <span data-i18n="promessa1">Roteiro aprovado por você antes de eu gravar</span></li>
@@ -968,13 +968,18 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/banco.js"></script>
 <script>
 (function(){
   "use strict";
 
   /* =========================================================
-     DADOS — edite os arrays abaixo para atualizar o site
-     sem precisar mexer no HTML.
+     DADOS DE RESERVA
+
+     Os vídeos de verdade vêm do painel (banco de dados).
+     Os arrays abaixo só entram no ar se o banco demorar ou
+     falhar, para o site nunca aparecer vazio para uma marca.
      Cada texto tem duas versões: pt (português) e en (inglês).
   ========================================================= */
 
@@ -1127,7 +1132,7 @@
       fotoCreator: "foto da creator 4:5",
       sobreEyebrow: "01 · Sobre mim",
       sobreTitulo: "Prazer, eu sou a Priscila",
-      sobreTexto: "Sou a Priscila e trago um olhar de mulher madura para as escolhas do dia a dia. Entre a casa, a decoração, os cuidados com os pets e a tecnologia, gosto de descobrir o que torna a rotina mais gostosa, prática e cheia de personalidade — e transformar essas experiências em histórias para compartilhar.",
+      sobreTexto: "Sou a Priscila e trago um olhar de mulher madura para as escolhas do dia a dia. Entre a casa, a decoração, os cuidados com os pets e a tecnologia, gosto de descobrir o que torna a rotina mais gostosa, prática e cheia de personalidade, e transformar essas experiências em histórias para compartilhar.",
       sobreTexto2: "Antes de gravar, gosto de experimentar e encontrar os detalhes que merecem ser mostrados. Assim, crio conteúdo com minhas próprias palavras, cuidado em cada cena e a naturalidade de quem tem uma experiência para contar.",
       promessa1: "Roteiro aprovado por você antes de eu gravar",
       promessa2: "Uma rodada de ajuste incluída no valor",
@@ -1191,7 +1196,7 @@
       fotoCreator: "creator photo 4:5",
       sobreEyebrow: "01 · About me",
       sobreTitulo: "Hi, I am Priscila",
-      sobreTexto: "I'm Priscila, and I bring a mature woman's perspective to everyday choices. From home and décor to pet care and technology, I love discovering what makes daily life more enjoyable, practical, and full of personality — and turning those experiences into stories to share.",
+      sobreTexto: "I'm Priscila, and I bring a mature woman's perspective to everyday choices. From home and décor to pet care and technology, I love discovering what makes daily life more enjoyable, practical, and full of personality, and turning those experiences into stories to share.",
       sobreTexto2: "Before filming, I like to try things out and find the details worth showing. That's how I create content in my own words, with care in every scene and the ease of someone sharing a firsthand experience.",
       promessa1: "Script approved by you before I film",
       promessa2: "One round of revisions included",
@@ -1298,7 +1303,7 @@
     grid.innerHTML = "";
     destaques.forEach(function(item){
       var card = el("a", "destaque-card reveal");
-      card.href = item.link;
+      card.href = window.BancoUtil.urlSegura(item.link) || "#";
       if(item.link && item.link.indexOf("http") === 0){
         card.target = "_blank";
         card.rel = "noopener";
@@ -1324,10 +1329,10 @@
 
       var body = el("div", "destaque-body");
       body.innerHTML =
-        '<span class="destaque-num">' + item.numero + '</span>' +
-        '<span class="destaque-num-label">' + txt(item.numeroLabel) + '</span>' +
-        '<h3 class="destaque-title">' + txt(item.titulo) + '</h3>' +
-        '<p class="destaque-context">' + txt(item.contexto) + '</p>';
+        '<span class="destaque-num">' + window.BancoUtil.escapar(item.numero) + '</span>' +
+        '<span class="destaque-num-label">' + window.BancoUtil.escapar(txt(item.numeroLabel)) + '</span>' +
+        '<h3 class="destaque-title">' + window.BancoUtil.escapar(txt(item.titulo)) + '</h3>' +
+        '<p class="destaque-context">' + window.BancoUtil.escapar(txt(item.contexto)) + '</p>';
 
       card.appendChild(cover);
       card.appendChild(body);
@@ -1348,14 +1353,15 @@
     grid.innerHTML = "";
     trabalhos.forEach(function(item){
       var visivel = (filtroAtual === "todos" || item.nicho === filtroAtual);
-      var card = el("article", "trabalho-card reveal" + (visivel ? "" : " is-hidden"));
+      var card = el("a", "trabalho-card reveal" + (visivel ? "" : " is-hidden"));
+      card.href=window.BancoUtil.urlSegura(item.link)||"#";card.target="_blank";card.rel="noopener noreferrer";card.style.textDecoration="none";card.style.color="inherit";
       card.setAttribute("data-nicho", item.nicho);
       card.innerHTML =
         '<div class="trabalho-cover">' + phBlock(txt(item.formato)) + '</div>' +
         '<div class="trabalho-info">' +
-          '<span class="trabalho-nicho">' + nomeNicho(item.nicho) + '</span>' +
-          '<h3 class="trabalho-titulo">' + item.marca + '</h3>' +
-          '<p class="trabalho-formato">' + txt(item.titulo) + '</p>' +
+          '<span class="trabalho-nicho">' + window.BancoUtil.escapar(nomeNicho(item.nicho)) + '</span>' +
+          '<h3 class="trabalho-titulo">' + window.BancoUtil.escapar(item.marca) + '</h3>' +
+          '<p class="trabalho-formato">' + window.BancoUtil.escapar(txt(item.titulo)) + '</p>' +
         '</div>';
       grid.appendChild(card);
     });
@@ -1589,10 +1595,24 @@
   var formContato = document.getElementById("form-contato");
   var confirmacao = document.getElementById("form-confirmacao");
 
-  formContato.addEventListener("submit", function(e){
-    e.preventDefault();
-    formContato.classList.add("is-hidden");
-    confirmacao.classList.add("is-visible");
+  async function enviarContato(form,dados){
+    var botao=form.querySelector('[type="submit"]');
+    if(botao.disabled)return false;
+    var aviso=form.querySelector('[role="alert"]');
+    if(!aviso){aviso=document.createElement('p');aviso.setAttribute('role','alert');form.appendChild(aviso);}
+    aviso.textContent='';botao.disabled=true;
+    try{
+      if(!window.sb)throw Error();
+      var r=await window.sb.from('marcas').insert(dados);
+      if(r.error)throw r.error;
+      return true;
+    }catch(e){aviso.textContent='Não foi possível enviar agora. Seus dados continuam aqui. Tente novamente ou entre em contato pelo Instagram.';return false;}
+    finally{botao.disabled=false;}
+  }
+  formContato.addEventListener('submit',async function(e){
+    e.preventDefault();if(!formContato.reportValidity())return;
+    var ok=await enviarContato(formContato,{nome:document.getElementById('campo-nome').value.trim(),email:document.getElementById('campo-email').value.trim(),obs:document.getElementById('campo-mensagem').value.trim(),situacao:'lead'});
+    if(ok){formContato.classList.add('is-hidden');confirmacao.classList.add('is-visible');}
   });
 
   /* =========================================================
@@ -1623,9 +1643,10 @@
   document.addEventListener("keydown", function(e){
     if(e.key === "Escape" && overlay.classList.contains("is-open")) fecharCaptura();
   });
-  formCaptura.addEventListener("submit", function(e){
-    e.preventDefault();
-    fecharCaptura();
+  formCaptura.addEventListener('submit',async function(e){
+    e.preventDefault();if(!formCaptura.reportValidity())return;
+    var ok=await enviarContato(formCaptura,{nome:document.getElementById('captura-nome').value.trim(),email:document.getElementById('captura-email').value.trim(),obs:'Pediu o mídia kit pelo site',situacao:'lead'});
+    if(ok){formCaptura.innerHTML='<p role="status">Pedido recebido. Entrarei em contato pelo e-mail informado.</p>';}
   });
 
   /* =========================================================
@@ -1634,9 +1655,100 @@
   Array.prototype.forEach.call(document.querySelectorAll(".idioma-btn"), function(btn){
     btn.setAttribute("aria-pressed", btn.getAttribute("data-idioma") === idioma ? "true" : "false");
   });
+  destaques=[];trabalhos=[];
   renderTudo();
   ativarReveal();
   primeiraRenderizacao = false;
+
+  /* =========================================================
+     OS VÍDEOS VÊM DO PAINEL
+
+     Busca os vídeos marcados como visíveis no painel e troca o
+     conteúdo da página por eles. Se o banco falhar ou ainda não
+     tiver vídeo nenhum, a página continua com o conteúdo de
+     reserva que já está no ar.
+  ========================================================= */
+  async function carregarVideosDoPainel(){
+    if(!window.BancoUtil) return;
+
+    var r = await window.BancoUtil.ler("videos", function(q){
+      return q.eq("visivel", true).order("ordem", { ascending: true });
+    });
+    if(r.erro) { document.getElementById("trabalhos-grid").textContent="Os vídeos estão temporariamente indisponíveis. Tente novamente em instantes."; return; }
+
+    var doBanco = r.dados;
+
+    /* Os vídeos com o campo "destaque" preenchido sobem para a
+       seção de Conteúdos de destaque, no máximo três. */
+    var comDestaque = doBanco.filter(function(v){
+      return String(v.destaque || "").trim() !== "";
+    }).slice(0, 3);
+
+    {
+      destaques = comDestaque.map(function(v){
+        return {
+          link: v.link || "#",
+          capaImg: "",
+          numero: String(v.destaque || ""),
+          numeroLabel: String(v.formato || ""),
+          titulo: String(v.titulo || ""),
+          contexto: v.marca ? ("Conteúdo para " + v.marca) : ""
+        };
+      });
+    }
+
+    /* Todos os vídeos visíveis entram na galeria por nicho. */
+    trabalhos = doBanco.map(function(v){
+      return {
+        link: window.BancoUtil.urlSegura(v.link),
+        marca: String(v.marca || v.titulo || ""),
+        nicho: String(v.nicho || "casa"),
+        titulo: String(v.titulo || ""),
+        formato: String(v.formato || "")
+      };
+    });
+
+    renderDestaques();
+    renderFiltros();
+    renderTrabalhos();
+    if(!doBanco.length)document.getElementById("trabalhos-grid").textContent="Novos vídeos em breve.";
+  }
+
+  /* =========================================================
+     REGISTRO DE VISITA
+
+     Guarda apenas a data, a página e de onde a pessoa veio.
+     Nenhum dado pessoal, nenhum serviço de fora, nada pedido
+     para a visitante. Conta uma visita por sessão do navegador.
+  ========================================================= */
+  function registrarVisita(){
+    if(!window.sb) return;
+    try {
+      if(sessionStorage.getItem("visitaContada")) return;
+
+    } catch(err){ /* navegador sem sessionStorage: conta assim mesmo */ }
+
+    var origem = "direto";
+    try {
+      var utm = new URLSearchParams(window.location.search).get("utm_source");
+      if(utm){
+        origem = utm;
+      } else if(document.referrer){
+        var host = new URL(document.referrer).hostname.replace(/^www\./, "");
+        if(host && host !== window.location.hostname) origem = host;
+      }
+    } catch(err){ /* fica como direto */ }
+
+    try {
+      window.sb.from("visitas").insert({
+        pagina: window.location.pathname || "/",
+        origem: origem
+      }).then(function(r){if(!r.error){try{sessionStorage.setItem("visitaContada","1");}catch(e){}}}, function(){});
+    } catch(err){ /* nunca atrapalha a visitante */ }
+  }
+
+  carregarVideosDoPainel();
+  registrarVisita();
 
 })();
 </script>
