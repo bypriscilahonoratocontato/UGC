@@ -4,22 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Priscila Honorato | Portfólio UGC Creator</title>
-<meta name="description" content="Portfólio de Priscila Honorato, criadora de conteúdo UGC para marcas de casa e decoração, pet e tech.">
+<meta name="description" id="meta-description" content="Portfólio de Priscila Honorato, criadora de conteúdo UGC para marcas de casa e decoração, pet e tech.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   /* ===================== VARIÁVEIS ===================== */
   :root{
-    --fundo: #5B3039;
-    --superficie: #4B2730;
-    --destaque: #EDCBD0;
-    --detalhe: #DFB8C0;
-    --tinta: #FFF8F2;
-    --tinta-suave: #EADCDE;
-    --linha: rgba(255, 248, 242, 0.28);
-    --serif: "DM Serif Display", serif;
-    --corpo: "Montserrat", sans-serif;
+    --areia: #efe9e1;
+    --off-white: #fdfcfa;
+    --marrom: #8a7461;
+    --nude: #c9b5a3;
+    --tinta: #3a332c;
+    --tinta-suave: #6b6058;
+    --linha: rgba(58, 51, 44, 0.18);
+    --serif: "Tenor Sans", serif;
+    --corpo: "Jost", sans-serif;
     --max: 1180px;
     --gap: clamp(1.25rem, 3vw, 2.5rem);
   }
@@ -33,15 +33,13 @@
 
   body{
     margin:0;
-    background: var(--fundo);
+    background: var(--areia);
     color: var(--tinta);
     font-family: var(--corpo);
     font-weight: 300;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-
-  button, input, textarea, select{ font-family: var(--corpo); }
 
   img{ max-width:100%; display:block; }
 
@@ -73,7 +71,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--destaque);
+    color: var(--marrom);
     margin-bottom: 1.1rem;
   }
 
@@ -85,7 +83,7 @@
   button:focus-visible,
   input:focus-visible,
   textarea:focus-visible{
-    outline: 2px solid var(--destaque);
+    outline: 2px solid var(--marrom);
     outline-offset: 3px;
   }
 
@@ -93,11 +91,11 @@
     position:absolute;
     left: -9999px;
     top: auto;
-    background: var(--superficie);
+    background: var(--off-white);
     color: var(--tinta);
     padding: 0.8em 1.4em;
     z-index: 999;
-    border: 1px solid var(--destaque);
+    border: 1px solid var(--marrom);
   }
   .skip-link:focus{ left: 1rem; top: 1rem; }
 
@@ -119,9 +117,9 @@
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     white-space: nowrap;
   }
-  .btn:hover{ background: var(--tinta); color: var(--superficie); }
-  .btn-marrom{ border-color: var(--destaque); color: var(--destaque); }
-  .btn-marrom:hover{ background: var(--destaque); color: var(--superficie); }
+  .btn:hover{ background: var(--tinta); color: var(--off-white); }
+  .btn-marrom{ border-color: var(--marrom); color: var(--marrom); }
+  .btn-marrom:hover{ background: var(--marrom); color: var(--off-white); }
   .btn-small{ padding: 0.7em 1.4em; font-size: 0.7rem; }
   .btn-block{ width:100%; }
 
@@ -130,7 +128,7 @@
     position: fixed;
     top:0; left:0; right:0;
     z-index: 500;
-    background: rgba(91, 48, 57, 0.96);
+    background: rgba(253, 252, 250, 0.92);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--linha);
   }
@@ -138,16 +136,18 @@
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap: 1rem;
     padding: 1.1rem clamp(1.25rem, 5vw, 3rem);
   }
   .logo{
     font-family: var(--serif);
     font-size: 1.15rem;
     letter-spacing: 0.08em;
+    white-space: nowrap;
   }
   .nav-links{
     display:flex;
-    gap: clamp(1.2rem, 2.5vw, 2.2rem);
+    gap: clamp(1rem, 2.2vw, 2rem);
   }
   .nav-links a{
     font-size: 0.72rem;
@@ -158,7 +158,41 @@
     border-bottom: 1px solid transparent;
     transition: border-color 0.25s ease, color 0.25s ease;
   }
-  .nav-links a:hover{ border-color: var(--destaque); color: var(--destaque); }
+  .nav-links a:hover{ border-color: var(--marrom); color: var(--marrom); }
+
+  .topbar-acoes{
+    display:flex;
+    align-items:center;
+    gap: 0.9rem;
+  }
+
+  /* seletor de idioma PT / EN */
+  .idioma{
+    display:flex;
+    align-items:stretch;
+    border: 1px solid var(--linha);
+  }
+  .idioma-btn{
+    background: transparent;
+    border: 0;
+    padding: 0.55em 0.85em;
+    font-family: var(--corpo);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .idioma-btn:hover{ color: var(--marrom); }
+  .idioma-btn[aria-pressed="true"]{
+    background: var(--marrom);
+    color: var(--off-white);
+  }
+  .idioma-sep{
+    width: 1px;
+    background: var(--linha);
+  }
 
   .hamburger{
     display:none;
@@ -183,13 +217,13 @@
   .hamburger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
   .hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
 
-  @media (max-width: 860px){
+  @media (max-width: 980px){
     .nav-links{
       position:absolute;
       top: 100%;
       left:0; right:0;
       flex-direction:column;
-      background: var(--superficie);
+      background: var(--off-white);
       border-bottom: 1px solid var(--linha);
       padding: 1.5rem clamp(1.25rem, 5vw, 3rem) 2rem;
       gap: 1.1rem;
@@ -204,6 +238,11 @@
       pointer-events:auto;
     }
     .hamburger{ display:flex; }
+  }
+
+  @media (max-width: 400px){
+    .logo{ font-size: 0.95rem; }
+    .idioma-btn{ padding: 0.5em 0.6em; font-size: 0.62rem; letter-spacing: 0.1em; }
   }
 
   /* ===================== CAPA / HERO ===================== */
@@ -233,20 +272,20 @@
     margin: 2rem 0 3rem;
   }
   .ph-block{
-    background: linear-gradient(155deg, #784550 0%, var(--fundo) 55%, var(--superficie) 100%);
+    background: linear-gradient(155deg, var(--nude) 0%, var(--areia) 55%, var(--off-white) 100%);
     border: 1px solid var(--linha);
     display:flex;
     align-items:flex-end;
     justify-content:center;
     text-align:center;
-    color: var(--destaque);
+    color: var(--marrom);
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     padding-bottom: 1.2rem;
   }
   /* Troque este bloco por uma <img> real: <img src="sua-foto.jpg" alt="Priscila Honorato"> */
-  .hero-photo{ aspect-ratio: 3 / 4; width: 100%; object-fit: cover; border: 1px solid var(--linha); }
+  .hero-photo{ aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border: 1px solid var(--linha); }
 
   .hero-stats{
     display:grid;
@@ -257,9 +296,9 @@
     border-top: 1px solid var(--linha);
   }
   .stat-num{
-    font-family: var(--corpo);
+    font-family: var(--serif);
     font-size: clamp(1.8rem, 4vw, 2.6rem);
-    color: var(--destaque);
+    color: var(--marrom);
     margin-bottom: 0.3rem;
     display:block;
   }
@@ -283,7 +322,7 @@
     gap: clamp(1.4rem, 4vw, 3rem);
   }
   .brand-strip li{
-    font-family: var(--corpo);
+    font-family: var(--serif);
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -300,7 +339,7 @@
   }
 
   /* ===================== SOBRE ===================== */
-  #sobre{ background: var(--superficie); }
+  #sobre{ background: var(--off-white); }
   .sobre-inner{
     display:grid;
     grid-template-columns: 0.8fr 1.2fr;
@@ -319,16 +358,15 @@
   }
   .promessas li:last-child{ border-bottom: 1px solid var(--linha); }
   .promessas .marcador{
-    font-family: var(--corpo);
-    color: var(--destaque);
+    font-family: var(--serif);
+    color: var(--marrom);
     flex-shrink:0;
   }
   .assinatura{
     font-family: var(--serif);
-    font-weight: 400;
     font-size: 1.4rem;
     margin-top: 1.5rem;
-    color: var(--destaque);
+    color: var(--marrom);
   }
 
   @media (max-width: 860px){
@@ -344,11 +382,11 @@
   }
   .destaque-card{
     display:block;
-    background: var(--superficie);
+    background: var(--off-white);
     border: 1px solid var(--linha);
     transition: transform 0.3s ease, border-color 0.3s ease;
   }
-  .destaque-card:hover{ transform: translateY(-4px); border-color: var(--destaque); }
+  .destaque-card:hover{ transform: translateY(-4px); border-color: var(--marrom); }
   .destaque-cover{
     position:relative;
     aspect-ratio: 9 / 16;
@@ -359,18 +397,18 @@
     top:50%; left:50%;
     transform: translate(-50%,-50%);
     width: 58px; height: 58px;
-    border: 1px solid var(--tinta);
+    border: 1px solid var(--off-white);
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
   }
-  .destaque-cover .play svg{ width:16px; height:16px; fill: var(--tinta); margin-left:2px; }
+  .destaque-cover .play svg{ width:16px; height:16px; fill: var(--off-white); margin-left:2px; }
   .destaque-body{ padding: 1.4rem; }
   .destaque-num{
-    font-family: var(--corpo);
+    font-family: var(--serif);
     font-size: 1.6rem;
-    color: var(--destaque);
+    color: var(--marrom);
     display:block;
   }
   .destaque-num-label{
@@ -381,7 +419,7 @@
     margin-bottom: 0.8rem;
     display:block;
   }
-  .destaque-title{ font-family: var(--corpo); font-size: 1.05rem; margin-bottom: 0.4rem; }
+  .destaque-title{ font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.4rem; }
   .destaque-context{ font-size: 0.85rem; margin:0; }
 
   @media (max-width: 860px){
@@ -389,7 +427,7 @@
   }
 
   /* ===================== TRABALHOS / FILTRO ===================== */
-  #trabalhos{ background: var(--superficie); }
+  #trabalhos{ background: var(--off-white); }
   .filtros{
     display:flex;
     flex-wrap:wrap;
@@ -407,11 +445,11 @@
     cursor:pointer;
     transition: border-color 0.25s ease, color 0.25s ease;
   }
-  .filtro-btn:hover{ border-color: var(--destaque); color: var(--destaque); }
+  .filtro-btn:hover{ border-color: var(--marrom); color: var(--marrom); }
   .filtro-btn[aria-pressed="true"]{
-    border-color: var(--destaque);
-    color: var(--superficie);
-    background: var(--destaque);
+    border-color: var(--marrom);
+    color: var(--off-white);
+    background: var(--marrom);
   }
   .trabalhos-grid{
     display:grid;
@@ -419,7 +457,7 @@
     gap: clamp(1.25rem, 3vw, 2rem);
   }
   .trabalho-card{
-    background: var(--fundo);
+    background: var(--areia);
     border: 1px solid var(--linha);
   }
   .trabalho-cover{ aspect-ratio: 4 / 5; }
@@ -428,11 +466,11 @@
     font-size: 0.65rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--destaque);
+    color: var(--marrom);
     display:block;
     margin-bottom: 0.4rem;
   }
-  .trabalho-titulo{ font-family: var(--corpo); font-size: 1rem; margin-bottom:0.2rem; }
+  .trabalho-titulo{ font-family: var(--serif); font-size: 1rem; margin-bottom:0.2rem; }
   .trabalho-formato{ font-size: 0.8rem; margin:0; color: var(--tinta-suave); }
   .trabalho-card.is-hidden{ display:none; }
 
@@ -452,17 +490,17 @@
     border: 1px solid var(--linha);
   }
   .servico-card{
-    background: var(--fundo);
+    background: var(--areia);
     padding: clamp(1.8rem, 3vw, 2.4rem);
   }
   .servico-num{
-    font-family: var(--corpo);
-    color: var(--detalhe);
+    font-family: var(--serif);
+    color: var(--nude);
     font-size: 1.6rem;
     display:block;
     margin-bottom: 1rem;
   }
-  .servico-titulo{ font-family: var(--corpo); font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .servico-titulo{ font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.5rem; }
   .servico-desc{ font-size: 0.88rem; margin:0; }
 
   @media (max-width: 860px){
@@ -473,7 +511,7 @@
   }
 
   /* ===================== NÚMEROS E DEPOIMENTOS ===================== */
-  #numeros{ background: var(--superficie); }
+  #numeros{ background: var(--off-white); }
   .metricas-grid{
     display:grid;
     grid-template-columns: repeat(4, 1fr);
@@ -483,9 +521,9 @@
   }
   .metrica-item{ padding: 1.5rem 0.5rem; border: 1px solid var(--linha); }
   .metrica-valor{
-    font-family: var(--corpo);
+    font-family: var(--serif);
     font-size: clamp(2rem, 4.4vw, 2.8rem);
-    color: var(--destaque);
+    color: var(--marrom);
     display:block;
     margin-bottom: 0.4rem;
   }
@@ -497,11 +535,11 @@
   }
 
   .subtitulo-bloco{
-    font-family: var(--corpo);
+    display:block;
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--destaque);
+    color: var(--marrom);
     margin-bottom: 1.6rem;
   }
 
@@ -516,14 +554,14 @@
     padding: clamp(1.6rem, 3vw, 2.2rem);
   }
   .resultado-marca{
-    font-family: var(--corpo);
+    font-family: var(--serif);
     font-size: 1rem;
     margin-bottom: 0.6rem;
   }
   .resultado-valor{
-    font-family: var(--corpo);
+    font-family: var(--serif);
     font-size: 1.9rem;
-    color: var(--destaque);
+    color: var(--marrom);
     display:block;
     margin-bottom: 0.4rem;
   }
@@ -535,7 +573,7 @@
     gap: clamp(1.25rem, 3vw, 2rem);
   }
   .depoimento-card{
-    background: var(--fundo);
+    background: var(--areia);
     border: 1px solid var(--linha);
     padding: clamp(1.6rem, 3vw, 2.2rem);
   }
@@ -572,7 +610,7 @@
   .campo textarea{
     width:100%;
     padding: 0.9em 1em;
-    background: var(--superficie);
+    background: var(--off-white);
     border: 1px solid var(--linha);
     color: var(--tinta);
     font-family: var(--corpo);
@@ -580,15 +618,15 @@
   }
   .campo textarea{ resize: vertical; min-height: 120px; }
   .campo input::placeholder,
-  .campo textarea::placeholder{ color: var(--tinta-suave); opacity: 1; }
+  .campo textarea::placeholder{ color: var(--tinta-suave); opacity: 0.6; }
 
   .contato-canais{ display:flex; flex-direction:column; gap: 3rem; }
   .canais-lista{ display:flex; flex-wrap:wrap; gap: 1rem; }
   .form-confirmacao{
     display:none;
-    border: 1px solid var(--destaque);
+    border: 1px solid var(--marrom);
     padding: 1.6rem;
-    color: var(--destaque);
+    color: var(--marrom);
     font-size: 0.9rem;
   }
   .form-confirmacao.is-visible{ display:block; }
@@ -619,7 +657,7 @@
     color: var(--tinta-suave);
     border-bottom: 1px solid transparent;
   }
-  .footer-redes a:hover{ color: var(--destaque); border-color: var(--destaque); }
+  .footer-redes a:hover{ color: var(--marrom); border-color: var(--marrom); }
   .footer-ano{ font-size: 0.75rem; color: var(--tinta-suave); width:100%; text-align:center; margin-top: 1rem; }
 
   /* ===================== ANIMAÇÃO DE ENTRADA ===================== */
@@ -637,7 +675,7 @@
   .capture-overlay{
     position: fixed;
     inset: 0;
-    background: rgba(30, 12, 18, 0.72);
+    background: rgba(58, 51, 44, 0.55);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -650,7 +688,7 @@
   .capture-overlay.is-open{ opacity:1; pointer-events:auto; }
   .capture-card{
     position:relative;
-    background: var(--superficie);
+    background: var(--off-white);
     border: 1px solid var(--linha);
     max-width: 420px;
     width:100%;
@@ -685,22 +723,29 @@
 </head>
 <body>
 
-<a href="#capa" class="skip-link">Pular para o conteúdo</a>
+<a href="#capa" class="skip-link" data-i18n="skip">Pular para o conteúdo</a>
 
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#capa" class="logo">Priscila Honorato</a>
-    <nav class="nav-links" id="nav-links" aria-label="Navegação principal">
-      <a href="#sobre">Sobre</a>
-      <a href="#destaques">Destaques</a>
-      <a href="#trabalhos">Trabalhos</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#numeros">Números</a>
-      <a href="#contato">Contato</a>
+    <nav class="nav-links" id="nav-links" data-i18n-aria="navAria" aria-label="Navegação principal">
+      <a href="#sobre" data-i18n="navSobre">Sobre</a>
+      <a href="#destaques" data-i18n="navDestaques">Destaques</a>
+      <a href="#trabalhos" data-i18n="navTrabalhos">Trabalhos</a>
+      <a href="#servicos" data-i18n="navServicos">Serviços</a>
+      <a href="#numeros" data-i18n="navNumeros">Números</a>
+      <a href="#contato" data-i18n="navContato">Contato</a>
     </nav>
-    <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="topbar-acoes">
+      <div class="idioma" role="group" aria-label="Idioma / Language">
+        <button type="button" class="idioma-btn" data-idioma="pt" aria-pressed="true">PT</button>
+        <span class="idioma-sep" aria-hidden="true"></span>
+        <button type="button" class="idioma-btn" data-idioma="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -712,28 +757,28 @@
       <div class="hero-inner">
         <div>
           <h1 class="hero-name">Priscila Honorato</h1>
-          <p class="hero-tag">Um detalhe que transforma a casa, um cuidado com o pet, uma descoberta que facilita o dia. É dessas pequenas histórias que nasce o conteúdo que crio para a sua marca.</p>
+          <p class="hero-tag" data-i18n="heroTag">Eu gravo como quem conversa com uma amiga. Crio conteúdo UGC para marcas de casa e decoração, pet e tech.</p>
           <div class="hero-ctas">
-            <a class="btn" href="#contato">Falar comigo</a>
-            <a class="btn btn-marrom" href="#trabalhos">Ver os trabalhos</a>
+            <a class="btn" href="#contato" data-i18n="heroBtn1">Falar comigo</a>
+            <a class="btn btn-marrom" href="#trabalhos" data-i18n="heroBtn2">Ver os trabalhos</a>
           </div>
         </div>
-        <!-- Foto real da capa. Para trocar, substitua o arquivo foto-priscila-capa.png na pasta do projeto ou troque o "src" abaixo. -->
-        <img class="hero-photo" src="foto-priscila-capa.png" alt="Priscila Honorato sentada em um sofá com manta azul, vestindo um conjunto bege">
+        <!-- Foto real da capa. Para trocar, substitua o arquivo foto-priscila-capa.webp na pasta do projeto ou troque o "src" abaixo. -->
+        <img class="hero-photo" src="foto-priscila-capa.webp" data-i18n-alt="heroAlt" alt="Priscila Honorato sentada no chão da sala, vestindo camiseta preta e calça jeans, ao lado de plantas">
       </div>
 
       <div class="hero-stats reveal">
         <div>
           <span class="stat-num">10+</span>
-          <span class="stat-label">Vídeos entregues</span>
+          <span class="stat-label" data-i18n="statVideos">Vídeos entregues</span>
         </div>
         <div>
           <span class="stat-num">4+</span>
-          <span class="stat-label">Marcas atendidas</span>
+          <span class="stat-label" data-i18n="statMarcas">Marcas atendidas</span>
         </div>
         <div>
           <span class="stat-num">12M+</span>
-          <span class="stat-label">Views somadas</span>
+          <span class="stat-label" data-i18n="statViews">Views somadas</span>
         </div>
       </div>
 
@@ -748,15 +793,15 @@
     <div class="container">
       <div class="sobre-inner">
         <!-- Troque por uma foto real: <img class="sobre-photo" src="foto-sobre.jpg" alt="Priscila Honorato em ambiente de gravação"> -->
-        <div class="ph-block sobre-photo reveal" role="img" aria-label="Foto da creator Priscila Honorato, proporção 4 por 5">foto da creator 4:5</div>
+        <div class="ph-block sobre-photo reveal" role="img" data-i18n-aria="fotoCreator" data-i18n="fotoCreator" aria-label="Foto da creator, proporção 4 por 5">foto da creator 4:5</div>
         <div class="reveal">
-          <span class="eyebrow">01 · Sobre mim</span>
-          <h2>Prazer, eu sou a Priscila</h2>
-          <p>Eu gravo como quem conversa com uma amiga. Moro em Coimbra, MG, e transformo o dia a dia com um produto em conteúdo leve, verdadeiro e que faz a pessoa do outro lado confiar na sua marca. Gosto de entender o produto antes de ligar a câmera, porque um vídeo bom começa com uma boa conversa.</p>
+          <span class="eyebrow" data-i18n="sobreEyebrow">01 · Sobre mim</span>
+          <h2 data-i18n="sobreTitulo">Prazer, eu sou a Priscila</h2>
+          <p data-i18n="sobreTexto">Eu gravo como quem conversa com uma amiga. Moro em Coimbra, MG, e transformo o dia a dia com um produto em conteúdo leve, verdadeiro e que faz a pessoa do outro lado confiar na sua marca. Gosto de entender o produto antes de ligar a câmera, porque um vídeo bom começa com uma boa conversa.</p>
           <ul class="promessas">
-            <li><span class="marcador">01</span> Roteiro aprovado por você antes de eu gravar</li>
-            <li><span class="marcador">02</span> Uma rodada de ajuste incluída no valor</li>
-            <li><span class="marcador">03</span> Entrega em até 72 horas úteis</li>
+            <li><span class="marcador">01</span> <span data-i18n="promessa1">Roteiro aprovado por você antes de eu gravar</span></li>
+            <li><span class="marcador">02</span> <span data-i18n="promessa2">Uma rodada de ajuste incluída no valor</span></li>
+            <li><span class="marcador">03</span> <span data-i18n="promessa3">Entrega em até 72 horas úteis</span></li>
           </ul>
           <p class="assinatura">Priscila Honorato</p>
         </div>
@@ -768,9 +813,9 @@
   <section id="destaques">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow">02 · Destaques</span>
-        <h2>Conteúdos de destaque</h2>
-        <p>Três vídeos que mostram como eu conto a história de um produto.</p>
+        <span class="eyebrow" data-i18n="destaquesEyebrow">02 · Destaques</span>
+        <h2 data-i18n="destaquesTitulo">Conteúdos de destaque</h2>
+        <p data-i18n="destaquesSub">Três vídeos que mostram como eu conto a história de um produto.</p>
       </div>
       <div class="destaques-grid" id="destaques-grid">
         <!-- preenchido via JavaScript a partir do array "destaques" -->
@@ -782,11 +827,11 @@
   <section id="trabalhos">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow">03 · Trabalhos</span>
-        <h2>Trabalhos por nicho</h2>
-        <p>Filtre por área para ver os projetos que já fiz para cada tipo de marca.</p>
+        <span class="eyebrow" data-i18n="trabalhosEyebrow">03 · Trabalhos</span>
+        <h2 data-i18n="trabalhosTitulo">Trabalhos por nicho</h2>
+        <p data-i18n="trabalhosSub">Filtre por área para ver os projetos que já fiz para cada tipo de marca.</p>
       </div>
-      <div class="filtros reveal" id="filtros" role="group" aria-label="Filtrar trabalhos por nicho">
+      <div class="filtros reveal" id="filtros" role="group" data-i18n-aria="filtrosAria" aria-label="Filtrar trabalhos por nicho">
         <!-- preenchido via JavaScript a partir do array "nichos" -->
       </div>
       <div class="trabalhos-grid" id="trabalhos-grid">
@@ -799,9 +844,9 @@
   <section id="servicos">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow">04 · Serviços</span>
-        <h2>Como eu te ajudo</h2>
-        <p>Seis formatos de entrega para encaixar no que a sua marca precisa agora.</p>
+        <span class="eyebrow" data-i18n="servicosEyebrow">04 · Serviços</span>
+        <h2 data-i18n="servicosTitulo">Como eu te ajudo</h2>
+        <p data-i18n="servicosSub">Seis formatos de entrega para encaixar no que a sua marca precisa agora.</p>
       </div>
       <div class="servicos-grid reveal" id="servicos-grid">
         <!-- preenchido via JavaScript a partir do array "servicos" -->
@@ -813,21 +858,21 @@
   <section id="numeros">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow">05 · Números e depoimentos</span>
-        <h2>Resultados que sustentam o trabalho</h2>
-        <p>Os números do meu trabalho, os resultados de campanha e o que as marcas dizem depois de trabalhar comigo.</p>
+        <span class="eyebrow" data-i18n="numerosEyebrow">05 · Números e depoimentos</span>
+        <h2 data-i18n="numerosTitulo">Resultados que sustentam o trabalho</h2>
+        <p data-i18n="numerosSub">Os números do meu trabalho, os resultados de campanha e o que as marcas dizem depois de trabalhar comigo.</p>
       </div>
 
       <div class="metricas-grid" id="metricas-grid">
         <!-- preenchido via JavaScript a partir do array "metricas", com contador animado -->
       </div>
 
-      <span class="subtitulo-bloco reveal">Resultados de campanha</span>
+      <span class="subtitulo-bloco reveal" data-i18n="numerosResultados">Resultados de campanha</span>
       <div class="resultados-grid reveal" id="resultados-grid">
         <!-- preenchido via JavaScript a partir do array "resultadosCampanha" -->
       </div>
 
-      <span class="subtitulo-bloco reveal">Depoimentos</span>
+      <span class="subtitulo-bloco reveal" data-i18n="numerosDepoimentos">Depoimentos</span>
       <div class="depoimentos-grid reveal" id="depoimentos-grid">
         <!-- preenchido via JavaScript a partir do array "depoimentos" -->
       </div>
@@ -839,42 +884,42 @@
     <div class="container">
       <div class="contato-inner">
         <div class="reveal">
-          <span class="eyebrow">06 · Contato</span>
-          <h2>Bora criar juntos</h2>
-          <p>Conta um pouco sobre a sua marca e o que você precisa. Eu respondo rapidinho.</p>
+          <span class="eyebrow" data-i18n="contatoEyebrow">06 · Contato</span>
+          <h2 data-i18n="contatoTitulo">Bora criar juntos</h2>
+          <p data-i18n="contatoSub">Conta um pouco sobre a sua marca e o que você precisa. Eu respondo rapidinho.</p>
 
           <form id="form-contato" novalidate>
             <div class="campo">
-              <label for="campo-nome">Nome</label>
-              <input type="text" id="campo-nome" name="nome" placeholder="Seu nome" required>
+              <label for="campo-nome" data-i18n="labelNome">Nome</label>
+              <input type="text" id="campo-nome" name="nome" data-i18n-ph="phNome" placeholder="Seu nome" required>
             </div>
             <div class="campo">
-              <label for="campo-email">E-mail</label>
+              <label for="campo-email" data-i18n="labelEmail">E-mail</label>
               <input type="email" id="campo-email" name="email" placeholder="seuemail@email.com" required>
             </div>
             <div class="campo">
-              <label for="campo-mensagem">Mensagem</label>
-              <textarea id="campo-mensagem" name="mensagem" placeholder="Conte sobre a sua marca e o que você precisa" required></textarea>
+              <label for="campo-mensagem" data-i18n="labelMensagem">Mensagem</label>
+              <textarea id="campo-mensagem" name="mensagem" data-i18n-ph="phMensagem" placeholder="Conte sobre a sua marca e o que você precisa" required></textarea>
             </div>
-            <button type="submit" class="btn btn-marrom btn-block">Enviar mensagem</button>
+            <button type="submit" class="btn btn-marrom btn-block" data-i18n="btnEnviar">Enviar mensagem</button>
           </form>
-          <div class="form-confirmacao" id="form-confirmacao" role="status">
+          <div class="form-confirmacao" id="form-confirmacao" role="status" data-i18n="confirmacao">
             Mensagem recebida! Obrigada pelo contato, eu respondo em breve por e-mail ou WhatsApp.
           </div>
         </div>
 
         <div class="contato-canais reveal">
           <div>
-            <span class="eyebrow">Fale direto comigo</span>
+            <span class="eyebrow" data-i18n="canaisTitulo">Fale direto comigo</span>
             <div class="canais-lista">
               <a class="btn btn-marrom" href="https://wa.me/5532987112913" target="_blank" rel="noopener">WhatsApp</a>
-              <a class="btn btn-marrom" href="mailto:bypriscilahonorato.contato@gmail.com">E-mail</a>
+              <a class="btn btn-marrom" href="mailto:bypriscilahonorato.contato@gmail.com" data-i18n="canalEmail">E-mail</a>
               <a class="btn btn-marrom" href="https://instagram.com/bypriscilahonorato" target="_blank" rel="noopener">Instagram</a>
             </div>
           </div>
           <div>
-            <span class="eyebrow">Localização</span>
-            <p>Atendo de forma remota e também em Coimbra, MG.</p>
+            <span class="eyebrow" data-i18n="localTitulo">Localização</span>
+            <p data-i18n="localTexto">Atendo de forma remota e também em Coimbra, MG.</p>
           </div>
         </div>
       </div>
@@ -891,7 +936,7 @@
       <div class="footer-redes">
         <a href="https://instagram.com/bypriscilahonorato" target="_blank" rel="noopener">@bypriscilahonorato</a>
         <a href="https://wa.me/5532987112913" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="mailto:bypriscilahonorato.contato@gmail.com">E-mail</a>
+        <a href="mailto:bypriscilahonorato.contato@gmail.com" data-i18n="canalEmail">E-mail</a>
       </div>
       <span class="footer-ano" id="footer-ano"></span>
     </div>
@@ -901,19 +946,19 @@
 <!-- ===================== CARD DE CAPTURA ===================== -->
 <div class="capture-overlay" id="capture-overlay" role="dialog" aria-modal="true" aria-labelledby="capture-title">
   <div class="capture-card">
-    <button class="capture-close" id="capture-close" aria-label="Fechar">&times;</button>
-    <h3 class="capture-title" id="capture-title">Quer meu mídia kit completo?</h3>
-    <p>Deixe seu nome e e-mail que eu envio direitinho.</p>
+    <button class="capture-close" id="capture-close" data-i18n-aria="fechar" aria-label="Fechar">&times;</button>
+    <h3 class="capture-title" id="capture-title" data-i18n="capturaTitulo">Quer meu mídia kit completo?</h3>
+    <p data-i18n="capturaTexto">Deixe seu nome e e-mail que eu envio direitinho.</p>
     <form id="form-captura">
       <div class="campo">
-        <label for="captura-nome" class="sr-only">Nome</label>
-        <input type="text" id="captura-nome" name="nome" placeholder="Seu nome" required>
+        <label for="captura-nome" class="sr-only" data-i18n="labelNome">Nome</label>
+        <input type="text" id="captura-nome" name="nome" data-i18n-ph="phNome" placeholder="Seu nome" required>
       </div>
       <div class="campo">
-        <label for="captura-email" class="sr-only">E-mail</label>
+        <label for="captura-email" class="sr-only" data-i18n="labelEmail">E-mail</label>
         <input type="email" id="captura-email" name="email" placeholder="seuemail@email.com" required>
       </div>
-      <button type="submit" class="btn btn-marrom btn-block">Quero receber</button>
+      <button type="submit" class="btn btn-marrom btn-block" data-i18n="capturaBtn">Quero receber</button>
     </form>
   </div>
 </div>
@@ -925,7 +970,11 @@
   /* =========================================================
      DADOS — edite os arrays abaixo para atualizar o site
      sem precisar mexer no HTML.
+     Cada texto tem duas versões: pt (português) e en (inglês).
   ========================================================= */
+
+  // Idioma que abre por padrão: "pt" ou "en"
+  var IDIOMA_PADRAO = "pt";
 
   // Marcas que aparecem na faixa fina do topo (capa)
   var marcas = [
@@ -939,87 +988,271 @@
 
   // Conteúdos de destaque (seção 02).
   // link: para onde o card leva ao ser clicado (troque o "#" pelo link real do vídeo).
-  // capa: deixe em branco ("") para usar o bloco de degradê, ou informe uma imagem em "capaImg".
+  // capaImg: deixe em branco ("") para usar o bloco de degradê, ou informe o arquivo da capa.
   var destaques = [
     {
       link: "https://youtube.com/shorts/Bpw2nVF-T7E?feature=share",
       capaImg: "",
       numero: "+1,2M",
-      numeroLabel: "views no youtube shorts",
-      titulo: "Título do vídeo 01",
-      contexto: "Escreva aqui uma linha curta de contexto sobre este conteúdo."
+      numeroLabel: { pt: "views no youtube shorts", en: "views on youtube shorts" },
+      titulo: { pt: "Título do vídeo 01", en: "Video title 01" },
+      contexto: { pt: "Escreva aqui uma linha curta de contexto sobre este conteúdo.", en: "Write a short line of context about this content here." }
     },
     {
       link: "#",
       capaImg: "",
       numero: "+000K",
-      numeroLabel: "views no reels",
-      titulo: "Título do vídeo 02",
-      contexto: "Escreva aqui uma linha curta de contexto sobre este conteúdo."
+      numeroLabel: { pt: "views no reels", en: "views on reels" },
+      titulo: { pt: "Título do vídeo 02", en: "Video title 02" },
+      contexto: { pt: "Escreva aqui uma linha curta de contexto sobre este conteúdo.", en: "Write a short line of context about this content here." }
     },
     {
       link: "#",
       capaImg: "",
       numero: "+000K",
-      numeroLabel: "views no tiktok",
-      titulo: "Título do vídeo 03",
-      contexto: "Escreva aqui uma linha curta de contexto sobre este conteúdo."
+      numeroLabel: { pt: "views no tiktok", en: "views on tiktok" },
+      titulo: { pt: "Título do vídeo 03", en: "Video title 03" },
+      contexto: { pt: "Escreva aqui uma linha curta de contexto sobre este conteúdo.", en: "Write a short line of context about this content here." }
     }
   ];
 
-  // Nichos usados nos filtros da galeria (seção 03)
-  var nichos = ["Todos", "Casa e decoração", "Pet", "Tech"];
+  // Nichos usados nos filtros da galeria (seção 03). O "id" liga o filtro aos trabalhos.
+  var nichos = [
+    { id: "todos", pt: "Todos", en: "All" },
+    { id: "casa", pt: "Casa e decoração", en: "Home and decor" },
+    { id: "pet", pt: "Pet", en: "Pet" },
+    { id: "tech", pt: "Tech", en: "Tech" }
+  ];
 
-  // Trabalhos da galeria (seção 03). "nicho" precisa bater com um item do array "nichos".
+  // Trabalhos da galeria (seção 03). "nicho" precisa ser um dos "id" do array acima.
   var trabalhos = [
-    { marca: "Camicado", nicho: "Casa e decoração", titulo: "Vídeo de organização da casa", formato: "vídeo 9:16" },
-    { marca: "Tokstok", nicho: "Casa e decoração", titulo: "Unboxing de decoração", formato: "vídeo 9:16" },
-    { marca: "Matos e Lopes", nicho: "Casa e decoração", titulo: "Fotos do produto em ambiente", formato: "foto 4:5" },
-    { marca: "Brastemp", nicho: "Casa e decoração", titulo: "Vídeo de eletrodoméstico em uso", formato: "vídeo 9:16" },
-    { marca: "Pet love", nicho: "Pet", titulo: "Rotina com o pet", formato: "vídeo 9:16" },
-    { marca: "Petiko", nicho: "Pet", titulo: "Unboxing de produto para pet", formato: "vídeo 9:16" },
-    { marca: "Marca 01", nicho: "Tech", titulo: "Review de produto de tecnologia", formato: "vídeo 9:16" },
-    { marca: "Marca 02", nicho: "Tech", titulo: "Unboxing de acessório de tech", formato: "vídeo 9:16" }
+    { marca: "Camicado", nicho: "casa", titulo: { pt: "Vídeo de organização da casa", en: "Home organization video" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
+    { marca: "Tokstok", nicho: "casa", titulo: { pt: "Unboxing de decoração", en: "Decor unboxing" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
+    { marca: "Matos e Lopes", nicho: "casa", titulo: { pt: "Fotos do produto em ambiente", en: "Product photos in context" }, formato: { pt: "foto 4:5", en: "photo 4:5" } },
+    { marca: "Brastemp", nicho: "casa", titulo: { pt: "Vídeo de eletrodoméstico em uso", en: "Appliance in use video" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
+    { marca: "Pet love", nicho: "pet", titulo: { pt: "Rotina com o pet", en: "Daily routine with the pet" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
+    { marca: "Petiko", nicho: "pet", titulo: { pt: "Unboxing de produto para pet", en: "Pet product unboxing" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
+    { marca: "Marca 01", nicho: "tech", titulo: { pt: "Review de produto de tecnologia", en: "Tech product review" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
+    { marca: "Marca 02", nicho: "tech", titulo: { pt: "Unboxing de acessório de tech", en: "Tech accessory unboxing" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } }
   ];
 
   // Serviços oferecidos (seção 04)
   var servicos = [
-    { numero: "01", titulo: "Vídeo UGC", desc: "Gravo um vídeo autêntico no formato conversa de amiga, pensado para performar no feed e nos anúncios da sua marca." },
-    { numero: "02", titulo: "Corte para anúncio", desc: "Entrego cortes curtos e diretos, prontos para rodar como anúncio em redes sociais." },
-    { numero: "03", titulo: "Fotos do produto", desc: "Faço fotos limpas e naturais do seu produto, prontas para loja virtual, catálogo e redes sociais." },
-    { numero: "04", titulo: "Unboxing", desc: "Gravo a experiência real de abrir e testar o seu produto, do jeito que a sua cliente faria em casa." },
-    { numero: "05", titulo: "Publicação no meu perfil", desc: "Publico o conteúdo no meu Instagram, levando a sua marca até a minha audiência." },
-    { numero: "06", titulo: "Pacote mensal", desc: "Monto um combo de vídeos e fotos entregues ao longo do mês, ideal para manter a sua marca sempre presente." }
+    {
+      numero: "01",
+      titulo: { pt: "Vídeo UGC", en: "UGC video" },
+      desc: { pt: "Gravo um vídeo autêntico no formato conversa de amiga, pensado para performar no feed e nos anúncios da sua marca.", en: "I film an authentic video in a friendly, conversational style, built to perform on your feed and in your brand's ads." }
+    },
+    {
+      numero: "02",
+      titulo: { pt: "Corte para anúncio", en: "Ad cutdown" },
+      desc: { pt: "Entrego cortes curtos e diretos, prontos para rodar como anúncio em redes sociais.", en: "I deliver short, direct cutdowns, ready to run as ads on social media." }
+    },
+    {
+      numero: "03",
+      titulo: { pt: "Fotos do produto", en: "Product photos" },
+      desc: { pt: "Faço fotos limpas e naturais do seu produto, prontas para loja virtual, catálogo e redes sociais.", en: "I shoot clean, natural photos of your product, ready for your online store, catalog and social media." }
+    },
+    {
+      numero: "04",
+      titulo: { pt: "Unboxing", en: "Unboxing" },
+      desc: { pt: "Gravo a experiência real de abrir e testar o seu produto, do jeito que a sua cliente faria em casa.", en: "I film the real experience of opening and testing your product, just like your customer would at home." }
+    },
+    {
+      numero: "05",
+      titulo: { pt: "Publicação no meu perfil", en: "Post on my profile" },
+      desc: { pt: "Publico o conteúdo no meu Instagram, levando a sua marca até a minha audiência.", en: "I publish the content on my Instagram, bringing your brand to my audience." }
+    },
+    {
+      numero: "06",
+      titulo: { pt: "Pacote mensal", en: "Monthly package" },
+      desc: { pt: "Monto um combo de vídeos e fotos entregues ao longo do mês, ideal para manter a sua marca sempre presente.", en: "I put together a bundle of videos and photos delivered across the month, ideal to keep your brand always present." }
+    }
   ];
 
   // Métricas com contador animado (seção 05).
   // valor deve ser um número inteiro; sufixo é o texto que aparece depois do número (M+, +, %, etc).
   var metricas = [
-    { valor: 10, sufixo: "+", label: "Vídeos entregues" },
-    { valor: 4, sufixo: "+", label: "Marcas atendidas" },
-    { valor: 12, sufixo: "M+", label: "Views somadas" },
-    { valor: 0, sufixo: "", label: "Sua métrica" } // placeholder: troque valor e label pela quarta métrica real
+    { valor: 10, sufixo: "+", label: { pt: "Vídeos entregues", en: "Videos delivered" } },
+    { valor: 4, sufixo: "+", label: { pt: "Marcas atendidas", en: "Brands served" } },
+    { valor: 12, sufixo: "M+", label: { pt: "Views somadas", en: "Total views" } },
+    { valor: 0, sufixo: "", label: { pt: "Sua métrica", en: "Your metric" } } // placeholder: troque valor e label pela quarta métrica real
   ];
 
   // Resultados de campanha (seção 05)
   var resultadosCampanha = [
-    { marca: "Marca 01", valor: "+000%", desc: "Descreva aqui o resultado desta campanha." },
-    { marca: "Marca 02", valor: "+000%", desc: "Descreva aqui o resultado desta campanha." },
-    { marca: "Marca 03", valor: "+000%", desc: "Descreva aqui o resultado desta campanha." }
+    { marca: "Marca 01", valor: "+000%", desc: { pt: "Descreva aqui o resultado desta campanha.", en: "Describe this campaign's result here." } },
+    { marca: "Marca 02", valor: "+000%", desc: { pt: "Descreva aqui o resultado desta campanha.", en: "Describe this campaign's result here." } },
+    { marca: "Marca 03", valor: "+000%", desc: { pt: "Descreva aqui o resultado desta campanha.", en: "Describe this campaign's result here." } }
   ];
 
   // Depoimentos (seção 05)
   var depoimentos = [
-    { texto: "Escreva aqui o depoimento do Cliente 01 sobre o trabalho da Priscila.", nome: "Cliente 01", empresa: "Empresa 01" },
-    { texto: "Escreva aqui o depoimento do Cliente 02 sobre o trabalho da Priscila.", nome: "Cliente 02", empresa: "Empresa 02" },
-    { texto: "Escreva aqui o depoimento do Cliente 03 sobre o trabalho da Priscila.", nome: "Cliente 03", empresa: "Empresa 03" },
-    { texto: "Escreva aqui o depoimento do Cliente 04 sobre o trabalho da Priscila.", nome: "Cliente 04", empresa: "Empresa 04" }
+    { texto: { pt: "Escreva aqui o depoimento do Cliente 01 sobre o trabalho da Priscila.", en: "Write Client 01's testimonial about Priscila's work here." }, nome: "Cliente 01", empresa: "Empresa 01" },
+    { texto: { pt: "Escreva aqui o depoimento do Cliente 02 sobre o trabalho da Priscila.", en: "Write Client 02's testimonial about Priscila's work here." }, nome: "Cliente 02", empresa: "Empresa 02" },
+    { texto: { pt: "Escreva aqui o depoimento do Cliente 03 sobre o trabalho da Priscila.", en: "Write Client 03's testimonial about Priscila's work here." }, nome: "Cliente 03", empresa: "Empresa 03" },
+    { texto: { pt: "Escreva aqui o depoimento do Cliente 04 sobre o trabalho da Priscila.", en: "Write Client 04's testimonial about Priscila's work here." }, nome: "Cliente 04", empresa: "Empresa 04" }
   ];
+
+  /* =========================================================
+     TEXTOS FIXOS DO SITE (menu, títulos, formulário, etc)
+  ========================================================= */
+  var textos = {
+    pt: {
+      htmlLang: "pt-BR",
+      metaTitulo: "Priscila Honorato | Portfólio UGC Creator",
+      metaDesc: "Portfólio de Priscila Honorato, criadora de conteúdo UGC para marcas de casa e decoração, pet e tech.",
+      skip: "Pular para o conteúdo",
+      navAria: "Navegação principal",
+      navSobre: "Sobre",
+      navDestaques: "Destaques",
+      navTrabalhos: "Trabalhos",
+      navServicos: "Serviços",
+      navNumeros: "Números",
+      navContato: "Contato",
+      menuAbrir: "Abrir menu",
+      menuFechar: "Fechar menu",
+      heroTag: "Eu gravo como quem conversa com uma amiga. Crio conteúdo UGC para marcas de casa e decoração, pet e tech.",
+      heroBtn1: "Falar comigo",
+      heroBtn2: "Ver os trabalhos",
+      heroAlt: "Priscila Honorato sentada no chão da sala, vestindo camiseta preta e calça jeans, ao lado de plantas",
+      statVideos: "Vídeos entregues",
+      statMarcas: "Marcas atendidas",
+      statViews: "Views somadas",
+      fotoCreator: "foto da creator 4:5",
+      sobreEyebrow: "01 · Sobre mim",
+      sobreTitulo: "Prazer, eu sou a Priscila",
+      sobreTexto: "Eu gravo como quem conversa com uma amiga. Moro em Coimbra, MG, e transformo o dia a dia com um produto em conteúdo leve, verdadeiro e que faz a pessoa do outro lado confiar na sua marca. Gosto de entender o produto antes de ligar a câmera, porque um vídeo bom começa com uma boa conversa.",
+      promessa1: "Roteiro aprovado por você antes de eu gravar",
+      promessa2: "Uma rodada de ajuste incluída no valor",
+      promessa3: "Entrega em até 72 horas úteis",
+      destaquesEyebrow: "02 · Destaques",
+      destaquesTitulo: "Conteúdos de destaque",
+      destaquesSub: "Três vídeos que mostram como eu conto a história de um produto.",
+      capaVertical: "capa vertical 9:16",
+      trabalhosEyebrow: "03 · Trabalhos",
+      trabalhosTitulo: "Trabalhos por nicho",
+      trabalhosSub: "Filtre por área para ver os projetos que já fiz para cada tipo de marca.",
+      filtrosAria: "Filtrar trabalhos por nicho",
+      servicosEyebrow: "04 · Serviços",
+      servicosTitulo: "Como eu te ajudo",
+      servicosSub: "Seis formatos de entrega para encaixar no que a sua marca precisa agora.",
+      numerosEyebrow: "05 · Números e depoimentos",
+      numerosTitulo: "Resultados que sustentam o trabalho",
+      numerosSub: "Os números do meu trabalho, os resultados de campanha e o que as marcas dizem depois de trabalhar comigo.",
+      numerosResultados: "Resultados de campanha",
+      numerosDepoimentos: "Depoimentos",
+      contatoEyebrow: "06 · Contato",
+      contatoTitulo: "Bora criar juntos",
+      contatoSub: "Conta um pouco sobre a sua marca e o que você precisa. Eu respondo rapidinho.",
+      labelNome: "Nome",
+      labelEmail: "E-mail",
+      labelMensagem: "Mensagem",
+      phNome: "Seu nome",
+      phMensagem: "Conte sobre a sua marca e o que você precisa",
+      btnEnviar: "Enviar mensagem",
+      confirmacao: "Mensagem recebida! Obrigada pelo contato, eu respondo em breve por e-mail ou WhatsApp.",
+      canaisTitulo: "Fale direto comigo",
+      canalEmail: "E-mail",
+      localTitulo: "Localização",
+      localTexto: "Atendo de forma remota e também em Coimbra, MG.",
+      capturaTitulo: "Quer meu mídia kit completo?",
+      capturaTexto: "Deixe seu nome e e-mail que eu envio direitinho.",
+      capturaBtn: "Quero receber",
+      fechar: "Fechar"
+    },
+    en: {
+      htmlLang: "en",
+      metaTitulo: "Priscila Honorato | UGC Creator Portfolio",
+      metaDesc: "Portfolio of Priscila Honorato, UGC content creator for home and decor, pet and tech brands.",
+      skip: "Skip to content",
+      navAria: "Main navigation",
+      navSobre: "About",
+      navDestaques: "Highlights",
+      navTrabalhos: "Work",
+      navServicos: "Services",
+      navNumeros: "Numbers",
+      navContato: "Contact",
+      menuAbrir: "Open menu",
+      menuFechar: "Close menu",
+      heroTag: "I film like I am talking to a friend. I create UGC content for home and decor, pet and tech brands.",
+      heroBtn1: "Get in touch",
+      heroBtn2: "See the work",
+      heroAlt: "Priscila Honorato sitting on the living room floor, wearing a black t-shirt and jeans, next to plants",
+      statVideos: "Videos delivered",
+      statMarcas: "Brands served",
+      statViews: "Total views",
+      fotoCreator: "creator photo 4:5",
+      sobreEyebrow: "01 · About me",
+      sobreTitulo: "Hi, I am Priscila",
+      sobreTexto: "I film like I am talking to a friend. I live in Coimbra, Minas Gerais, and I turn everyday moments with a product into light, honest content that makes the person on the other side trust your brand. I like to understand the product before turning the camera on, because a good video starts with a good conversation.",
+      promessa1: "Script approved by you before I film",
+      promessa2: "One round of revisions included",
+      promessa3: "Delivery within 72 business hours",
+      destaquesEyebrow: "02 · Highlights",
+      destaquesTitulo: "Featured content",
+      destaquesSub: "Three videos that show how I tell a product's story.",
+      capaVertical: "vertical cover 9:16",
+      trabalhosEyebrow: "03 · Work",
+      trabalhosTitulo: "Work by niche",
+      trabalhosSub: "Filter by area to see the projects I have done for each type of brand.",
+      filtrosAria: "Filter work by niche",
+      servicosEyebrow: "04 · Services",
+      servicosTitulo: "How I can help",
+      servicosSub: "Six delivery formats to fit what your brand needs right now.",
+      numerosEyebrow: "05 · Numbers and testimonials",
+      numerosTitulo: "Results that back the work",
+      numerosSub: "The numbers behind my work, the campaign results and what brands say after working with me.",
+      numerosResultados: "Campaign results",
+      numerosDepoimentos: "Testimonials",
+      contatoEyebrow: "06 · Contact",
+      contatoTitulo: "Let us create together",
+      contatoSub: "Tell me a bit about your brand and what you need. I reply quickly.",
+      labelNome: "Name",
+      labelEmail: "Email",
+      labelMensagem: "Message",
+      phNome: "Your name",
+      phMensagem: "Tell me about your brand and what you need",
+      btnEnviar: "Send message",
+      confirmacao: "Message received! Thank you for reaching out, I will reply soon by email or WhatsApp.",
+      canaisTitulo: "Talk to me directly",
+      canalEmail: "Email",
+      localTitulo: "Location",
+      localTexto: "I work remotely and also in Coimbra, Minas Gerais.",
+      capturaTitulo: "Want my full media kit?",
+      capturaTexto: "Leave your name and email and I will send it over.",
+      capturaBtn: "Send it to me",
+      fechar: "Close"
+    }
+  };
+
+  /* =========================================================
+     ESTADO
+  ========================================================= */
+  var idioma = IDIOMA_PADRAO;
+  var primeiraRenderizacao = true;
+  var metricasAnimadas = false;
+  var filtroAtual = "todos";
+  var prefereReduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  try {
+    var salvo = localStorage.getItem("idiomaPortfolio");
+    if(salvo === "pt" || salvo === "en") idioma = salvo;
+  } catch(err){ /* navegador sem localStorage: segue com o idioma padrão */ }
+
+  function t(chave){
+    return textos[idioma][chave];
+  }
+
+  function txt(campo){
+    // aceita tanto "texto simples" quanto { pt: "...", en: "..." }
+    if(campo && typeof campo === "object") return campo[idioma];
+    return campo;
+  }
 
   /* =========================================================
      RENDERIZAÇÃO
   ========================================================= */
-
   function el(tag, className, html){
     var node = document.createElement(tag);
     if(className) node.className = className;
@@ -1035,19 +1268,27 @@
     return '<div class="ph-block" style="width:100%;height:100%;" role="img" aria-label="' + label + '">' + label + '</div>';
   }
 
-  // Faixa de marcas
-  (function renderMarcas(){
+  // marca os blocos recriados como visíveis quando a página já foi revelada
+  function ajustarReveal(container){
+    if(primeiraRenderizacao && !prefereReduzido) return;
+    Array.prototype.forEach.call(container.querySelectorAll(".reveal"), function(node){
+      node.classList.add("is-visible");
+    });
+  }
+
+  function renderMarcas(){
     var lista = document.getElementById("brand-strip-list");
+    lista.innerHTML = "";
     marcas.forEach(function(nome){
       var li = document.createElement("li");
       li.textContent = nome;
       lista.appendChild(li);
     });
-  })();
+  }
 
-  // Destaques
-  (function renderDestaques(){
+  function renderDestaques(){
     var grid = document.getElementById("destaques-grid");
+    grid.innerHTML = "";
     destaques.forEach(function(item){
       var card = el("a", "destaque-card reveal");
       card.href = item.link;
@@ -1055,19 +1296,19 @@
         card.target = "_blank";
         card.rel = "noopener";
       }
-      card.setAttribute("aria-label", item.titulo + ", " + item.numero + " " + item.numeroLabel);
+      card.setAttribute("aria-label", txt(item.titulo) + ", " + item.numero + " " + txt(item.numeroLabel));
 
       var cover = el("div", "destaque-cover");
       if(item.capaImg){
         var img = el("img");
         img.src = item.capaImg;
-        img.alt = "Capa do vídeo: " + item.titulo;
+        img.alt = txt(item.titulo);
         img.style.width = "100%";
         img.style.height = "100%";
         img.style.objectFit = "cover";
         cover.appendChild(img);
       } else {
-        cover.innerHTML = phBlock("capa vertical 9:16");
+        cover.innerHTML = phBlock(t("capaVertical"));
       }
       var play = el("span", "play");
       play.innerHTML = playIcon();
@@ -1077,110 +1318,169 @@
       var body = el("div", "destaque-body");
       body.innerHTML =
         '<span class="destaque-num">' + item.numero + '</span>' +
-        '<span class="destaque-num-label">' + item.numeroLabel + '</span>' +
-        '<h3 class="destaque-title">' + item.titulo + '</h3>' +
-        '<p class="destaque-context">' + item.contexto + '</p>';
+        '<span class="destaque-num-label">' + txt(item.numeroLabel) + '</span>' +
+        '<h3 class="destaque-title">' + txt(item.titulo) + '</h3>' +
+        '<p class="destaque-context">' + txt(item.contexto) + '</p>';
 
       card.appendChild(cover);
       card.appendChild(body);
       grid.appendChild(card);
     });
-  })();
-
-  // Filtros de nicho
-  var trabalhosGrid = document.getElementById("trabalhos-grid");
-  var filtrosWrap = document.getElementById("filtros");
-  var filtroAtual = "Todos";
-
-  function renderTrabalhos(){
-    trabalhosGrid.innerHTML = "";
-    trabalhos.forEach(function(t){
-      var visivel = (filtroAtual === "Todos" || t.nicho === filtroAtual);
-      var card = el("article", "trabalho-card reveal is-visible" + (visivel ? "" : " is-hidden"));
-      card.setAttribute("data-nicho", t.nicho);
-      card.innerHTML =
-        '<div class="trabalho-cover">' + phBlock(t.formato) + '</div>' +
-        '<div class="trabalho-info">' +
-          '<span class="trabalho-nicho">' + t.nicho + '</span>' +
-          '<h3 class="trabalho-titulo">' + t.marca + '</h3>' +
-          '<p class="trabalho-formato">' + t.titulo + '</p>' +
-        '</div>';
-      trabalhosGrid.appendChild(card);
-    });
+    ajustarReveal(grid);
   }
 
-  (function renderFiltros(){
-    nichos.forEach(function(nicho, i){
+  function nomeNicho(id){
+    for(var i = 0; i < nichos.length; i++){
+      if(nichos[i].id === id) return nichos[i][idioma];
+    }
+    return id;
+  }
+
+  function renderTrabalhos(){
+    var grid = document.getElementById("trabalhos-grid");
+    grid.innerHTML = "";
+    trabalhos.forEach(function(item){
+      var visivel = (filtroAtual === "todos" || item.nicho === filtroAtual);
+      var card = el("article", "trabalho-card reveal" + (visivel ? "" : " is-hidden"));
+      card.setAttribute("data-nicho", item.nicho);
+      card.innerHTML =
+        '<div class="trabalho-cover">' + phBlock(txt(item.formato)) + '</div>' +
+        '<div class="trabalho-info">' +
+          '<span class="trabalho-nicho">' + nomeNicho(item.nicho) + '</span>' +
+          '<h3 class="trabalho-titulo">' + item.marca + '</h3>' +
+          '<p class="trabalho-formato">' + txt(item.titulo) + '</p>' +
+        '</div>';
+      grid.appendChild(card);
+    });
+    ajustarReveal(grid);
+  }
+
+  function renderFiltros(){
+    var wrap = document.getElementById("filtros");
+    wrap.innerHTML = "";
+    nichos.forEach(function(nicho){
       var btn = el("button", "filtro-btn");
       btn.type = "button";
-      btn.textContent = nicho;
-      btn.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+      btn.textContent = nicho[idioma];
+      btn.setAttribute("aria-pressed", nicho.id === filtroAtual ? "true" : "false");
       btn.addEventListener("click", function(){
-        filtroAtual = nicho;
-        Array.prototype.forEach.call(filtrosWrap.querySelectorAll(".filtro-btn"), function(b){
+        filtroAtual = nicho.id;
+        Array.prototype.forEach.call(wrap.querySelectorAll(".filtro-btn"), function(b){
           b.setAttribute("aria-pressed", b === btn ? "true" : "false");
         });
         renderTrabalhos();
       });
-      filtrosWrap.appendChild(btn);
+      wrap.appendChild(btn);
     });
-    renderTrabalhos();
-  })();
+  }
 
-  // Serviços
-  (function renderServicos(){
+  function renderServicos(){
     var grid = document.getElementById("servicos-grid");
+    grid.innerHTML = "";
     servicos.forEach(function(s){
-      var card = el("div", "servico-card reveal");
+      var card = el("div", "servico-card");
       card.innerHTML =
         '<span class="servico-num">' + s.numero + '</span>' +
-        '<h3 class="servico-titulo">' + s.titulo + '</h3>' +
-        '<p class="servico-desc">' + s.desc + '</p>';
+        '<h3 class="servico-titulo">' + txt(s.titulo) + '</h3>' +
+        '<p class="servico-desc">' + txt(s.desc) + '</p>';
       grid.appendChild(card);
     });
-  })();
+  }
 
-  // Métricas (contador)
-  (function renderMetricas(){
+  function renderMetricas(){
     var grid = document.getElementById("metricas-grid");
+    grid.innerHTML = "";
     metricas.forEach(function(m){
       var item = el("div", "metrica-item reveal");
+      var valorInicial = metricasAnimadas ? (m.valor + m.sufixo) : "0";
       item.innerHTML =
-        '<span class="metrica-valor" data-valor="' + m.valor + '" data-sufixo="' + m.sufixo + '">0</span>' +
-        '<span class="metrica-label">' + m.label + '</span>';
+        '<span class="metrica-valor" data-valor="' + m.valor + '" data-sufixo="' + m.sufixo + '">' + valorInicial + '</span>' +
+        '<span class="metrica-label">' + txt(m.label) + '</span>';
       grid.appendChild(item);
     });
-  })();
+    ajustarReveal(grid);
+    if(!metricasAnimadas) observarMetricas();
+  }
 
-  // Resultados de campanha
-  (function renderResultados(){
+  function renderResultados(){
     var grid = document.getElementById("resultados-grid");
+    grid.innerHTML = "";
     resultadosCampanha.forEach(function(r){
-      var card = el("div", "resultado-card reveal");
+      var card = el("div", "resultado-card");
       card.innerHTML =
         '<h3 class="resultado-marca">' + r.marca + '</h3>' +
         '<span class="resultado-valor">' + r.valor + '</span>' +
-        '<p class="resultado-desc">' + r.desc + '</p>';
+        '<p class="resultado-desc">' + txt(r.desc) + '</p>';
       grid.appendChild(card);
     });
-  })();
+  }
 
-  // Depoimentos
-  (function renderDepoimentos(){
+  function renderDepoimentos(){
     var grid = document.getElementById("depoimentos-grid");
+    grid.innerHTML = "";
     depoimentos.forEach(function(d){
-      var card = el("div", "depoimento-card reveal");
+      var card = el("div", "depoimento-card");
       card.innerHTML =
-        '<p class="depoimento-texto">' + d.texto + '</p>' +
+        '<p class="depoimento-texto">' + txt(d.texto) + '</p>' +
         '<p class="depoimento-autor"><strong>' + d.nome + '</strong>, ' + d.empresa + '</p>';
       grid.appendChild(card);
     });
-  })();
+  }
 
   /* =========================================================
-     ANO AUTOMÁTICO NO RODAPÉ
+     APLICAR IDIOMA
   ========================================================= */
-  document.getElementById("footer-ano").textContent = "© " + new Date().getFullYear() + " Priscila Honorato";
+  function aplicarTextosFixos(){
+    document.documentElement.lang = t("htmlLang");
+    document.title = t("metaTitulo");
+    var meta = document.getElementById("meta-description");
+    if(meta) meta.setAttribute("content", t("metaDesc"));
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n]"), function(node){
+      var valor = textos[idioma][node.getAttribute("data-i18n")];
+      if(valor !== undefined) node.textContent = valor;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n-ph]"), function(node){
+      var valor = textos[idioma][node.getAttribute("data-i18n-ph")];
+      if(valor !== undefined) node.setAttribute("placeholder", valor);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n-aria]"), function(node){
+      var valor = textos[idioma][node.getAttribute("data-i18n-aria")];
+      if(valor !== undefined) node.setAttribute("aria-label", valor);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n-alt]"), function(node){
+      var valor = textos[idioma][node.getAttribute("data-i18n-alt")];
+      if(valor !== undefined) node.setAttribute("alt", valor);
+    });
+
+    // o botão do menu tem dois estados possíveis
+    var aberto = hamburger.getAttribute("aria-expanded") === "true";
+    hamburger.setAttribute("aria-label", aberto ? t("menuFechar") : t("menuAbrir"));
+
+    document.getElementById("footer-ano").textContent = "© " + new Date().getFullYear() + " Priscila Honorato";
+  }
+
+  function renderTudo(){
+    aplicarTextosFixos();
+    renderMarcas();
+    renderDestaques();
+    renderFiltros();
+    renderTrabalhos();
+    renderServicos();
+    renderMetricas();
+    renderResultados();
+    renderDepoimentos();
+  }
+
+  function trocarIdioma(novo){
+    if(novo === idioma) return;
+    idioma = novo;
+    try { localStorage.setItem("idiomaPortfolio", idioma); } catch(err){ /* segue sem salvar */ }
+    Array.prototype.forEach.call(document.querySelectorAll(".idioma-btn"), function(btn){
+      btn.setAttribute("aria-pressed", btn.getAttribute("data-idioma") === idioma ? "true" : "false");
+    });
+    renderTudo();
+  }
 
   /* =========================================================
      MENU SANDUÍCHE
@@ -1191,45 +1491,23 @@
   hamburger.addEventListener("click", function(){
     var aberto = hamburger.getAttribute("aria-expanded") === "true";
     hamburger.setAttribute("aria-expanded", String(!aberto));
-    hamburger.setAttribute("aria-label", aberto ? "Abrir menu" : "Fechar menu");
+    hamburger.setAttribute("aria-label", aberto ? t("menuAbrir") : t("menuFechar"));
     navLinks.classList.toggle("is-open", !aberto);
   });
 
   Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function(link){
     link.addEventListener("click", function(){
       hamburger.setAttribute("aria-expanded", "false");
-      hamburger.setAttribute("aria-label", "Abrir menu");
+      hamburger.setAttribute("aria-label", t("menuAbrir"));
       navLinks.classList.remove("is-open");
     });
   });
 
-  /* =========================================================
-     ANIMAÇÃO DE ENTRADA AO ROLAR
-  ========================================================= */
-  var prefereReduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if(prefereReduzido){
-    Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function(node){
-      node.classList.add("is-visible");
+  Array.prototype.forEach.call(document.querySelectorAll(".idioma-btn"), function(btn){
+    btn.addEventListener("click", function(){
+      trocarIdioma(btn.getAttribute("data-idioma"));
     });
-  } else if("IntersectionObserver" in window){
-    var revealObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function(node){
-      revealObserver.observe(node);
-    });
-  } else {
-    Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function(node){
-      node.classList.add("is-visible");
-    });
-  }
+  });
 
   /* =========================================================
      CONTADOR ANIMADO DAS MÉTRICAS
@@ -1249,8 +1527,7 @@
     function passo(timestamp){
       if(inicio === null) inicio = timestamp;
       var progresso = Math.min((timestamp - inicio) / duracao, 1);
-      var valorAtual = Math.floor(progresso * alvo);
-      node.textContent = valorAtual + sufixo;
+      node.textContent = Math.floor(progresso * alvo) + sufixo;
       if(progresso < 1){
         window.requestAnimationFrame(passo);
       } else {
@@ -1260,23 +1537,43 @@
     window.requestAnimationFrame(passo);
   }
 
-  if("IntersectionObserver" in window){
+  function observarMetricas(){
+    var nodes = document.querySelectorAll(".metrica-valor");
+    if(!("IntersectionObserver" in window)){
+      Array.prototype.forEach.call(nodes, animarContador);
+      metricasAnimadas = true;
+      return;
+    }
     var metricaObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
           animarContador(entry.target);
+          metricasAnimadas = true;
           metricaObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.4 });
+    Array.prototype.forEach.call(nodes, function(node){ metricaObserver.observe(node); });
+  }
 
-    Array.prototype.forEach.call(document.querySelectorAll(".metrica-valor"), function(node){
-      metricaObserver.observe(node);
-    });
-  } else {
-    Array.prototype.forEach.call(document.querySelectorAll(".metrica-valor"), function(node){
-      animarContador(node);
-    });
+  /* =========================================================
+     ANIMAÇÃO DE ENTRADA AO ROLAR
+  ========================================================= */
+  function ativarReveal(){
+    var nodes = document.querySelectorAll(".reveal");
+    if(prefereReduzido || !("IntersectionObserver" in window)){
+      Array.prototype.forEach.call(nodes, function(node){ node.classList.add("is-visible"); });
+      return;
+    }
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    Array.prototype.forEach.call(nodes, function(node){ revealObserver.observe(node); });
   }
 
   /* =========================================================
@@ -1300,24 +1597,17 @@
   var CHAVE_SESSAO = "midiaKitExibido";
 
   function abrirCaptura(){
-    if(sessionStorage.getItem(CHAVE_SESSAO)) return;
     overlay.classList.add("is-open");
-    sessionStorage.setItem(CHAVE_SESSAO, "1");
+    try { sessionStorage.setItem(CHAVE_SESSAO, "1"); } catch(err){ /* segue sem salvar */ }
   }
 
   function fecharCaptura(){
     overlay.classList.remove("is-open");
   }
 
-  try {
-    if(!sessionStorage.getItem(CHAVE_SESSAO)){
-      window.setTimeout(abrirCaptura, 7000);
-    }
-  } catch(err){
-    window.setTimeout(function(){
-      overlay.classList.add("is-open");
-    }, 7000);
-  }
+  var jaExibido = false;
+  try { jaExibido = !!sessionStorage.getItem(CHAVE_SESSAO); } catch(err){ jaExibido = false; }
+  if(!jaExibido) window.setTimeout(abrirCaptura, 7000);
 
   captureClose.addEventListener("click", fecharCaptura);
   overlay.addEventListener("click", function(e){
@@ -1330,6 +1620,16 @@
     e.preventDefault();
     fecharCaptura();
   });
+
+  /* =========================================================
+     INÍCIO
+  ========================================================= */
+  Array.prototype.forEach.call(document.querySelectorAll(".idioma-btn"), function(btn){
+    btn.setAttribute("aria-pressed", btn.getAttribute("data-idioma") === idioma ? "true" : "false");
+  });
+  renderTudo();
+  ativarReveal();
+  primeiraRenderizacao = false;
 
 })();
 </script>
