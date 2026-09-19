@@ -21,7 +21,6 @@
     --serif: "DM Serif Display", serif;
     --corpo: "Montserrat", sans-serif;
     --max: 1180px;
-    --gap: clamp(1.25rem, 3vw, 2.5rem);
   }
 
   *,*::before,*::after{ box-sizing: border-box; }
@@ -80,7 +79,6 @@
   .section-head{ margin-bottom: clamp(2.25rem, 5vw, 3.5rem); max-width: 640px; }
   .section-head p{ margin-top: 0.8rem; }
 
-  /* foco visível para acessibilidade */
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
@@ -122,7 +120,6 @@
   .btn:hover{ background: var(--tinta); color: var(--superficie); }
   .btn-marrom{ border-color: var(--destaque); color: var(--destaque); }
   .btn-marrom:hover{ background: var(--destaque); color: var(--superficie); }
-  .btn-small{ padding: 0.7em 1.4em; font-size: 0.7rem; }
   .btn-block{ width:100%; }
 
   /* ===================== TOPO / NAV ===================== */
@@ -162,23 +159,13 @@
   }
   .nav-links a:hover{ border-color: var(--destaque); color: var(--destaque); }
 
-  .topbar-acoes{
-    display:flex;
-    align-items:center;
-    gap: 0.9rem;
-  }
+  .topbar-acoes{ display:flex; align-items:center; gap: 0.9rem; }
 
-  /* seletor de idioma PT / EN */
-  .idioma{
-    display:flex;
-    align-items:stretch;
-    border: 1px solid var(--linha);
-  }
+  .idioma{ display:flex; align-items:stretch; border: 1px solid var(--linha); }
   .idioma-btn{
     background: transparent;
     border: 0;
     padding: 0.55em 0.85em;
-    font-family: var(--corpo);
     font-size: 0.68rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -187,14 +174,8 @@
     transition: background 0.25s ease, color 0.25s ease;
   }
   .idioma-btn:hover{ color: var(--destaque); }
-  .idioma-btn[aria-pressed="true"]{
-    background: var(--destaque);
-    color: var(--superficie);
-  }
-  .idioma-sep{
-    width: 1px;
-    background: var(--linha);
-  }
+  .idioma-btn[aria-pressed="true"]{ background: var(--destaque); color: var(--superficie); }
+  .idioma-sep{ width: 1px; background: var(--linha); }
 
   .hamburger{
     display:none;
@@ -234,23 +215,16 @@
       pointer-events:none;
       transition: opacity 0.25s ease, transform 0.25s ease;
     }
-    .nav-links.is-open{
-      transform: translateY(0);
-      opacity:1;
-      pointer-events:auto;
-    }
+    .nav-links.is-open{ transform: translateY(0); opacity:1; pointer-events:auto; }
     .hamburger{ display:flex; }
   }
-
   @media (max-width: 400px){
     .logo{ font-size: 0.95rem; }
     .idioma-btn{ padding: 0.5em 0.6em; font-size: 0.62rem; letter-spacing: 0.1em; }
   }
 
   /* ===================== CAPA / HERO ===================== */
-  .hero{
-    padding-top: clamp(7.5rem, 14vw, 10rem);
-  }
+  .hero{ padding-top: clamp(7.5rem, 14vw, 10rem); }
   .hero-inner{
     display:grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -262,17 +236,20 @@
     line-height: 1.05;
     margin-bottom: 0.5rem;
   }
-  .hero-tag{
-    font-size: 1.05rem;
-    max-width: 30em;
-    color: var(--tinta-suave);
+  .hero-tag{ font-size: 1.05rem; max-width: 30em; color: var(--tinta-suave); }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap: 1rem; margin: 2rem 0 0; }
+  .hero-photo{
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    object-fit: cover;
+    border: 1px solid var(--linha);
   }
-  .hero-ctas{
-    display:flex;
-    flex-wrap:wrap;
-    gap: 1rem;
-    margin: 2rem 0 3rem;
+
+  @media (max-width: 860px){
+    .hero-inner{ grid-template-columns: 1fr; }
+    .hero-photo{ order:-1; max-width: 320px; margin: 0 auto; }
   }
+
   .ph-block{
     background: linear-gradient(155deg, #784550 0%, var(--fundo) 55%, var(--superficie) 100%);
     border: 1px solid var(--linha);
@@ -285,59 +262,6 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     padding-bottom: 1.2rem;
-  }
-  /* Foto da capa. Para trocar, substitua o arquivo foto-priscila-capa.jpg na pasta do projeto. */
-  .hero-photo{ aspect-ratio: 3 / 4; width: 100%; object-fit: cover; border: 1px solid var(--linha); }
-
-  .hero-stats{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1rem, 3vw, 2rem);
-    margin-top: clamp(2.5rem, 6vw, 4rem);
-    padding-top: clamp(2rem, 5vw, 3rem);
-    border-top: 1px solid var(--linha);
-  }
-  .stat-num{
-    font-family: var(--corpo);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    color: var(--destaque);
-    margin-bottom: 0.3rem;
-    display:block;
-  }
-  .stat-label{
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--tinta-suave);
-  }
-
-  .brand-strip{
-    margin-top: clamp(3rem, 7vw, 5rem);
-    border-top: 1px solid var(--linha);
-    border-bottom: 1px solid var(--linha);
-    padding: 1.6rem 0;
-  }
-  .brand-strip ul{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap: clamp(1.4rem, 4vw, 3rem);
-  }
-  .brand-strip li{
-    font-family: var(--corpo);
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--tinta-suave);
-  }
-
-  @media (max-width: 860px){
-    .hero-inner{ grid-template-columns: 1fr; }
-    .hero-photo{ order:-1; max-width: 320px; margin: 0 auto; }
-    .hero-stats{ grid-template-columns: 1fr 1fr 1fr; }
-  }
-  @media (max-width: 520px){
-    .hero-stats{ grid-template-columns: 1fr; text-align:center; row-gap: 1.5rem; }
   }
 
   /* ===================== SOBRE ===================== */
@@ -359,14 +283,9 @@
     font-size: 0.95rem;
   }
   .promessas li:last-child{ border-bottom: 1px solid var(--linha); }
-  .promessas .marcador{
-    font-family: var(--corpo);
-    color: var(--destaque);
-    flex-shrink:0;
-  }
+  .promessas .marcador{ font-family: var(--corpo); color: var(--destaque); flex-shrink:0; }
   .assinatura{
     font-family: var(--serif);
-    font-weight: 400;
     font-size: 1.4rem;
     margin-top: 1.5rem;
     color: var(--destaque);
@@ -377,76 +296,56 @@
     .sobre-photo{ max-width: 320px; margin: 0 auto; }
   }
 
-  /* ===================== DESTAQUES ===================== */
-  .destaques-grid{
+  /* olhar por nicho, dentro de sobre */
+  .olhares{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     gap: clamp(1.25rem, 3vw, 2rem);
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding-top: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid var(--linha);
   }
-  .destaque-card{
-    display:block;
-    background: var(--superficie);
-    border: 1px solid var(--linha);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-  .destaque-card:hover{ transform: translateY(-4px); border-color: var(--destaque); }
-  .destaque-cover{
-    position:relative;
-    aspect-ratio: 9 / 16;
-    overflow:hidden;
-  }
-  .destaque-cover .play{
-    position:absolute;
-    top:50%; left:50%;
-    transform: translate(-50%,-50%);
-    width: 58px; height: 58px;
-    border: 1px solid var(--tinta);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .destaque-cover .play svg{ width:16px; height:16px; fill: var(--tinta); margin-left:2px; }
-  .destaque-body{ padding: 1.4rem; }
-  .destaque-num{
+  .olhar-nome{
     font-family: var(--corpo);
-    font-size: 1.6rem;
-    color: var(--destaque);
-    display:block;
-  }
-  .destaque-num-label{
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--tinta-suave);
-    margin-bottom: 0.8rem;
-    display:block;
-  }
-  .destaque-title{ font-family: var(--corpo); font-size: 1.05rem; margin-bottom: 0.4rem; }
-  .destaque-context{ font-size: 0.85rem; margin:0; }
-
-  @media (max-width: 860px){
-    .destaques-grid{ grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
-  }
-
-  /* ===================== TRABALHOS / FILTRO ===================== */
-  #trabalhos{ background: var(--superficie); }
-  .filtros{
-    display:flex;
-    flex-wrap:wrap;
-    gap: 0.8rem;
-    margin-bottom: clamp(2rem, 4vw, 3rem);
-  }
-  .filtro-btn{
-    padding: 0.7em 1.5em;
-    border: 1px solid var(--linha);
-    background: transparent;
-    color: var(--tinta-suave);
     font-size: 0.7rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
+    color: var(--destaque);
+    margin-bottom: 0.6rem;
+  }
+  .olhar-texto{ font-size: 0.9rem; margin: 0; }
+  @media (max-width: 760px){ .olhares{ grid-template-columns: 1fr; } }
+
+  /* ===================== GALERIAS ===================== */
+  #videos{ background: var(--superficie); }
+
+  .selo-autoral{
+    display:inline-block;
+    border: 1px solid var(--detalhe);
+    color: var(--detalhe);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35em 0.8em;
+    margin-bottom: 1.4rem;
+  }
+
+  .filtros{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.6rem;
+    margin-bottom: clamp(1.8rem, 4vw, 2.6rem);
+  }
+  .filtro-btn{
+    padding: 0.6em 1.2em;
+    border: 1px solid var(--linha);
+    background: transparent;
+    color: var(--tinta-suave);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     cursor:pointer;
-    transition: border-color 0.25s ease, color 0.25s ease;
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
   }
   .filtro-btn:hover{ border-color: var(--destaque); color: var(--destaque); }
   .filtro-btn[aria-pressed="true"]{
@@ -454,37 +353,128 @@
     color: var(--superficie);
     background: var(--destaque);
   }
-  .trabalhos-grid{
+
+  .galeria{
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: clamp(1.25rem, 3vw, 2rem);
   }
-  .trabalho-card{
-    background: var(--fundo);
+  .item{
+    display:block;
     border: 1px solid var(--linha);
+    background: var(--fundo);
+    color: inherit;
+    transition: transform 0.3s ease, border-color 0.3s ease;
   }
-  .trabalho-cover{ aspect-ratio: 4 / 5; }
-  .trabalho-info{ padding: 1.2rem 1.3rem 1.4rem; }
-  .trabalho-nicho{
-    font-size: 0.65rem;
+  #videos .item{ background: var(--fundo); }
+  .item:hover{ transform: translateY(-4px); border-color: var(--destaque); }
+  .item-capa{ position:relative; overflow:hidden; }
+  .item-capa img{ width:100%; height:100%; object-fit: cover; }
+  .capa-foto{ aspect-ratio: 4 / 5; }
+  .capa-video{ aspect-ratio: 9 / 16; }
+  .item-capa .play{
+    position:absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width: 52px; height: 52px;
+    border: 1px solid var(--tinta);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .item-capa .play svg{ width:15px; height:15px; fill: var(--tinta); margin-left:2px; }
+  .item-corpo{ padding: 1rem 1.1rem 1.2rem; }
+  .item-marca{
+    font-size: 0.64rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--destaque);
     display:block;
     margin-bottom: 0.4rem;
   }
-  .trabalho-titulo{ font-family: var(--corpo); font-size: 1rem; margin-bottom:0.2rem; }
-  .trabalho-formato{ font-size: 0.8rem; margin:0; color: var(--tinta-suave); }
-  .trabalho-card.is-hidden{ display:none; }
+  .item-titulo{ font-family: var(--corpo); font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .item-desc{ font-size: 0.82rem; margin: 0 0 0.6rem; }
+  .item-nota{
+    font-size: 0.66rem;
+    color: var(--tinta-suave);
+    opacity: 0.75;
+    font-style: italic;
+    margin: 0;
+  }
 
-  @media (max-width: 860px){
-    .trabalhos-grid{ grid-template-columns: repeat(2, 1fr); }
+  .galeria-vazia{
+    grid-column: 1 / -1;
+    border: 1px dashed var(--linha);
+    padding: clamp(2rem, 5vw, 3rem);
+    text-align:center;
+    color: var(--tinta-suave);
+    font-size: 0.9rem;
+    max-width: 44em;
+    margin: 0 auto;
   }
-  @media (max-width: 560px){
-    .trabalhos-grid{ grid-template-columns: 1fr; }
+
+  /* ===================== COMO EU TRABALHO ===================== */
+  .passos{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
   }
+  .passo{ background: var(--fundo); padding: clamp(1.5rem, 3vw, 2.2rem); }
+  .passo-num{
+    font-family: var(--corpo);
+    color: var(--detalhe);
+    font-size: 1.5rem;
+    display:block;
+    margin-bottom: 0.9rem;
+  }
+  .passo-titulo{ font-family: var(--corpo); font-size: 0.95rem; font-weight: 500; margin-bottom: 0.45rem; }
+  .passo-desc{ font-size: 0.84rem; margin:0; }
+  @media (max-width: 900px){ .passos{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px){ .passos{ grid-template-columns: 1fr; } }
+
+  .sub-bloco{
+    display:block;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--destaque);
+    margin-bottom: 1.4rem;
+  }
+
+  .entregas{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+  .entrega{ border-top: 1px solid var(--linha); padding-top: 1rem; }
+  .entrega-nome{
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--destaque);
+    margin-bottom: 0.4rem;
+  }
+  .entrega-texto{ font-size: 0.88rem; margin:0; }
+  @media (max-width: 860px){ .entregas{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px){ .entregas{ grid-template-columns: 1fr; } }
+
+  .ambientes{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+  .ambiente{ border: 1px solid var(--linha); padding: clamp(1.3rem, 3vw, 1.8rem); }
+  .ambiente-nome{ font-family: var(--corpo); font-size: 0.92rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .ambiente-texto{ font-size: 0.84rem; margin:0; }
+  @media (max-width: 860px){ .ambientes{ grid-template-columns: 1fr; } }
 
   /* ===================== SERVIÇOS ===================== */
+  #servicos{ background: var(--superficie); }
   .servicos-grid{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
@@ -492,10 +482,7 @@
     background: var(--linha);
     border: 1px solid var(--linha);
   }
-  .servico-card{
-    background: var(--fundo);
-    padding: clamp(1.8rem, 3vw, 2.4rem);
-  }
+  .servico-card{ background: var(--superficie); padding: clamp(1.8rem, 3vw, 2.4rem); }
   .servico-num{
     font-family: var(--corpo);
     color: var(--detalhe);
@@ -503,97 +490,10 @@
     display:block;
     margin-bottom: 1rem;
   }
-  .servico-titulo{ font-family: var(--corpo); font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .servico-titulo{ font-family: var(--corpo); font-size: 1.05rem; font-weight: 500; margin-bottom: 0.5rem; }
   .servico-desc{ font-size: 0.88rem; margin:0; }
-
-  @media (max-width: 860px){
-    .servicos-grid{ grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 560px){
-    .servicos-grid{ grid-template-columns: 1fr; }
-  }
-
-  /* ===================== NÚMEROS E DEPOIMENTOS ===================== */
-  #numeros{ background: var(--superficie); }
-  .metricas-grid{
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(1rem, 3vw, 2rem);
-    margin-bottom: clamp(3rem, 6vw, 5rem);
-    text-align:center;
-  }
-  .metrica-item{ padding: 1.5rem 0.5rem; border: 1px solid var(--linha); }
-  .metrica-valor{
-    font-family: var(--corpo);
-    font-size: clamp(2rem, 4.4vw, 2.8rem);
-    color: var(--destaque);
-    display:block;
-    margin-bottom: 0.4rem;
-  }
-  .metrica-label{
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--tinta-suave);
-  }
-
-  .subtitulo-bloco{
-    display:block;
-    font-family: var(--corpo);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--destaque);
-    margin-bottom: 1.6rem;
-  }
-
-  .resultados-grid{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1.25rem, 3vw, 2rem);
-    margin-bottom: clamp(3rem, 6vw, 5rem);
-  }
-  .resultado-card{
-    border: 1px solid var(--linha);
-    padding: clamp(1.6rem, 3vw, 2.2rem);
-  }
-  .resultado-marca{
-    font-family: var(--corpo);
-    font-size: 1rem;
-    margin-bottom: 0.6rem;
-  }
-  .resultado-valor{
-    font-family: var(--corpo);
-    font-size: 1.9rem;
-    color: var(--destaque);
-    display:block;
-    margin-bottom: 0.4rem;
-  }
-  .resultado-desc{ font-size: 0.85rem; margin:0; }
-
-  .depoimentos-grid{
-    display:grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(1.25rem, 3vw, 2rem);
-  }
-  .depoimento-card{
-    background: var(--fundo);
-    border: 1px solid var(--linha);
-    padding: clamp(1.6rem, 3vw, 2.2rem);
-  }
-  .depoimento-texto{
-    font-style: italic;
-    color: var(--tinta);
-    margin-bottom: 1.2rem;
-  }
-  .depoimento-autor{ font-size: 0.8rem; letter-spacing: 0.06em; }
-  .depoimento-autor strong{ font-weight: 500; color: var(--tinta); }
-
-  @media (max-width: 860px){
-    .metricas-grid{ grid-template-columns: repeat(2, 1fr); }
-    .resultados-grid{ grid-template-columns: 1fr; }
-    .depoimentos-grid{ grid-template-columns: 1fr; }
-  }
+  @media (max-width: 860px){ .servicos-grid{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px){ .servicos-grid{ grid-template-columns: 1fr; } }
 
   /* ===================== CONTATO ===================== */
   .contato-inner{
@@ -635,16 +535,10 @@
   }
   .form-confirmacao.is-visible{ display:block; }
   #form-contato.is-hidden{ display:none; }
-
-  @media (max-width: 860px){
-    .contato-inner{ grid-template-columns: 1fr; }
-  }
+  @media (max-width: 860px){ .contato-inner{ grid-template-columns: 1fr; } }
 
   /* ===================== RODAPÉ ===================== */
-  footer{
-    border-top: 1px solid var(--linha);
-    padding: clamp(2.5rem, 6vw, 3.5rem) 0;
-  }
+  footer{ border-top: 1px solid var(--linha); padding: clamp(2.5rem, 6vw, 3.5rem) 0; }
   .footer-inner{
     display:flex;
     flex-wrap:wrap;
@@ -664,7 +558,7 @@
   .footer-redes a:hover{ color: var(--destaque); border-color: var(--destaque); }
   .footer-ano{ font-size: 0.75rem; color: var(--tinta-suave); width:100%; text-align:center; margin-top: 1rem; }
 
-  /* ===================== ANIMAÇÃO DE ENTRADA ===================== */
+  /* ===================== ANIMAÇÃO ===================== */
   .reveal{
     opacity: 0;
     transform: translateY(24px);
@@ -675,7 +569,7 @@
     .reveal{ opacity:1; transform:none; transition:none; }
   }
 
-  /* ===================== CARD DE CAPTURA (MODAL) ===================== */
+  /* ===================== CARD DE CAPTURA ===================== */
   .capture-overlay{
     position: fixed;
     inset: 0;
@@ -713,7 +607,6 @@
   .capture-card p{ margin-bottom: 1.4rem; }
   .capture-card .campo{ margin-bottom: 1rem; }
 
-  /* ===================== UTILITÁRIOS ===================== */
   .sr-only{
     position:absolute;
     width:1px; height:1px;
@@ -734,10 +627,10 @@
     <a href="#capa" class="logo">Priscila Honorato</a>
     <nav class="nav-links" id="nav-links" data-i18n-aria="navAria" aria-label="Navegação principal">
       <a href="#sobre" data-i18n="navSobre">Sobre</a>
-      <a href="#destaques" data-i18n="navDestaques">Destaques</a>
-      <a href="#trabalhos" data-i18n="navTrabalhos">Trabalhos</a>
+      <a href="#fotos" data-i18n="navFotos">Fotos</a>
+      <a href="#videos" data-i18n="navVideos">Vídeos</a>
+      <a href="#processo" data-i18n="navProcesso">Processo</a>
       <a href="#servicos" data-i18n="navServicos">Serviços</a>
-      <a href="#numeros" data-i18n="navNumeros">Números</a>
       <a href="#contato" data-i18n="navContato">Contato</a>
     </nav>
     <div class="topbar-acoes">
@@ -755,7 +648,7 @@
 
 <main id="capa">
 
-  <!-- ===================== CAPA / HERO ===================== -->
+  <!-- ===================== CAPA ===================== -->
   <section class="hero">
     <div class="container">
       <div class="hero-inner">
@@ -764,30 +657,11 @@
           <p class="hero-tag" data-i18n="heroTag">Um detalhe que transforma a casa, um cuidado com o pet, uma descoberta que facilita o dia. É dessas pequenas histórias que nasce o conteúdo que crio para a sua marca.</p>
           <div class="hero-ctas">
             <a class="btn" href="#contato" data-i18n="heroBtn1">Falar comigo</a>
-            <a class="btn btn-marrom" href="#trabalhos" data-i18n="heroBtn2">Ver os trabalhos</a>
+            <a class="btn btn-marrom" href="#fotos" data-i18n="heroBtn2">Ver os conteúdos</a>
           </div>
         </div>
-        <!-- Foto real da capa. Para trocar, substitua o arquivo foto-priscila-capa.jpg na pasta do projeto ou troque o "src" abaixo. -->
+        <!-- Foto da capa. Para trocar, substitua o arquivo foto-priscila-capa.jpg na pasta do projeto. -->
         <img class="hero-photo" src="foto-priscila-capa.jpg" data-i18n-alt="heroAlt" alt="Priscila Honorato sentada em um sofá com manta azul, vestindo um conjunto bege">
-      </div>
-
-      <div class="hero-stats reveal">
-        <div>
-          <span class="stat-num">10+</span>
-          <span class="stat-label" data-i18n="statVideos">Vídeos entregues</span>
-        </div>
-        <div>
-          <span class="stat-num">4+</span>
-          <span class="stat-label" data-i18n="statMarcas">Marcas atendidas</span>
-        </div>
-        <div>
-          <span class="stat-num">12M+</span>
-          <span class="stat-label" data-i18n="statViews">Views somadas</span>
-        </div>
-      </div>
-
-      <div class="brand-strip reveal">
-        <ul id="brand-strip-list"><!-- preenchido via JavaScript a partir do array "marcas" --></ul>
       </div>
     </div>
   </section>
@@ -796,7 +670,7 @@
   <section id="sobre">
     <div class="container">
       <div class="sobre-inner">
-        <!-- Troque por uma foto real: <img class="sobre-photo" src="foto-sobre.jpg" alt="Priscila Honorato em ambiente de gravação"> -->
+        <!-- Troque por uma foto real: <img class="sobre-photo" src="foto-sobre.jpg" alt="Priscila Honorato gravando"> -->
         <div class="ph-block sobre-photo reveal" role="img" data-i18n-aria="fotoCreator" data-i18n="fotoCreator" aria-label="Foto da creator, proporção 4 por 5">foto da creator 4:5</div>
         <div class="reveal">
           <span class="eyebrow" data-i18n="sobreEyebrow">01 · Sobre mim</span>
@@ -811,80 +685,73 @@
           <p class="assinatura">Priscila Honorato</p>
         </div>
       </div>
+
+      <div class="olhares reveal" id="olhares">
+        <!-- preenchido via JavaScript a partir do array "olhares" -->
+      </div>
     </div>
   </section>
 
-  <!-- ===================== 02 CONTEÚDOS DE DESTAQUE ===================== -->
-  <section id="destaques">
+  <!-- ===================== 02 FOTOS ===================== -->
+  <section id="fotos">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow" data-i18n="destaquesEyebrow">02 · Destaques</span>
-        <h2 data-i18n="destaquesTitulo">Conteúdos de destaque</h2>
-        <p data-i18n="destaquesSub">Três vídeos que mostram como eu conto a história de um produto.</p>
+        <span class="eyebrow" data-i18n="fotosEyebrow">02 · Fotos</span>
+        <h2 data-i18n="fotosTitulo">Ideias que nascem da minha rotina</h2>
+        <p data-i18n="fotosSub">Uma seleção de fotos que criei com produtos que fazem parte do meu dia a dia. Produções autorais para mostrar meu olhar, minha linguagem e as possibilidades de criação para marcas.</p>
       </div>
-      <div class="destaques-grid" id="destaques-grid">
-        <!-- preenchido via JavaScript a partir do array "destaques" -->
-      </div>
+      <span class="selo-autoral reveal" data-i18n="seloAutoral">Conteúdo autoral, sem parceria com as marcas</span>
+      <div class="filtros reveal" id="filtros-fotos" role="group" data-i18n-aria="filtrosAria" aria-label="Filtrar fotos por marca"></div>
+      <div class="galeria" id="galeria-fotos"></div>
     </div>
   </section>
 
-  <!-- ===================== 03 TRABALHOS POR NICHO ===================== -->
-  <section id="trabalhos">
+  <!-- ===================== 03 VÍDEOS ===================== -->
+  <section id="videos">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow" data-i18n="trabalhosEyebrow">03 · Trabalhos</span>
-        <h2 data-i18n="trabalhosTitulo">Trabalhos por nicho</h2>
-        <p data-i18n="trabalhosSub">Filtre por área para ver os projetos que já fiz para cada tipo de marca.</p>
+        <span class="eyebrow" data-i18n="videosEyebrow">03 · Vídeos</span>
+        <h2 data-i18n="videosTitulo">Meu olhar em movimento</h2>
+        <p data-i18n="videosSub">Vídeos autorais gravados na minha casa, com produtos da minha rotina. É assim que eu falo de um produto, com a linguagem de quem conta para uma amiga.</p>
       </div>
-      <div class="filtros reveal" id="filtros" role="group" data-i18n-aria="filtrosAria" aria-label="Filtrar trabalhos por nicho">
-        <!-- preenchido via JavaScript a partir do array "nichos" -->
-      </div>
-      <div class="trabalhos-grid" id="trabalhos-grid">
-        <!-- preenchido via JavaScript a partir do array "trabalhos" -->
-      </div>
+      <span class="selo-autoral reveal" data-i18n="seloAutoral">Conteúdo autoral, sem parceria com as marcas</span>
+      <div class="filtros reveal" id="filtros-videos" role="group" data-i18n-aria="filtrosAria" aria-label="Filtrar vídeos por marca"></div>
+      <div class="galeria" id="galeria-videos"></div>
     </div>
   </section>
 
-  <!-- ===================== 04 COMO EU TE AJUDO ===================== -->
+  <!-- ===================== 04 COMO EU TRABALHO ===================== -->
+  <section id="processo">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="processoEyebrow">04 · Como eu trabalho</span>
+        <h2 data-i18n="processoTitulo">Do primeiro contato até o arquivo na sua mão</h2>
+        <p data-i18n="processoSub">Sem surpresa no meio do caminho. Você sabe desde o começo o que vai receber, quando e em que formato.</p>
+      </div>
+
+      <div class="passos reveal" id="passos"></div>
+
+      <span class="sub-bloco reveal" data-i18n="entregasTitulo">O que você recebe</span>
+      <div class="entregas reveal" id="entregas"></div>
+
+      <span class="sub-bloco reveal" data-i18n="ambientesTitulo">Onde eu gravo</span>
+      <div class="ambientes reveal" id="ambientes"></div>
+    </div>
+  </section>
+
+  <!-- ===================== 05 COMO EU TE AJUDO ===================== -->
   <section id="servicos">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow" data-i18n="servicosEyebrow">04 · Serviços</span>
+        <span class="eyebrow" data-i18n="servicosEyebrow">05 · Serviços</span>
         <h2 data-i18n="servicosTitulo">Como eu te ajudo</h2>
         <p data-i18n="servicosSub">Seis formatos de entrega para encaixar no que a sua marca precisa agora.</p>
       </div>
-      <div class="servicos-grid reveal" id="servicos-grid">
-        <!-- preenchido via JavaScript a partir do array "servicos" -->
-      </div>
+      <div class="servicos-grid reveal" id="servicos-grid"></div>
     </div>
   </section>
 
-  <!-- ===================== 05 NÚMEROS E DEPOIMENTOS ===================== -->
-  <section id="numeros">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow" data-i18n="numerosEyebrow">05 · Números e depoimentos</span>
-        <h2 data-i18n="numerosTitulo">Resultados que sustentam o trabalho</h2>
-        <p data-i18n="numerosSub">Os números do meu trabalho, os resultados de campanha e o que as marcas dizem depois de trabalhar comigo.</p>
-      </div>
-
-      <div class="metricas-grid" id="metricas-grid">
-        <!-- preenchido via JavaScript a partir do array "metricas", com contador animado -->
-      </div>
-
-      <span class="subtitulo-bloco reveal" data-i18n="numerosResultados">Resultados de campanha</span>
-      <div class="resultados-grid reveal" id="resultados-grid">
-        <!-- preenchido via JavaScript a partir do array "resultadosCampanha" -->
-      </div>
-
-      <span class="subtitulo-bloco reveal" data-i18n="numerosDepoimentos">Depoimentos</span>
-      <div class="depoimentos-grid reveal" id="depoimentos-grid">
-        <!-- preenchido via JavaScript a partir do array "depoimentos" -->
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== 06 BORA CRIAR JUNTOS ===================== -->
+  <!-- ===================== 06 CONTATO ===================== -->
   <section id="contato">
     <div class="container">
       <div class="contato-inner">
@@ -933,7 +800,6 @@
 
 </main>
 
-<!-- ===================== RODAPÉ ===================== -->
 <footer>
   <div class="container">
     <div class="footer-inner">
@@ -948,7 +814,6 @@
   </div>
 </footer>
 
-<!-- ===================== CARD DE CAPTURA ===================== -->
 <div class="capture-overlay" id="capture-overlay" role="dialog" aria-modal="true" aria-labelledby="capture-title">
   <div class="capture-card">
     <button class="capture-close" id="capture-close" data-i18n-aria="fechar" aria-label="Fechar">&times;</button>
@@ -975,78 +840,114 @@
   "use strict";
 
   /* =========================================================
-     DADOS DE RESERVA
+     DADOS DO SITE
 
-     Os vídeos de verdade vêm do painel (banco de dados).
-     Os arrays abaixo só entram no ar se o banco demorar ou
-     falhar, para o site nunca aparecer vazio para uma marca.
-     Cada texto tem duas versões: pt (português) e en (inglês).
+     As fotos e os vídeos vêm do painel. O resto está nos
+     arrays abaixo, em português e inglês, para você editar
+     sem precisar mexer no HTML.
   ========================================================= */
 
-  // Idioma que abre por padrão: "pt" ou "en"
   var IDIOMA_PADRAO = "pt";
 
-  // Marcas que aparecem na faixa fina do topo (capa)
+  /* As marcas dos produtos que aparecem nos seus conteúdos.
+     Isso vira o filtro das galerias. Só aparece o botão da
+     marca que tiver pelo menos um conteúdo cadastrado. */
   var marcas = [
-    "Camicado",
-    "Brastemp",
-    "Matos e Lopes",
-    "Tokstok",
-    "Pet love",
-    "Petiko"
+    "Tokstok", "Camicado", "Brastemp", "Brinox", "L'envie",
+    "Petiko", "Meli+", "Flo", "Matos e Lopes", "Ritúalia"
   ];
 
-  // Conteúdos de destaque (seção 02).
-  // link: para onde o card leva ao ser clicado (troque o "#" pelo link real do vídeo).
-  // capaImg: deixe em branco ("") para usar o bloco de degradê, ou informe o arquivo da capa.
-  var destaques = [
+  /* Fotos e vídeos de reserva. Ficam vazios de propósito:
+     o conteúdo de verdade vem do painel. */
+  var fotos = [];
+  var videos = [];
+
+  /* O seu olhar em cada nicho (aparece no fim do Sobre mim) */
+  var olhares = [
     {
-      link: "https://youtube.com/shorts/Bpw2nVF-T7E?feature=share",
-      capaImg: "",
-      numero: "+1,2M",
-      numeroLabel: { pt: "views no youtube shorts", en: "views on youtube shorts" },
-      titulo: { pt: "Título do vídeo 01", en: "Video title 01" },
-      contexto: { pt: "Escreva aqui uma linha curta de contexto sobre este conteúdo.", en: "Write a short line of context about this content here." }
+      nome: { pt: "Casa e decoração", en: "Home and decor" },
+      texto: { pt: "Eu reparo no detalhe que faz o ambiente parecer cuidado. O produto aparece resolvendo alguma coisa, não posando na prateleira.", en: "I notice the detail that makes a room feel looked after. The product shows up solving something, not posing on a shelf." }
     },
     {
-      link: "#",
-      capaImg: "",
-      numero: "+000K",
-      numeroLabel: { pt: "views no reels", en: "views on reels" },
-      titulo: { pt: "Título do vídeo 02", en: "Video title 02" },
-      contexto: { pt: "Escreva aqui uma linha curta de contexto sobre este conteúdo.", en: "Write a short line of context about this content here." }
+      nome: { pt: "Pet", en: "Pet" },
+      texto: { pt: "Mostro o produto na rotina de verdade, com o bicho no meio, do jeito bagunçado que acontece na vida real.", en: "I show the product in a real routine, with the pet in the middle of it, as messy as real life actually is." }
     },
     {
-      link: "#",
-      capaImg: "",
-      numero: "+000K",
-      numeroLabel: { pt: "views no tiktok", en: "views on tiktok" },
-      titulo: { pt: "Título do vídeo 03", en: "Video title 03" },
-      contexto: { pt: "Escreva aqui uma linha curta de contexto sobre este conteúdo.", en: "Write a short line of context about this content here." }
+      nome: { pt: "Tech", en: "Tech" },
+      texto: { pt: "Tiro o medo do produto. Falo de tecnologia com a linguagem de quem explica para uma amiga, sem palavra difícil.", en: "I take the fear out of the product. I talk about technology the way you would explain it to a friend, with no jargon." }
     }
   ];
 
-  // Nichos usados nos filtros da galeria (seção 03). O "id" liga o filtro aos trabalhos.
-  var nichos = [
-    { id: "todos", pt: "Todos", en: "All" },
-    { id: "casa", pt: "Casa e decoração", en: "Home and decor" },
-    { id: "pet", pt: "Pet", en: "Pet" },
-    { id: "tech", pt: "Tech", en: "Tech" }
+  /* Como eu trabalho, em quatro passos */
+  var passos = [
+    {
+      numero: "01",
+      titulo: { pt: "A gente conversa sobre o produto", en: "We talk about the product" },
+      desc: { pt: "Você me conta o que quer mostrar e para quem. Eu pergunto o que a sua cliente costuma duvidar antes de comprar.", en: "You tell me what you want to show and to whom. I ask what your customer usually doubts before buying." }
+    },
+    {
+      numero: "02",
+      titulo: { pt: "Escrevo o roteiro e você aprova", en: "I write the script and you approve it" },
+      desc: { pt: "Nada é gravado antes de você ler e dizer que está do jeito da sua marca.", en: "Nothing gets filmed before you read it and say it sounds like your brand." }
+    },
+    {
+      numero: "03",
+      titulo: { pt: "Gravo com luz natural, em casa", en: "I film at home, with natural light" },
+      desc: { pt: "Uso os ambientes da minha casa e o produto no uso real, do jeito que a sua cliente usaria.", en: "I use the rooms in my home and the product in real use, the way your customer would use it." }
+    },
+    {
+      numero: "04",
+      titulo: { pt: "Entrego com uma rodada de ajuste", en: "I deliver with one round of revisions" },
+      desc: { pt: "Você recebe em até 72 horas úteis e ainda tem direito a um ajuste, sem custo nenhum.", en: "You get it within 72 business hours, with one round of revisions included at no extra cost." }
+    }
   ];
 
-  // Trabalhos da galeria (seção 03). "nicho" precisa ser um dos "id" do array acima.
-  var trabalhos = [
-    { marca: "Camicado", nicho: "casa", titulo: { pt: "Vídeo de organização da casa", en: "Home organization video" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
-    { marca: "Tokstok", nicho: "casa", titulo: { pt: "Unboxing de decoração", en: "Decor unboxing" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
-    { marca: "Matos e Lopes", nicho: "casa", titulo: { pt: "Fotos do produto em ambiente", en: "Product photos in context" }, formato: { pt: "foto 4:5", en: "photo 4:5" } },
-    { marca: "Brastemp", nicho: "casa", titulo: { pt: "Vídeo de eletrodoméstico em uso", en: "Appliance in use video" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
-    { marca: "Pet love", nicho: "pet", titulo: { pt: "Rotina com o pet", en: "Daily routine with the pet" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
-    { marca: "Petiko", nicho: "pet", titulo: { pt: "Unboxing de produto para pet", en: "Pet product unboxing" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
-    { marca: "Marca 01", nicho: "tech", titulo: { pt: "Review de produto de tecnologia", en: "Tech product review" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } },
-    { marca: "Marca 02", nicho: "tech", titulo: { pt: "Unboxing de acessório de tech", en: "Tech accessory unboxing" }, formato: { pt: "vídeo 9:16", en: "video 9:16" } }
+  /* O que a marca recebe. Ajuste conforme o que você oferece. */
+  var entregas = [
+    {
+      nome: { pt: "Formatos", en: "Formats" },
+      texto: { pt: "Vertical 9:16 para reels e stories, 4:5 para o feed e 1:1 quando a sua campanha pedir.", en: "Vertical 9:16 for reels and stories, 4:5 for the feed and 1:1 when your campaign needs it." }
+    },
+    {
+      nome: { pt: "Duração", en: "Length" },
+      texto: { pt: "De 15 a 60 segundos, cortado no ritmo da plataforma onde o vídeo vai rodar.", en: "From 15 to 60 seconds, cut to the rhythm of the platform where it will run." }
+    },
+    {
+      nome: { pt: "Legenda", en: "Captions" },
+      texto: { pt: "Com legenda na tela ou sem, você escolhe na hora de aprovar o roteiro.", en: "With on screen captions or without, you choose when approving the script." }
+    },
+    {
+      nome: { pt: "Prazo", en: "Turnaround" },
+      texto: { pt: "Até 72 horas úteis depois do roteiro aprovado e do produto em mãos.", en: "Up to 72 business hours after the script is approved and the product arrives." }
+    },
+    {
+      nome: { pt: "Ajuste", en: "Revisions" },
+      texto: { pt: "Uma rodada de ajuste já está inclusa no valor combinado.", en: "One round of revisions is already included in the agreed price." }
+    },
+    {
+      nome: { pt: "Uso do material", en: "Usage rights" },
+      texto: { pt: "Combinado por escrito antes de gravar, com prazo e canais definidos.", en: "Agreed in writing before filming, with the time frame and channels defined." }
+    }
   ];
 
-  // Serviços oferecidos (seção 04)
+  /* Os ambientes que você tem para gravar.
+     Troque pelos cantos da sua casa que você mais usa. */
+  var ambientes = [
+    {
+      nome: { pt: "Sala com luz natural", en: "Living room with natural light" },
+      texto: { pt: "Janela grande com cortina clara, luz difusa e suave durante a manhã inteira.", en: "A large window with a light curtain, giving soft, diffused light all morning." }
+    },
+    {
+      nome: { pt: "Canto de estar", en: "Sitting corner" },
+      texto: { pt: "Sofá claro, plantas e parede neutra, bom para cena de rotina e de conversa.", en: "Light sofa, plants and a neutral wall, good for routine and talking head scenes." }
+    },
+    {
+      nome: { pt: "Mesa de apoio", en: "Tabletop setup" },
+      texto: { pt: "Superfície limpa para detalhe de produto pequeno, embalagem e textura.", en: "A clean surface for close ups of small products, packaging and texture." }
+    }
+  ];
+
+  /* Serviços oferecidos */
   var servicos = [
     {
       numero: "01",
@@ -1080,55 +981,28 @@
     }
   ];
 
-  // Métricas com contador animado (seção 05).
-  // valor deve ser um número inteiro; sufixo é o texto que aparece depois do número (M+, +, %, etc).
-  var metricas = [
-    { valor: 10, sufixo: "+", label: { pt: "Vídeos entregues", en: "Videos delivered" } },
-    { valor: 4, sufixo: "+", label: { pt: "Marcas atendidas", en: "Brands served" } },
-    { valor: 12, sufixo: "M+", label: { pt: "Views somadas", en: "Total views" } },
-    { valor: 0, sufixo: "", label: { pt: "Sua métrica", en: "Your metric" } } // placeholder: troque valor e label pela quarta métrica real
-  ];
-
-  // Resultados de campanha (seção 05)
-  var resultadosCampanha = [
-    { marca: "Marca 01", valor: "+000%", desc: { pt: "Descreva aqui o resultado desta campanha.", en: "Describe this campaign's result here." } },
-    { marca: "Marca 02", valor: "+000%", desc: { pt: "Descreva aqui o resultado desta campanha.", en: "Describe this campaign's result here." } },
-    { marca: "Marca 03", valor: "+000%", desc: { pt: "Descreva aqui o resultado desta campanha.", en: "Describe this campaign's result here." } }
-  ];
-
-  // Depoimentos (seção 05)
-  var depoimentos = [
-    { texto: { pt: "Escreva aqui o depoimento do Cliente 01 sobre o trabalho da Priscila.", en: "Write Client 01's testimonial about Priscila's work here." }, nome: "Cliente 01", empresa: "Empresa 01" },
-    { texto: { pt: "Escreva aqui o depoimento do Cliente 02 sobre o trabalho da Priscila.", en: "Write Client 02's testimonial about Priscila's work here." }, nome: "Cliente 02", empresa: "Empresa 02" },
-    { texto: { pt: "Escreva aqui o depoimento do Cliente 03 sobre o trabalho da Priscila.", en: "Write Client 03's testimonial about Priscila's work here." }, nome: "Cliente 03", empresa: "Empresa 03" },
-    { texto: { pt: "Escreva aqui o depoimento do Cliente 04 sobre o trabalho da Priscila.", en: "Write Client 04's testimonial about Priscila's work here." }, nome: "Cliente 04", empresa: "Empresa 04" }
-  ];
-
   /* =========================================================
-     TEXTOS FIXOS DO SITE (menu, títulos, formulário, etc)
+     TEXTOS FIXOS DO SITE
   ========================================================= */
   var textos = {
     pt: {
       htmlLang: "pt-BR",
       metaTitulo: "Priscila Honorato | Portfólio UGC Creator",
-      metaDesc: "Portfólio de Priscila Honorato, criadora de conteúdo UGC para marcas de casa e decoração, pet e tech.",
+      metaDesc: "Portfólio de Priscila Honorato, criadora de conteúdo autoral para marcas de casa e decoração, pet e tech.",
       skip: "Pular para o conteúdo",
       navAria: "Navegação principal",
       navSobre: "Sobre",
-      navDestaques: "Destaques",
-      navTrabalhos: "Trabalhos",
+      navFotos: "Fotos",
+      navVideos: "Vídeos",
+      navProcesso: "Processo",
       navServicos: "Serviços",
-      navNumeros: "Números",
       navContato: "Contato",
       menuAbrir: "Abrir menu",
       menuFechar: "Fechar menu",
       heroTag: "Um detalhe que transforma a casa, um cuidado com o pet, uma descoberta que facilita o dia. É dessas pequenas histórias que nasce o conteúdo que crio para a sua marca.",
       heroBtn1: "Falar comigo",
-      heroBtn2: "Ver os trabalhos",
+      heroBtn2: "Ver os conteúdos",
       heroAlt: "Priscila Honorato sentada em um sofá com manta azul, vestindo um conjunto bege",
-      statVideos: "Vídeos entregues",
-      statMarcas: "Marcas atendidas",
-      statViews: "Views somadas",
       fotoCreator: "foto da creator 4:5",
       sobreEyebrow: "01 · Sobre mim",
       sobreTitulo: "Prazer, eu sou a Priscila",
@@ -1137,22 +1011,29 @@
       promessa1: "Roteiro aprovado por você antes de eu gravar",
       promessa2: "Uma rodada de ajuste incluída no valor",
       promessa3: "Entrega em até 72 horas úteis",
-      destaquesEyebrow: "02 · Destaques",
-      destaquesTitulo: "Conteúdos de destaque",
-      destaquesSub: "Três vídeos que mostram como eu conto a história de um produto.",
-      capaVertical: "capa vertical 9:16",
-      trabalhosEyebrow: "03 · Trabalhos",
-      trabalhosTitulo: "Trabalhos por nicho",
-      trabalhosSub: "Filtre por área para ver os projetos que já fiz para cada tipo de marca.",
-      filtrosAria: "Filtrar trabalhos por nicho",
-      servicosEyebrow: "04 · Serviços",
+      olharTitulo: "Meu olhar em cada nicho",
+      fotosEyebrow: "02 · Fotos",
+      fotosTitulo: "Ideias que nascem da minha rotina",
+      fotosSub: "Uma seleção de fotos que criei com produtos que fazem parte do meu dia a dia. Produções autorais para mostrar meu olhar, minha linguagem e as possibilidades de criação para marcas.",
+      videosEyebrow: "03 · Vídeos",
+      videosTitulo: "Meu olhar em movimento",
+      videosSub: "Vídeos autorais gravados na minha casa, com produtos da minha rotina. É assim que eu falo de um produto, com a linguagem de quem conta para uma amiga.",
+      seloAutoral: "Conteúdo autoral, sem parceria com as marcas",
+      notaAutoral: "Conteúdo autoral, sem parceria com a marca.",
+      filtrosAria: "Filtrar por marca",
+      filtroTodas: "Todas",
+      fotosVazio: "As primeiras fotos autorais entram aqui em breve. Enquanto isso, você pode ver como eu trabalho logo abaixo, ou me chamar para conversar sobre o seu produto.",
+      videosVazio: "Os primeiros vídeos autorais entram aqui em breve. Enquanto isso, você pode ver como eu trabalho logo abaixo, ou me chamar para conversar sobre o seu produto.",
+      capaFoto: "foto 4:5",
+      capaVideo: "vídeo 9:16",
+      processoEyebrow: "04 · Como eu trabalho",
+      processoTitulo: "Do primeiro contato até o arquivo na sua mão",
+      processoSub: "Sem surpresa no meio do caminho. Você sabe desde o começo o que vai receber, quando e em que formato.",
+      entregasTitulo: "O que você recebe",
+      ambientesTitulo: "Onde eu gravo",
+      servicosEyebrow: "05 · Serviços",
       servicosTitulo: "Como eu te ajudo",
       servicosSub: "Seis formatos de entrega para encaixar no que a sua marca precisa agora.",
-      numerosEyebrow: "05 · Números e depoimentos",
-      numerosTitulo: "Resultados que sustentam o trabalho",
-      numerosSub: "Os números do meu trabalho, os resultados de campanha e o que as marcas dizem depois de trabalhar comigo.",
-      numerosResultados: "Resultados de campanha",
-      numerosDepoimentos: "Depoimentos",
       contatoEyebrow: "06 · Contato",
       contatoTitulo: "Bora criar juntos",
       contatoSub: "Conta um pouco sobre a sua marca e o que você precisa. Eu respondo rapidinho.",
@@ -1175,14 +1056,14 @@
     en: {
       htmlLang: "en",
       metaTitulo: "Priscila Honorato | UGC Creator Portfolio",
-      metaDesc: "Portfolio of Priscila Honorato, UGC content creator for home and decor, pet and tech brands.",
+      metaDesc: "Portfolio of Priscila Honorato, independent content creator for home and decor, pet and tech brands.",
       skip: "Skip to content",
       navAria: "Main navigation",
       navSobre: "About",
-      navDestaques: "Highlights",
-      navTrabalhos: "Work",
+      navFotos: "Photos",
+      navVideos: "Videos",
+      navProcesso: "Process",
       navServicos: "Services",
-      navNumeros: "Numbers",
       navContato: "Contact",
       menuAbrir: "Open menu",
       menuFechar: "Close menu",
@@ -1190,9 +1071,6 @@
       heroBtn1: "Get in touch",
       heroBtn2: "See the work",
       heroAlt: "Priscila Honorato sitting on a sofa with a blue throw, wearing a beige outfit",
-      statVideos: "Videos delivered",
-      statMarcas: "Brands served",
-      statViews: "Total views",
       fotoCreator: "creator photo 4:5",
       sobreEyebrow: "01 · About me",
       sobreTitulo: "Hi, I am Priscila",
@@ -1201,22 +1079,29 @@
       promessa1: "Script approved by you before I film",
       promessa2: "One round of revisions included",
       promessa3: "Delivery within 72 business hours",
-      destaquesEyebrow: "02 · Highlights",
-      destaquesTitulo: "Featured content",
-      destaquesSub: "Three videos that show how I tell a product's story.",
-      capaVertical: "vertical cover 9:16",
-      trabalhosEyebrow: "03 · Work",
-      trabalhosTitulo: "Work by niche",
-      trabalhosSub: "Filter by area to see the projects I have done for each type of brand.",
-      filtrosAria: "Filter work by niche",
-      servicosEyebrow: "04 · Services",
+      olharTitulo: "My eye in each niche",
+      fotosEyebrow: "02 · Photos",
+      fotosTitulo: "Ideas that come from my routine",
+      fotosSub: "A selection of photos I created with products that are part of my everyday life. Independent work to show my eye, my voice and what I can create for brands.",
+      videosEyebrow: "03 · Videos",
+      videosTitulo: "My eye in motion",
+      videosSub: "Independent videos filmed at home, with products from my own routine. This is how I talk about a product, the way you would tell a friend.",
+      seloAutoral: "Independent content, not a paid partnership",
+      notaAutoral: "Independent content, not a paid partnership.",
+      filtrosAria: "Filter by brand",
+      filtroTodas: "All",
+      fotosVazio: "The first independent photos are coming here soon. In the meantime, you can see how I work just below, or reach out to talk about your product.",
+      videosVazio: "The first independent videos are coming here soon. In the meantime, you can see how I work just below, or reach out to talk about your product.",
+      capaFoto: "photo 4:5",
+      capaVideo: "video 9:16",
+      processoEyebrow: "04 · How I work",
+      processoTitulo: "From the first message to the file in your hands",
+      processoSub: "No surprises along the way. You know from the start what you will get, when and in which format.",
+      entregasTitulo: "What you receive",
+      ambientesTitulo: "Where I film",
+      servicosEyebrow: "05 · Services",
       servicosTitulo: "How I can help",
       servicosSub: "Six delivery formats to fit what your brand needs right now.",
-      numerosEyebrow: "05 · Numbers and testimonials",
-      numerosTitulo: "Results that back the work",
-      numerosSub: "The numbers behind my work, the campaign results and what brands say after working with me.",
-      numerosResultados: "Campaign results",
-      numerosDepoimentos: "Testimonials",
       contatoEyebrow: "06 · Contact",
       contatoTitulo: "Let us create together",
       contatoSub: "Tell me a bit about your brand and what you need. I reply quickly.",
@@ -1243,8 +1128,8 @@
   ========================================================= */
   var idioma = IDIOMA_PADRAO;
   var primeiraRenderizacao = true;
-  var metricasAnimadas = false;
-  var filtroAtual = "todos";
+  var filtroFotos = "todas";
+  var filtroVideos = "todas";
   var prefereReduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   try {
@@ -1252,35 +1137,26 @@
     if(salvo === "pt" || salvo === "en") idioma = salvo;
   } catch(err){ /* navegador sem localStorage: segue com o idioma padrão */ }
 
-  function t(chave){
-    return textos[idioma][chave];
-  }
+  function t(chave){ return textos[idioma][chave]; }
 
   function txt(campo){
-    // aceita tanto "texto simples" quanto { pt: "...", en: "..." }
     if(campo && typeof campo === "object") return campo[idioma];
     return campo;
+  }
+
+  function esc(texto){
+    return String(texto === null || texto === undefined ? "" : texto)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
   /* =========================================================
      RENDERIZAÇÃO
   ========================================================= */
-  function el(tag, className, html){
-    var node = document.createElement(tag);
-    if(className) node.className = className;
-    if(html !== undefined) node.innerHTML = html;
-    return node;
-  }
-
   function playIcon(){
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg>';
   }
 
-  function phBlock(label){
-    return '<div class="ph-block" style="width:100%;height:100%;" role="img" aria-label="' + label + '">' + label + '</div>';
-  }
-
-  // marca os blocos recriados como visíveis quando a página já foi revelada
   function ajustarReveal(container){
     if(primeiraRenderizacao && !prefereReduzido) return;
     Array.prototype.forEach.call(container.querySelectorAll(".reveal"), function(node){
@@ -1288,160 +1164,141 @@
     });
   }
 
-  function renderMarcas(){
-    var lista = document.getElementById("brand-strip-list");
-    lista.innerHTML = "";
-    marcas.forEach(function(nome){
-      var li = document.createElement("li");
-      li.textContent = nome;
-      lista.appendChild(li);
-    });
-  }
-
-  function renderDestaques(){
-    var grid = document.getElementById("destaques-grid");
-    grid.innerHTML = "";
-    destaques.forEach(function(item){
-      var card = el("a", "destaque-card reveal");
-      card.href = window.BancoUtil.urlSegura(item.link) || "#";
-      if(item.link && item.link.indexOf("http") === 0){
-        card.target = "_blank";
-        card.rel = "noopener";
-      }
-      card.setAttribute("aria-label", txt(item.titulo) + ", " + item.numero + " " + txt(item.numeroLabel));
-
-      var cover = el("div", "destaque-cover");
-      if(item.capaImg){
-        var img = el("img");
-        img.src = item.capaImg;
-        img.alt = txt(item.titulo);
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.objectFit = "cover";
-        cover.appendChild(img);
-      } else {
-        cover.innerHTML = phBlock(t("capaVertical"));
-      }
-      var play = el("span", "play");
-      play.innerHTML = playIcon();
-      play.setAttribute("aria-hidden", "true");
-      cover.appendChild(play);
-
-      var body = el("div", "destaque-body");
-      body.innerHTML =
-        '<span class="destaque-num">' + window.BancoUtil.escapar(item.numero) + '</span>' +
-        '<span class="destaque-num-label">' + window.BancoUtil.escapar(txt(item.numeroLabel)) + '</span>' +
-        '<h3 class="destaque-title">' + window.BancoUtil.escapar(txt(item.titulo)) + '</h3>' +
-        '<p class="destaque-context">' + window.BancoUtil.escapar(txt(item.contexto)) + '</p>';
-
-      card.appendChild(cover);
-      card.appendChild(body);
-      grid.appendChild(card);
-    });
-    ajustarReveal(grid);
-  }
-
-  function nomeNicho(id){
-    for(var i = 0; i < nichos.length; i++){
-      if(nichos[i].id === id) return nichos[i][idioma];
+  /* Monta o endereço da imagem. Aceita link completo ou o nome
+     de um arquivo que esteja na pasta fotos do projeto. */
+  function enderecoImagem(valor){
+    var v = String(valor || "").trim();
+    if(!v) return "";
+    if(/^https?:\/\//i.test(v)){
+      return window.BancoUtil ? window.BancoUtil.urlSegura(v) : "";
     }
-    return id;
+    if(/[<>"']/.test(v)) return "";
+    return "fotos/" + v;
   }
 
-  function renderTrabalhos(){
-    var grid = document.getElementById("trabalhos-grid");
-    grid.innerHTML = "";
-    trabalhos.forEach(function(item){
-      var visivel = (filtroAtual === "todos" || item.nicho === filtroAtual);
-      var card = el("a", "trabalho-card reveal" + (visivel ? "" : " is-hidden"));
-      card.href=window.BancoUtil.urlSegura(item.link)||"#";card.target="_blank";card.rel="noopener noreferrer";card.style.textDecoration="none";card.style.color="inherit";
-      card.setAttribute("data-nicho", item.nicho);
-      card.innerHTML =
-        '<div class="trabalho-cover">' + phBlock(txt(item.formato)) + '</div>' +
-        '<div class="trabalho-info">' +
-          '<span class="trabalho-nicho">' + window.BancoUtil.escapar(nomeNicho(item.nicho)) + '</span>' +
-          '<h3 class="trabalho-titulo">' + window.BancoUtil.escapar(item.marca) + '</h3>' +
-          '<p class="trabalho-formato">' + window.BancoUtil.escapar(txt(item.titulo)) + '</p>' +
-        '</div>';
-      grid.appendChild(card);
+  function cartaoConteudo(item, ehVideo){
+    var classeCapa = ehVideo ? "capa-video" : "capa-foto";
+    var rotuloCapa = ehVideo ? t("capaVideo") : t("capaFoto");
+    var imagem = enderecoImagem(item.imagem);
+
+    var capa = '<div class="item-capa ' + classeCapa + '">';
+    if(imagem){
+      capa += '<img src="' + esc(imagem) + '" alt="' + esc(txt(item.titulo)) + '" loading="lazy">';
+    } else {
+      capa += '<div class="ph-block" style="width:100%;height:100%" role="img" aria-label="' + esc(rotuloCapa) + '">' + esc(rotuloCapa) + '</div>';
+    }
+    if(ehVideo){
+      capa += '<span class="play" aria-hidden="true">' + playIcon() + '</span>';
+    }
+    capa += '</div>';
+
+    var corpo = '<div class="item-corpo">' +
+      (item.marca ? '<span class="item-marca">' + esc(item.marca) + '</span>' : "") +
+      '<h3 class="item-titulo">' + esc(txt(item.titulo)) + '</h3>' +
+      (txt(item.descricao) ? '<p class="item-desc">' + esc(txt(item.descricao)) + '</p>' : "") +
+      '<p class="item-nota">' + esc(t("notaAutoral")) + '</p>' +
+    '</div>';
+
+    var link = window.BancoUtil ? window.BancoUtil.urlSegura(item.link) : "";
+    if(link){
+      return '<a class="item reveal" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + capa + corpo + '</a>';
+    }
+    return '<article class="item reveal">' + capa + corpo + '</article>';
+  }
+
+  function marcasComConteudo(lista){
+    var presentes = {};
+    lista.forEach(function(i){
+      var m = String(i.marca || "").trim();
+      if(m) presentes[m] = true;
     });
-    ajustarReveal(grid);
+    return marcas.filter(function(m){ return presentes[m]; });
   }
 
-  function renderFiltros(){
-    var wrap = document.getElementById("filtros");
-    wrap.innerHTML = "";
-    nichos.forEach(function(nicho){
-      var btn = el("button", "filtro-btn");
-      btn.type = "button";
-      btn.textContent = nicho[idioma];
-      btn.setAttribute("aria-pressed", nicho.id === filtroAtual ? "true" : "false");
-      btn.addEventListener("click", function(){
-        filtroAtual = nicho.id;
-        Array.prototype.forEach.call(wrap.querySelectorAll(".filtro-btn"), function(b){
-          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
-        });
-        renderTrabalhos();
+  function renderGaleria(tipo){
+    var ehVideo = (tipo === "videos");
+    var lista = ehVideo ? videos : fotos;
+    var filtro = ehVideo ? filtroVideos : filtroFotos;
+    var grade = document.getElementById(ehVideo ? "galeria-videos" : "galeria-fotos");
+    var caixaFiltros = document.getElementById(ehVideo ? "filtros-videos" : "filtros-fotos");
+
+    /* filtros: só aparecem se houver mais de uma marca com conteúdo */
+    var disponiveis = marcasComConteudo(lista);
+    if(disponiveis.length > 1){
+      var htmlFiltros = '<button type="button" class="filtro-btn" data-marca="todas" aria-pressed="' +
+                        (filtro === "todas" ? "true" : "false") + '">' + esc(t("filtroTodas")) + '</button>';
+      disponiveis.forEach(function(m){
+        htmlFiltros += '<button type="button" class="filtro-btn" data-marca="' + esc(m) + '" aria-pressed="' +
+                       (filtro === m ? "true" : "false") + '">' + esc(m) + '</button>';
       });
-      wrap.appendChild(btn);
-    });
+      caixaFiltros.innerHTML = htmlFiltros;
+      Array.prototype.forEach.call(caixaFiltros.querySelectorAll(".filtro-btn"), function(btn){
+        btn.addEventListener("click", function(){
+          var escolhida = btn.getAttribute("data-marca");
+          if(ehVideo) filtroVideos = escolhida; else filtroFotos = escolhida;
+          renderGaleria(tipo);
+        });
+      });
+    } else {
+      caixaFiltros.innerHTML = "";
+    }
+
+    if(lista.length === 0){
+      grade.innerHTML = '<div class="galeria-vazia reveal">' +
+                        esc(ehVideo ? t("videosVazio") : t("fotosVazio")) + '</div>';
+      ajustarReveal(grade);
+      return;
+    }
+
+    var visiveis = (filtro === "todas") ? lista : lista.filter(function(i){ return i.marca === filtro; });
+    grade.innerHTML = visiveis.map(function(i){ return cartaoConteudo(i, ehVideo); }).join("");
+    ajustarReveal(grade);
+  }
+
+  function renderOlhares(){
+    var caixa = document.getElementById("olhares");
+    caixa.innerHTML = olhares.map(function(o){
+      return '<div><div class="olhar-nome">' + esc(txt(o.nome)) + '</div>' +
+             '<p class="olhar-texto">' + esc(txt(o.texto)) + '</p></div>';
+    }).join("");
+  }
+
+  function renderPassos(){
+    var caixa = document.getElementById("passos");
+    caixa.innerHTML = passos.map(function(p){
+      return '<div class="passo"><span class="passo-num">' + esc(p.numero) + '</span>' +
+             '<h3 class="passo-titulo">' + esc(txt(p.titulo)) + '</h3>' +
+             '<p class="passo-desc">' + esc(txt(p.desc)) + '</p></div>';
+    }).join("");
+  }
+
+  function renderEntregas(){
+    var caixa = document.getElementById("entregas");
+    caixa.innerHTML = entregas.map(function(e){
+      return '<div class="entrega"><div class="entrega-nome">' + esc(txt(e.nome)) + '</div>' +
+             '<p class="entrega-texto">' + esc(txt(e.texto)) + '</p></div>';
+    }).join("");
+  }
+
+  function renderAmbientes(){
+    var caixa = document.getElementById("ambientes");
+    caixa.innerHTML = ambientes.map(function(a){
+      return '<div class="ambiente"><h3 class="ambiente-nome">' + esc(txt(a.nome)) + '</h3>' +
+             '<p class="ambiente-texto">' + esc(txt(a.texto)) + '</p></div>';
+    }).join("");
   }
 
   function renderServicos(){
-    var grid = document.getElementById("servicos-grid");
-    grid.innerHTML = "";
-    servicos.forEach(function(s){
-      var card = el("div", "servico-card");
-      card.innerHTML =
-        '<span class="servico-num">' + s.numero + '</span>' +
-        '<h3 class="servico-titulo">' + txt(s.titulo) + '</h3>' +
-        '<p class="servico-desc">' + txt(s.desc) + '</p>';
-      grid.appendChild(card);
-    });
-  }
-
-  function renderMetricas(){
-    var grid = document.getElementById("metricas-grid");
-    grid.innerHTML = "";
-    metricas.forEach(function(m){
-      var item = el("div", "metrica-item reveal");
-      var valorInicial = metricasAnimadas ? (m.valor + m.sufixo) : "0";
-      item.innerHTML =
-        '<span class="metrica-valor" data-valor="' + m.valor + '" data-sufixo="' + m.sufixo + '">' + valorInicial + '</span>' +
-        '<span class="metrica-label">' + txt(m.label) + '</span>';
-      grid.appendChild(item);
-    });
-    ajustarReveal(grid);
-    if(!metricasAnimadas) observarMetricas();
-  }
-
-  function renderResultados(){
-    var grid = document.getElementById("resultados-grid");
-    grid.innerHTML = "";
-    resultadosCampanha.forEach(function(r){
-      var card = el("div", "resultado-card");
-      card.innerHTML =
-        '<h3 class="resultado-marca">' + r.marca + '</h3>' +
-        '<span class="resultado-valor">' + r.valor + '</span>' +
-        '<p class="resultado-desc">' + txt(r.desc) + '</p>';
-      grid.appendChild(card);
-    });
-  }
-
-  function renderDepoimentos(){
-    var grid = document.getElementById("depoimentos-grid");
-    grid.innerHTML = "";
-    depoimentos.forEach(function(d){
-      var card = el("div", "depoimento-card");
-      card.innerHTML =
-        '<p class="depoimento-texto">' + txt(d.texto) + '</p>' +
-        '<p class="depoimento-autor"><strong>' + d.nome + '</strong>, ' + d.empresa + '</p>';
-      grid.appendChild(card);
-    });
+    var caixa = document.getElementById("servicos-grid");
+    caixa.innerHTML = servicos.map(function(s){
+      return '<div class="servico-card"><span class="servico-num">' + esc(s.numero) + '</span>' +
+             '<h3 class="servico-titulo">' + esc(txt(s.titulo)) + '</h3>' +
+             '<p class="servico-desc">' + esc(txt(s.desc)) + '</p></div>';
+    }).join("");
   }
 
   /* =========================================================
-     APLICAR IDIOMA
+     IDIOMA
   ========================================================= */
   var hamburger = document.getElementById("hamburger");
   var navLinks = document.getElementById("nav-links");
@@ -1469,7 +1326,6 @@
       if(valor !== undefined) node.setAttribute("alt", valor);
     });
 
-    // o botão do menu tem dois estados possíveis
     var aberto = hamburger.getAttribute("aria-expanded") === "true";
     hamburger.setAttribute("aria-label", aberto ? t("menuFechar") : t("menuAbrir"));
 
@@ -1478,14 +1334,13 @@
 
   function renderTudo(){
     aplicarTextosFixos();
-    renderMarcas();
-    renderDestaques();
-    renderFiltros();
-    renderTrabalhos();
+    renderOlhares();
+    renderGaleria("fotos");
+    renderGaleria("videos");
+    renderPassos();
+    renderEntregas();
+    renderAmbientes();
     renderServicos();
-    renderMetricas();
-    renderResultados();
-    renderDepoimentos();
   }
 
   function trocarIdioma(novo){
@@ -1499,7 +1354,7 @@
   }
 
   /* =========================================================
-     MENU SANDUÍCHE
+     MENU
   ========================================================= */
   hamburger.addEventListener("click", function(){
     var aberto = hamburger.getAttribute("aria-expanded") === "true";
@@ -1523,70 +1378,23 @@
   });
 
   /* =========================================================
-     CONTADOR ANIMADO DAS MÉTRICAS
-  ========================================================= */
-  function animarContador(node){
-    var alvo = parseInt(node.getAttribute("data-valor"), 10) || 0;
-    var sufixo = node.getAttribute("data-sufixo") || "";
-
-    if(prefereReduzido){
-      node.textContent = alvo + sufixo;
-      return;
-    }
-
-    var duracao = 1400;
-    var inicio = null;
-
-    function passo(timestamp){
-      if(inicio === null) inicio = timestamp;
-      var progresso = Math.min((timestamp - inicio) / duracao, 1);
-      node.textContent = Math.floor(progresso * alvo) + sufixo;
-      if(progresso < 1){
-        window.requestAnimationFrame(passo);
-      } else {
-        node.textContent = alvo + sufixo;
-      }
-    }
-    window.requestAnimationFrame(passo);
-  }
-
-  function observarMetricas(){
-    var nodes = document.querySelectorAll(".metrica-valor");
-    if(!("IntersectionObserver" in window)){
-      Array.prototype.forEach.call(nodes, animarContador);
-      metricasAnimadas = true;
-      return;
-    }
-    var metricaObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          animarContador(entry.target);
-          metricasAnimadas = true;
-          metricaObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.4 });
-    Array.prototype.forEach.call(nodes, function(node){ metricaObserver.observe(node); });
-  }
-
-  /* =========================================================
-     ANIMAÇÃO DE ENTRADA AO ROLAR
+     ANIMAÇÃO DE ENTRADA
   ========================================================= */
   function ativarReveal(){
     var nodes = document.querySelectorAll(".reveal");
     if(prefereReduzido || !("IntersectionObserver" in window)){
-      Array.prototype.forEach.call(nodes, function(node){ node.classList.add("is-visible"); });
+      Array.prototype.forEach.call(nodes, function(n){ n.classList.add("is-visible"); });
       return;
     }
-    var revealObserver = new IntersectionObserver(function(entries){
+    var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
           entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.15 });
-    Array.prototype.forEach.call(nodes, function(node){ revealObserver.observe(node); });
+    Array.prototype.forEach.call(nodes, function(n){ obs.observe(n); });
   }
 
   /* =========================================================
@@ -1595,24 +1403,27 @@
   var formContato = document.getElementById("form-contato");
   var confirmacao = document.getElementById("form-confirmacao");
 
-  async function enviarContato(form,dados){
-    var botao=form.querySelector('[type="submit"]');
-    if(botao.disabled)return false;
-    var aviso=form.querySelector('[role="alert"]');
-    if(!aviso){aviso=document.createElement('p');aviso.setAttribute('role','alert');form.appendChild(aviso);}
-    aviso.textContent='';botao.disabled=true;
-    try{
-      if(!window.sb)throw Error();
-      var r=await window.sb.from('marcas').insert(dados);
-      if(r.error)throw r.error;
-      return true;
-    }catch(e){aviso.textContent='Não foi possível enviar agora. Seus dados continuam aqui. Tente novamente ou entre em contato pelo Instagram.';return false;}
-    finally{botao.disabled=false;}
-  }
-  formContato.addEventListener('submit',async function(e){
-    e.preventDefault();if(!formContato.reportValidity())return;
-    var ok=await enviarContato(formContato,{nome:document.getElementById('campo-nome').value.trim(),email:document.getElementById('campo-email').value.trim(),obs:document.getElementById('campo-mensagem').value.trim(),situacao:'lead'});
-    if(ok){formContato.classList.add('is-hidden');confirmacao.classList.add('is-visible');}
+  formContato.addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    var nome = document.getElementById("campo-nome").value.trim();
+    var email = document.getElementById("campo-email").value.trim();
+    var mensagem = document.getElementById("campo-mensagem").value.trim();
+
+    formContato.classList.add("is-hidden");
+    confirmacao.classList.add("is-visible");
+
+    if(window.sb){
+      try {
+        await window.sb.from("marcas").insert({
+          nome: nome || "Contato pelo site",
+          email: email,
+          obs: mensagem,
+          situacao: "lead",
+          ultimo_contato: new Date().toISOString().slice(0, 10)
+        });
+      } catch(err){ /* a visitante não precisa saber disso */ }
+    }
   });
 
   /* =========================================================
@@ -1627,26 +1438,33 @@
     overlay.classList.add("is-open");
     try { sessionStorage.setItem(CHAVE_SESSAO, "1"); } catch(err){ /* segue sem salvar */ }
   }
-
-  function fecharCaptura(){
-    overlay.classList.remove("is-open");
-  }
+  function fecharCaptura(){ overlay.classList.remove("is-open"); }
 
   var jaExibido = false;
   try { jaExibido = !!sessionStorage.getItem(CHAVE_SESSAO); } catch(err){ jaExibido = false; }
   if(!jaExibido) window.setTimeout(abrirCaptura, 7000);
 
   captureClose.addEventListener("click", fecharCaptura);
-  overlay.addEventListener("click", function(e){
-    if(e.target === overlay) fecharCaptura();
-  });
+  overlay.addEventListener("click", function(e){ if(e.target === overlay) fecharCaptura(); });
   document.addEventListener("keydown", function(e){
     if(e.key === "Escape" && overlay.classList.contains("is-open")) fecharCaptura();
   });
-  formCaptura.addEventListener('submit',async function(e){
-    e.preventDefault();if(!formCaptura.reportValidity())return;
-    var ok=await enviarContato(formCaptura,{nome:document.getElementById('captura-nome').value.trim(),email:document.getElementById('captura-email').value.trim(),obs:'Pediu o mídia kit pelo site',situacao:'lead'});
-    if(ok){formCaptura.innerHTML='<p role="status">Pedido recebido. Entrarei em contato pelo e-mail informado.</p>';}
+  formCaptura.addEventListener("submit", async function(e){
+    e.preventDefault();
+    var nome = document.getElementById("captura-nome").value.trim();
+    var email = document.getElementById("captura-email").value.trim();
+    fecharCaptura();
+    if(window.sb){
+      try {
+        await window.sb.from("marcas").insert({
+          nome: nome || "Pediu o mídia kit",
+          email: email,
+          obs: "Pediu o mídia kit pelo site",
+          situacao: "lead",
+          ultimo_contato: new Date().toISOString().slice(0, 10)
+        });
+      } catch(err){ /* a visitante não precisa saber disso */ }
+    }
   });
 
   /* =========================================================
@@ -1655,77 +1473,50 @@
   Array.prototype.forEach.call(document.querySelectorAll(".idioma-btn"), function(btn){
     btn.setAttribute("aria-pressed", btn.getAttribute("data-idioma") === idioma ? "true" : "false");
   });
-  destaques=[];trabalhos=[];
   renderTudo();
   ativarReveal();
   primeiraRenderizacao = false;
 
   /* =========================================================
-     OS VÍDEOS VÊM DO PAINEL
+     AS FOTOS E OS VÍDEOS VÊM DO PAINEL
 
-     Busca os vídeos marcados como visíveis no painel e troca o
-     conteúdo da página por eles. Se o banco falhar ou ainda não
-     tiver vídeo nenhum, a página continua com o conteúdo de
-     reserva que já está no ar.
+     Busca o que está marcado como visível e separa em duas
+     galerias. Se o banco falhar, as galerias mostram a frase
+     de "em breve" em vez de quebrar a página.
   ========================================================= */
-  async function carregarVideosDoPainel(){
+  async function carregarDoPainel(){
     if(!window.BancoUtil) return;
 
     var r = await window.BancoUtil.ler("videos", function(q){
       return q.eq("visivel", true).order("ordem", { ascending: true });
     });
-    if(r.erro) { document.getElementById("trabalhos-grid").textContent="Os vídeos estão temporariamente indisponíveis. Tente novamente em instantes."; return; }
+    if(r.erro || !r.dados || r.dados.length === 0) return;
 
-    var doBanco = r.dados;
-
-    /* Os vídeos com o campo "destaque" preenchido sobem para a
-       seção de Conteúdos de destaque, no máximo três. */
-    var comDestaque = doBanco.filter(function(v){
-      return String(v.destaque || "").trim() !== "";
-    }).slice(0, 3);
-
-    {
-      destaques = comDestaque.map(function(v){
-        return {
-          link: v.link || "#",
-          capaImg: "",
-          numero: String(v.destaque || ""),
-          numeroLabel: String(v.formato || ""),
-          titulo: String(v.titulo || ""),
-          contexto: v.marca ? ("Conteúdo para " + v.marca) : ""
-        };
-      });
+    function converter(v){
+      return {
+        titulo: String(v.titulo || ""),
+        descricao: String(v.descricao || ""),
+        marca: String(v.marca || ""),
+        link: String(v.link || ""),
+        imagem: String(v.imagem || "")
+      };
     }
 
-    /* Todos os vídeos visíveis entram na galeria por nicho. */
-    trabalhos = doBanco.map(function(v){
-      return {
-        link: window.BancoUtil.urlSegura(v.link),
-        marca: String(v.marca || v.titulo || ""),
-        nicho: String(v.nicho || "casa"),
-        titulo: String(v.titulo || ""),
-        formato: String(v.formato || "")
-      };
-    });
+    fotos  = r.dados.filter(function(v){ return v.tipo_midia === "foto"; }).map(converter);
+    videos = r.dados.filter(function(v){ return v.tipo_midia !== "foto"; }).map(converter);
 
-    renderDestaques();
-    renderFiltros();
-    renderTrabalhos();
-    if(!doBanco.length)document.getElementById("trabalhos-grid").textContent="Novos vídeos em breve.";
+    renderGaleria("fotos");
+    renderGaleria("videos");
   }
 
   /* =========================================================
      REGISTRO DE VISITA
-
-     Guarda apenas a data, a página e de onde a pessoa veio.
-     Nenhum dado pessoal, nenhum serviço de fora, nada pedido
-     para a visitante. Conta uma visita por sessão do navegador.
   ========================================================= */
   function registrarVisita(){
     if(!window.sb) return;
     try {
       if(sessionStorage.getItem("visitaContada")) return;
-
+      sessionStorage.setItem("visitaContada", "1");
     } catch(err){ /* navegador sem sessionStorage: conta assim mesmo */ }
 
     var origem = "direto";
@@ -1743,11 +1534,11 @@
       window.sb.from("visitas").insert({
         pagina: window.location.pathname || "/",
         origem: origem
-      }).then(function(r){if(!r.error){try{sessionStorage.setItem("visitaContada","1");}catch(e){}}}, function(){});
+      }).then(function(){}, function(){});
     } catch(err){ /* nunca atrapalha a visitante */ }
   }
 
-  carregarVideosDoPainel();
+  carregarDoPainel();
   registrarVisita();
 
 })();

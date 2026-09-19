@@ -69,6 +69,24 @@ alter table public.videos add column if not exists ordem       integer not null 
 alter table public.videos add column if not exists visivel     boolean not null default true;
 alter table public.videos add column if not exists criado_em   timestamptz not null default now();
 
+-- Campos do portfolio autoral.
+-- "tipo_midia" separa a galeria de fotos da galeria de videos.
+-- "descricao" e a legenda curta que aparece embaixo do titulo.
+-- "imagem" aceita um endereco completo (https://...) ou o nome de um
+-- arquivo que esteja na pasta fotos do projeto (ex: cozinha.jpg).
+alter table public.videos add column if not exists tipo_midia  text not null default 'video';
+alter table public.videos add column if not exists descricao   text default '';
+alter table public.videos add column if not exists imagem      text default '';
+
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'videos_tipo_midia_valido') then
+    alter table public.videos
+      add constraint videos_tipo_midia_valido
+      check (tipo_midia in ('foto','video'));
+  end if;
+end $$;
+
 -- A sua base de contatos de empresa.
 -- "situacao" so aceita estes quatro valores: lead, conversando, cliente, parada.
 create table if not exists public.marcas (
@@ -352,8 +370,10 @@ create policy "ideias dona total" on public.ideias
 -- Se voce ja tiver dados, este bloco nao duplica nada.
 -- ============================================================
 
-insert into public.videos (titulo, link, nicho, formato, marca, destaque, ordem, visivel)
-select 'EXEMPLO Video de organizacao da cozinha', '', 'casa', 'video 9:16', 'EXEMPLO Marca', '', 1, false
+insert into public.videos (titulo, descricao, link, nicho, formato, marca, tipo_midia, ordem, visivel)
+select 'EXEMPLO Organizacao de um cantinho da casa',
+       'Fotografia e composicao com um produto da minha rotina.',
+       '', 'casa', 'foto 4:5', 'Tokstok', 'foto', 1, false
 where not exists (select 1 from public.videos);
 
 insert into public.marcas (nome, instagram, email, telefone, situacao, obs, ultimo_contato)
