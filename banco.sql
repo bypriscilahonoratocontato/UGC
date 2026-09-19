@@ -111,6 +111,16 @@ alter table public.marcas add column if not exists obs             text default 
 alter table public.marcas add column if not exists ultimo_contato  date;
 alter table public.marcas add column if not exists criado_em       timestamptz not null default now();
 
+-- Campos do acompanhamento comercial.
+-- "proximo_followup" e a data de quando voce combinou de voltar a falar.
+-- "valor_potencial" e quanto esse contato pode render se fechar.
+-- "responsavel" e o nome de quem cuida do assunto dentro da marca.
+-- "notas_internas" so voce ve, nunca sai do painel.
+alter table public.marcas add column if not exists proximo_followup date;
+alter table public.marcas add column if not exists valor_potencial  numeric(12,2) not null default 0;
+alter table public.marcas add column if not exists responsavel      text default '';
+alter table public.marcas add column if not exists notas_internas   text default '';
+
 -- Trava para ninguem gravar uma situacao que o painel nao entende.
 do $$
 begin
@@ -226,6 +236,56 @@ alter table public.visitas add column if not exists data      timestamptz not nu
 alter table public.visitas add column if not exists pagina    text default '';
 alter table public.visitas add column if not exists origem    text default '';
 
+-- O seu dinheiro: tudo que entra e tudo que sai.
+-- "tipo" e entrada (dinheiro que voce recebe) ou saida (gasto).
+-- "status" e recebido, pendente, pago ou a pagar.
+-- "categoria" e de onde vem ou para onde vai o dinheiro.
+create table if not exists public.financeiro (
+  id          uuid primary key default gen_random_uuid(),
+  tipo        text not null default 'entrada',
+  descricao   text not null default '',
+  valor       numeric(12,2) not null default 0,
+  categoria   text default '',
+  cliente     text default '',
+  data        date not null default current_date,
+  status      text not null default 'recebido',
+  notas       text default '',
+  criado_em   timestamptz not null default now()
+);
+
+-- Completa campos de uma instalacao anterior, preservando os registros.
+alter table public.financeiro add column if not exists tipo       text not null default 'entrada';
+alter table public.financeiro add column if not exists descricao  text not null default '';
+alter table public.financeiro add column if not exists valor      numeric(12,2) not null default 0;
+alter table public.financeiro add column if not exists categoria  text default '';
+alter table public.financeiro add column if not exists cliente    text default '';
+alter table public.financeiro add column if not exists data       date not null default current_date;
+alter table public.financeiro add column if not exists status     text not null default 'recebido';
+alter table public.financeiro add column if not exists notas      text default '';
+alter table public.financeiro add column if not exists criado_em  timestamptz not null default now();
+
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'financeiro_tipo_valido') then
+    alter table public.financeiro
+      add constraint financeiro_tipo_valido
+      check (tipo in ('entrada','saida'));
+  end if;
+  if not exists (select 1 from pg_constraint where conname = 'financeiro_status_valido') then
+    alter table public.financeiro
+      add constraint financeiro_status_valido
+      check (status in ('recebido','pendente','pago','a pagar'));
+  end if;
+end $$;
+
+-- A sua meta de faturamento de cada mes.
+-- "mes" fica no formato ano e mes, por exemplo 2026-09.
+create table if not exists public.metas (
+  mes         text primary key,
+  valor       numeric(12,2) not null default 0,
+  criado_em   timestamptz not null default now()
+);
+
 -- Suas ideias de conteudo.
 -- "origem" diz se a ideia nasceu no painel ou veio do seu Trello.
 -- "trello_id" evita a mesma ideia entrar duas vezes na sincronizacao.
@@ -264,6 +324,8 @@ create index if not exists marcas_situacao_idx   on public.marcas (situacao);
 create index if not exists calendario_data_idx   on public.calendario (data);
 create index if not exists campanhas_prazo_idx   on public.campanhas (prazo);
 create index if not exists visitas_data_idx      on public.visitas (data);
+create index if not exists financeiro_data_idx   on public.financeiro (data);
+create index if not exists marcas_followup_idx   on public.marcas (proximo_followup);
 
 
 -- ============================================================
@@ -275,8 +337,8 @@ create index if not exists visitas_data_idx      on public.visitas (data);
 
 -- Apenas as tabelas deste painel recebem permissões.
 grant usage on schema public to anon, authenticated;
-revoke all on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias from public,anon,authenticated;
-grant select,insert,update,delete on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias to authenticated;
+revoke all on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias,public.financeiro,public.metas from public,anon,authenticated;
+grant select,insert,update,delete on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias,public.financeiro,public.metas to authenticated;
 grant select on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias to anon;
 grant insert on public.marcas,public.visitas to anon;
 grant usage on sequence public.visitas_id_seq to anon,authenticated;
@@ -290,7 +352,7 @@ grant execute on function public.e_dona() to anon,authenticated;
 do $$
 declare t text; p record;
 begin
-  foreach t in array array['videos','marcas','calendario','campanhas','marcados','visitas','ideias'] loop
+  foreach t in array array['videos','marcas','calendario','campanhas','marcados','visitas','ideias','financeiro','metas'] loop
     execute format('alter table public.%I enable row level security',t);
     for p in select policyname from pg_policies where schemaname='public' and tablename=t loop
       execute format('drop policy %I on public.%I',p.policyname,t);
@@ -357,6 +419,21 @@ create policy "visitas registro publico" on public.visitas
 -- IDEIAS
 drop policy if exists "ideias dona total" on public.ideias;
 create policy "ideias dona total" on public.ideias
+  for all to authenticated
+  using (public.e_dona())
+  with check (public.e_dona());
+
+-- FINANCEIRO
+-- Dinheiro e assunto privado: ninguem deslogado le nem grava nada aqui.
+drop policy if exists "financeiro dona total" on public.financeiro;
+create policy "financeiro dona total" on public.financeiro
+  for all to authenticated
+  using (public.e_dona())
+  with check (public.e_dona());
+
+-- METAS
+drop policy if exists "metas dona total" on public.metas;
+create policy "metas dona total" on public.metas
   for all to authenticated
   using (public.e_dona())
   with check (public.e_dona());
