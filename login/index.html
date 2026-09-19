@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Entrar | Priscila Honorato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --fundo: #5B3039;
+    --superficie: #4B2730;
+    --destaque: #EDCBD0;
+    --detalhe: #DFB8C0;
+    --tinta: #FFF8F2;
+    --tinta-suave: #EADCDE;
+    --linha: rgba(255, 248, 242, 0.28);
+    --erro: #F2B8B5;
+    --corpo: "Montserrat", sans-serif;
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background: var(--fundo);
+    color: var(--tinta);
+    font-family: var(--corpo);
+    font-weight: 300;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 1.5rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .cartao{
+    width:100%;
+    max-width: 380px;
+    background: var(--superficie);
+    border: 1px solid var(--linha);
+    padding: clamp(1.8rem, 5vw, 2.4rem);
+  }
+
+  .marca{
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.3rem;
+  }
+  .sub{
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--destaque);
+    margin: 0 0 1.8rem;
+  }
+
+  .campo{ margin-bottom: 1.1rem; }
+  .campo label{
+    display:block;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    margin-bottom: 0.5rem;
+  }
+  .campo input{
+    width:100%;
+    padding: 0.8em 0.9em;
+    background: var(--fundo);
+    border: 1px solid var(--linha);
+    color: var(--tinta);
+    font-family: var(--corpo);
+    font-size: 0.92rem;
+  }
+  .campo input::placeholder{ color: var(--tinta-suave); opacity: 0.7; }
+
+  .btn{
+    width:100%;
+    padding: 0.9em 1.5em;
+    border: 1px solid var(--destaque);
+    background: var(--destaque);
+    color: var(--superficie);
+    font-family: var(--corpo);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .btn:hover{ opacity: 0.88; }
+  .btn:disabled{ opacity: 0.55; cursor: default; }
+
+  .link-senha{
+    display:block;
+    width:100%;
+    margin-top: 1rem;
+    background: transparent;
+    border: 0;
+    color: var(--tinta-suave);
+    font-family: var(--corpo);
+    font-size: 0.75rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0.3em;
+  }
+  .link-senha:hover{ color: var(--destaque); }
+
+  .faixa{
+    display:none;
+    margin-bottom: 1.2rem;
+    padding: 0.8em 1em;
+    font-size: 0.82rem;
+    border: 1px solid var(--erro);
+    color: var(--erro);
+    background: rgba(242, 184, 181, 0.08);
+  }
+  .faixa.ok{
+    border-color: var(--destaque);
+    color: var(--destaque);
+    background: rgba(237, 203, 208, 0.08);
+  }
+  .faixa.aparece{ display:block; }
+
+  .voltar{
+    display:block;
+    text-align:center;
+    margin-top: 1.6rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--tinta-suave);
+    text-decoration: none;
+  }
+  .voltar:hover{ color: var(--destaque); }
+
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline: 2px solid var(--destaque);
+    outline-offset: 2px;
+  }
+
+  .carregando{
+    text-align:center;
+    color: var(--tinta-suave);
+    font-size: 0.8rem;
+  }
+  #conteudo{ display:none; }
+</style>
+</head>
+<body>
+
+<main class="cartao">
+  <p class="carregando" id="carregando">Conferindo...</p>
+
+  <div id="conteudo">
+    <h1 class="marca">Priscila Honorato</h1>
+    <p class="sub">Painel</p>
+
+    <div class="faixa" id="faixa" role="alert"></div>
+
+    <form id="form-login" novalidate>
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" autocomplete="username" placeholder="seuemail@email.com" required>
+      </div>
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" autocomplete="current-password" placeholder="Sua senha" required>
+      </div>
+      <button type="submit" class="btn" id="btn-entrar">Entrar</button>
+      <button type="button" class="link-senha" id="btn-esqueci">Esqueci minha senha</button>
+    </form>
+
+    <a class="voltar" href="../">Voltar para o site</a>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/banco.js"></script>
+<script>
+(function(){
+  "use strict";
+  const form=document.getElementById('form-login'),btn=document.getElementById('btn-entrar'),esqueci=document.getElementById('btn-esqueci'),email=document.getElementById('email'),senha=document.getElementById('senha'),faixa=document.getElementById('faixa');
+  let recuperando=new URLSearchParams(location.search).get('recuperar')==='1'||location.hash.includes('type=recovery');
+  function aviso(t,ok){faixa.textContent=t;faixa.className='faixa aparece'+(ok?' ok':'');}
+  function mostrar(){document.getElementById('carregando').style.display='none';document.getElementById('conteudo').style.display='block';}
+  function recuperar(){recuperando=true;mostrar();email.closest('.campo').hidden=true;email.required=false;senha.autocomplete='new-password';senha.minLength=8;senha.previousElementSibling.textContent='Nova senha';esqueci.hidden=true;btn.textContent='Salvar nova senha';aviso('Escolha uma senha com pelo menos 8 caracteres.',true);}
+  if(window.sb) window.sb.auth.onAuthStateChange(event=>{if(event==='PASSWORD_RECOVERY')recuperar();});
+  (async()=>{mostrar();if(!window.sb){aviso('Não consegui carregar a conexão. Recarregue a página.');return;}
+    const sessao=await BancoUtil.sessao();
+    if(recuperando){recuperar();if(!sessao)aviso('Abra o link mais recente do e-mail de recuperação.');return;}
+    if(sessao&&sessao.user.email===BANCO.emailDona)location.replace('../admin/');
+    else if(sessao){await BancoUtil.sair();aviso('Este painel é exclusivo da Priscila.');}
+  })();
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();if(btn.disabled)return;
+    if(!form.reportValidity())return;
+    btn.disabled=true;
+    try{
+      if(!window.sb)throw Error();
+      if(recuperando){
+        if(senha.value.length<8){aviso('Use pelo menos 8 caracteres.');return;}
+        const r=await sb.auth.updateUser({password:senha.value});
+        if(r.error){aviso('Não foi possível salvar. Abra um novo link de recuperação e tente outra senha.');return;}
+        await BancoUtil.sair();location.replace('./');return;
+      }
+      const r=await sb.auth.signInWithPassword({email:email.value.trim(),password:senha.value});
+      if(r.error){aviso('E-mail ou senha incorretos');senha.value='';return;}
+      if(r.data.user.email!==BANCO.emailDona){await BancoUtil.sair();aviso('Este painel é exclusivo da Priscila.');return;}
+      location.replace('../admin/');
+    }catch(e){aviso('Não consegui entrar agora. Confira sua conexão e tente novamente.');}
+    finally{btn.disabled=false;}
+  });
+  esqueci.addEventListener('click',async()=>{
+    if(!email.value.trim()||!email.checkValidity()){aviso('Escreva seu e-mail no campo acima.');return;}
+    esqueci.disabled=true;
+    try{const destino=new URL('./?recuperar=1',location.href).href;const r=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:destino});if(r.error)throw r.error;aviso('Se o e-mail estiver cadastrado, você receberá um link de recuperação.',true);}
+    catch(e){aviso('Não consegui enviar o e-mail agora. Tente novamente em instantes.');}
+    finally{esqueci.disabled=false;}
+  });
+})();
+</script>
+</body>
+</html>
