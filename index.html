@@ -7,7 +7,7 @@
 <meta name="description" content="Portfólio de Priscila Honorato, criadora de conteúdo UGC para marcas de casa e decoração, pet e tech.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&amp;display=swap" rel="stylesheet">
 <style>
   /* ===================== VARIÁVEIS ===================== */
   :root{
@@ -18,8 +18,8 @@
     --tinta: #3a332c;
     --tinta-suave: #6b6058;
     --linha: rgba(58, 51, 44, 0.18);
-    --serif: "Tenor Sans", serif;
-    --corpo: "Jost", sans-serif;
+    --serif: "DM Serif Display", serif;
+    --corpo: "Montserrat", sans-serif;
     --max: 1180px;
     --gap: clamp(1.25rem, 3vw, 2.5rem);
   }
@@ -40,6 +40,8 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
+
+  button, input, textarea, select{ font-family: var(--corpo); }
 
   img{ max-width:100%; display:block; }
 
@@ -255,7 +257,7 @@
     border-top: 1px solid var(--linha);
   }
   .stat-num{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     font-size: clamp(1.8rem, 4vw, 2.6rem);
     color: var(--marrom);
     margin-bottom: 0.3rem;
@@ -281,7 +283,7 @@
     gap: clamp(1.4rem, 4vw, 3rem);
   }
   .brand-strip li{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -317,12 +319,13 @@
   }
   .promessas li:last-child{ border-bottom: 1px solid var(--linha); }
   .promessas .marcador{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     color: var(--marrom);
     flex-shrink:0;
   }
   .assinatura{
     font-family: var(--serif);
+    font-weight: 400;
     font-size: 1.4rem;
     margin-top: 1.5rem;
     color: var(--marrom);
@@ -365,7 +368,7 @@
   .destaque-cover .play svg{ width:16px; height:16px; fill: var(--off-white); margin-left:2px; }
   .destaque-body{ padding: 1.4rem; }
   .destaque-num{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     font-size: 1.6rem;
     color: var(--marrom);
     display:block;
@@ -378,7 +381,7 @@
     margin-bottom: 0.8rem;
     display:block;
   }
-  .destaque-title{ font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.4rem; }
+  .destaque-title{ font-family: var(--corpo); font-size: 1.05rem; margin-bottom: 0.4rem; }
   .destaque-context{ font-size: 0.85rem; margin:0; }
 
   @media (max-width: 860px){
@@ -429,7 +432,7 @@
     display:block;
     margin-bottom: 0.4rem;
   }
-  .trabalho-titulo{ font-family: var(--serif); font-size: 1rem; margin-bottom:0.2rem; }
+  .trabalho-titulo{ font-family: var(--corpo); font-size: 1rem; margin-bottom:0.2rem; }
   .trabalho-formato{ font-size: 0.8rem; margin:0; color: var(--tinta-suave); }
   .trabalho-card.is-hidden{ display:none; }
 
@@ -453,13 +456,13 @@
     padding: clamp(1.8rem, 3vw, 2.4rem);
   }
   .servico-num{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     color: var(--nude);
     font-size: 1.6rem;
     display:block;
     margin-bottom: 1rem;
   }
-  .servico-titulo{ font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .servico-titulo{ font-family: var(--corpo); font-size: 1.05rem; margin-bottom: 0.5rem; }
   .servico-desc{ font-size: 0.88rem; margin:0; }
 
   @media (max-width: 860px){
@@ -480,7 +483,7 @@
   }
   .metrica-item{ padding: 1.5rem 0.5rem; border: 1px solid var(--linha); }
   .metrica-valor{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     font-size: clamp(2rem, 4.4vw, 2.8rem);
     color: var(--marrom);
     display:block;
@@ -494,6 +497,7 @@
   }
 
   .subtitulo-bloco{
+    font-family: var(--corpo);
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -512,12 +516,12 @@
     padding: clamp(1.6rem, 3vw, 2.2rem);
   }
   .resultado-marca{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     font-size: 1rem;
     margin-bottom: 0.6rem;
   }
   .resultado-valor{
-    font-family: var(--serif);
+    font-family: var(--corpo);
     font-size: 1.9rem;
     color: var(--marrom);
     display:block;
