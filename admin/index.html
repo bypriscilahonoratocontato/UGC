@@ -815,6 +815,8 @@
       campanhas: '<path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M18 8a5 5 0 0 1 0 8"/>',
       checklist: '<polyline points="9 11 12 14 20 6"/><path d="M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10"/>',
       ideias:    '<path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a6 6 0 0 0-4 10.5c.6.7 1 1.5 1 2.5h6c0-1 .4-1.8 1-2.5A6 6 0 0 0 12 2z"/>',
+      dinheiro:  '<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/>',
+      sobe:      '<polyline points="18 9 12 15 6 9"/>',
       mais:      '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
       lapis:     '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
       lixo:      '<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/>',
@@ -972,8 +974,9 @@
   var ABAS = [
     { id: "portfolio",  nome: "Portfolio",  grupo: "meu site",     icone: "portfolio",  sub: "Como o seu site esta indo" },
     { id: "marcas",     nome: "Marcas",     grupo: "meu site",     icone: "marcas",     sub: "A sua base de contatos" },
+    { id: "financeiro", nome: "Financeiro", grupo: "meu dinheiro", icone: "dinheiro",   sub: "O que entra e o que sai" },
+    { id: "campanhas",  nome: "Campanhas",  grupo: "meu dinheiro", icone: "campanhas",  sub: "Trabalhos, valores e prazos" },
     { id: "calendario", nome: "Calendario", grupo: "minha rotina", icone: "calendario", sub: "O mes inteiro de producao" },
-    { id: "campanhas",  nome: "Campanhas",  grupo: "minha rotina", icone: "campanhas",  sub: "Trabalhos, valores e prazos" },
     { id: "checklist",  nome: "Checklist",  grupo: "minha rotina", icone: "checklist",  sub: "O que falta no seu portfolio" },
     { id: "ideias",     nome: "Ideias",     grupo: "minha rotina", icone: "ideias",     sub: "Suas ideias de conteudo" }
   ];
@@ -1021,7 +1024,7 @@
     abaAtual = id;
     marcarAtivo();
     painel.innerHTML = '<div class="vazio">Carregando...</div>';
-    var telas={portfolio:telaPortfolio,marcas:telaMarcas,calendario:telaCalendario,campanhas:telaCampanhas,checklist:telaChecklist,ideias:telaIdeias};
+    var telas={portfolio:telaPortfolio,marcas:telaMarcas,calendario:telaCalendario,campanhas:telaCampanhas,checklist:telaChecklist,ideias:telaIdeias,financeiro:telaFinanceiro};
     Promise.resolve().then(function(){return telas[id]();}).catch(function(){
       if(abaAtual===id)painel.innerHTML=blocoAviso('Não foi possível abrir esta aba. Confira a conexão e a estrutura do banco. As outras abas continuam disponíveis.');
     });
@@ -1268,13 +1271,17 @@
     { valor: "parada",      texto: "Parada" }
   ];
   var CAMPOS_MARCA = [
-    { nome: "nome",           rotulo: "Marca",           tipo: "text" },
-    { nome: "instagram",      rotulo: "Instagram",       tipo: "text" },
-    { nome: "email",          rotulo: "E-mail",          tipo: "text" },
-    { nome: "telefone",       rotulo: "Telefone",        tipo: "text" },
-    { nome: "situacao",       rotulo: "Situacao",        tipo: "select", opcoes: SITUACOES, padrao: "lead" },
-    { nome: "obs",            rotulo: "Observacao",      tipo: "textarea" },
-    { nome: "ultimo_contato", rotulo: "Ultimo contato",  tipo: "date" }
+    { nome: "nome",             rotulo: "Marca",              tipo: "text" },
+    { nome: "responsavel",      rotulo: "Quem cuida do assunto la", tipo: "text" },
+    { nome: "instagram",        rotulo: "Instagram",          tipo: "text" },
+    { nome: "email",            rotulo: "E-mail",             tipo: "text" },
+    { nome: "telefone",         rotulo: "Telefone",           tipo: "text" },
+    { nome: "situacao",         rotulo: "Situacao",           tipo: "select", opcoes: SITUACOES, padrao: "lead" },
+    { nome: "valor_potencial",  rotulo: "Quanto pode render (R$)", tipo: "number", passo: "0.01", padrao: 0 },
+    { nome: "ultimo_contato",   rotulo: "Ultimo contato",     tipo: "date" },
+    { nome: "proximo_followup", rotulo: "Quando voltar a falar", tipo: "date" },
+    { nome: "obs",              rotulo: "Observacao",         tipo: "textarea" },
+    { nome: "notas_internas",   rotulo: "Notas internas (so voce ve)", tipo: "textarea" }
   ];
 
   var marcasBusca = "", marcasFiltro = "todas";
@@ -1295,8 +1302,43 @@
 
     function desenhar(){
       var lista = filtrar();
+      var hoje = hojeISO();
       var html = "";
       html += blocoAviso(r.erro);
+
+      /* numeros do acompanhamento comercial */
+      var clientes  = todas.filter(function(m){ return m.situacao === "cliente"; }).length;
+      var noPipe    = todas.filter(function(m){ return m.situacao === "lead" || m.situacao === "conversando"; });
+      var potencial = noPipe.reduce(function(s, m){ return s + (Number(m.valor_potencial) || 0); }, 0);
+
+      var esperando = todas.filter(function(m){
+        var f = String(m.proximo_followup || "").slice(0, 10);
+        return f && f <= hoje && m.situacao !== "cliente" && m.situacao !== "parada";
+      }).sort(function(a, b){ return String(a.proximo_followup).localeCompare(String(b.proximo_followup)); });
+
+      html += '<div class="faixa-numeros">' +
+        '<div class="num-item"><div class="num-valor">' + clientes + '</div><div class="num-rotulo">Ja sao clientes</div></div>' +
+        '<div class="num-item"><div class="num-valor">' + noPipe.length + '</div><div class="num-rotulo">Em conversa</div></div>' +
+        '<div class="num-item"><div class="num-valor">' + esperando.length + '</div><div class="num-rotulo">Esperando voce</div></div>' +
+        '<div class="num-item"><div class="num-valor">' + U.emReais(potencial) + '</div><div class="num-rotulo">Pode render</div>' +
+          '<div class="num-extra">somando quem ainda esta em conversa</div></div>' +
+      '</div>';
+
+      /* quem esta esperando resposta */
+      if(esperando.length > 0){
+        html += '<div class="bloco" style="margin-bottom:1.3rem">' +
+          '<div class="bloco-titulo">Voce combinou de voltar a falar</div>';
+        esperando.slice(0, 6).forEach(function(m){
+          var dias = diasEntre(hoje, m.proximo_followup);
+          html += '<div class="atraso-linha">' +
+            '<strong style="font-weight:400">' + esc(m.nome || "sem nome") + '</strong>' +
+            (m.responsavel ? '<span style="color:var(--tinta-suave)">' + esc(m.responsavel) + '</span>' : "") +
+            '<span class="atraso-dias">' + (dias === 0 ? "e hoje" : "ha " + dias + " dia" + (dias === 1 ? "" : "s")) + '</span>' +
+            '<button class="btn btn-mini" data-abrir-marca="' + esc(m.id) + '" style="margin-left:auto">Abrir</button>' +
+          '</div>';
+        });
+        html += '</div>';
+      }
 
       html += '<div class="barra-acoes">' +
         '<div class="cresce"><input type="search" id="busca-marcas" placeholder="Buscar por nome, @ ou e-mail" value="' + esc(marcasBusca) + '"></div>' +
@@ -1313,19 +1355,24 @@
         html += blocoVazio("Nenhuma marca encontrada com esse filtro.");
       } else {
         html += '<div class="rolagem"><table><thead><tr>' +
-          '<th>Marca</th><th>Instagram</th><th>E-mail</th><th>Telefone</th><th>Situacao</th><th>Observacao</th><th>Ultimo contato</th><th style="text-align:right">Contato</th>' +
+          '<th>Marca</th><th>Instagram</th><th>E-mail</th><th>Situacao</th><th>Pode render</th><th>Voltar a falar</th><th>Ultimo contato</th><th style="text-align:right">Contato</th>' +
           '</tr></thead><tbody>';
         lista.forEach(function(m){
           var situacao = SITUACOES.filter(function(s){ return s.valor === m.situacao; })[0];
           var zap = String(m.telefone || "").replace(/\D/g, "");
           var insta = String(m.instagram || "").replace(/^@/, "");
+          var f = String(m.proximo_followup || "").slice(0, 10);
+          var atrasado = f && f <= hoje && m.situacao !== "cliente" && m.situacao !== "parada";
           html += '<tr class="clicavel" data-id="' + esc(m.id) + '">' +
-            '<td>' + esc(m.nome || "sem nome") + '</td>' +
+            '<td>' + esc(m.nome || "sem nome") +
+              (m.responsavel ? '<div class="lista-gancho">' + esc(m.responsavel) + '</div>' : "") + '</td>' +
             '<td>' + (insta ? '<a href="https://instagram.com/' + esc(insta) + '" target="_blank" rel="noopener" data-fora="1">@' + esc(insta) + '</a>' : "") + '</td>' +
             '<td>' + esc(m.email || "") + '</td>' +
-            '<td>' + esc(m.telefone || "") + '</td>' +
             '<td><span class="pilula p-' + esc(m.situacao) + '">' + esc(situacao ? situacao.texto : m.situacao) + '</span></td>' +
-            '<td>' + esc(String(m.obs || "").slice(0, 44)) + (String(m.obs || "").length > 44 ? "..." : "") + '</td>' +
+            '<td>' + (Number(m.valor_potencial) > 0 ? esc(U.emReais(m.valor_potencial)) : "") + '</td>' +
+            '<td>' + (f ? (atrasado
+                ? '<span class="pilula etiqueta-erro">' + esc(U.paraBR(f)) + '</span>'
+                : esc(U.paraBR(f))) : "") + '</td>' +
             '<td>' + esc(U.paraBR(m.ultimo_contato)) + '</td>' +
             '<td><div class="acoes-linha">' +
               (zap ? '<a class="icone-btn" href="https://wa.me/' + (zap.length <= 11 ? "55" + zap : zap) + '" target="_blank" rel="noopener" data-fora="1" title="Abrir WhatsApp">' + icone("zap") + '</a>' : "") +
@@ -1365,27 +1412,40 @@
         var lista2 = filtrar();
         if(lista2.length === 0){ falar("Nao ha nada para baixar.", true); return; }
         baixarCSV("minhas-marcas.csv",
-          ["Marca","Instagram","E-mail","Telefone","Situacao","Observacao","Ultimo contato"],
+          ["Marca","Responsavel","Instagram","E-mail","Telefone","Situacao","Pode render","Ultimo contato","Voltar a falar","Observacao"],
           lista2.map(function(m){
             var s = SITUACOES.filter(function(x){ return x.valor === m.situacao; })[0];
-            return [m.nome, m.instagram, m.email, m.telefone, (s ? s.texto : m.situacao), m.obs, U.paraBR(m.ultimo_contato)];
+            return [m.nome, m.responsavel, m.instagram, m.email, m.telefone, (s ? s.texto : m.situacao),
+                    String(Number(m.valor_potencial) || 0).replace(".", ","),
+                    U.paraBR(m.ultimo_contato), U.paraBR(m.proximo_followup), m.obs];
           })
         );
         falar("Arquivo baixado.");
       });
 
+      function abrirMarca(id){
+        var m = todas.filter(function(x){ return String(x.id) === id; })[0];
+        if(!m) return;
+        abrirFormulario({
+          titulo: "Editar marca",
+          tabela: "marcas",
+          campos: CAMPOS_MARCA,
+          registro: m,
+          antesDeSalvar: function(d){ if(!d.nome) return "Escreva o nome da marca."; },
+          depois: telaMarcas
+        });
+      }
+
       Array.prototype.forEach.call(painel.querySelectorAll("tr[data-id]"), function(tr){
         tr.addEventListener("click", function(e){
           if(e.target.closest("[data-fora]")) return;
-          var m = todas.filter(function(x){ return String(x.id) === tr.getAttribute("data-id"); })[0];
-          abrirFormulario({
-            titulo: "Editar marca",
-            tabela: "marcas",
-            campos: CAMPOS_MARCA,
-            registro: m,
-            antesDeSalvar: function(d){ if(!d.nome) return "Escreva o nome da marca."; },
-            depois: telaMarcas
-          });
+          abrirMarca(tr.getAttribute("data-id"));
+        });
+      });
+
+      Array.prototype.forEach.call(painel.querySelectorAll("[data-abrir-marca]"), function(b){
+        b.addEventListener("click", function(){
+          abrirMarca(b.getAttribute("data-abrir-marca"));
         });
       });
     }
@@ -2198,6 +2258,326 @@
         });
       });
     });
+  }
+
+  /* ============================================================
+     PARTE 9B: ABA FINANCEIRO
+
+     Tudo que entra e tudo que sai, mes a mes.
+     Para incluir uma categoria nova, basta acrescentar nas
+     listas abaixo.
+     ============================================================ */
+  var CATEGORIAS_ENTRADA = ["UGC Creator", "Publicidade", "Afiliado", "Freelance", "TikTok", "Outros"];
+  var CATEGORIAS_SAIDA   = ["Equipamento", "Software", "Produto", "Transporte", "Impostos", "Outros"];
+
+  var mesFinanceiro = (function(){
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+  })();
+  var filtroFin = "todas";
+
+  function camposFinanceiro(tipo){
+    var ehSaida = (tipo === "saida");
+    return [
+      { nome: "tipo", rotulo: "Isto e uma entrada ou uma saida?", tipo: "select", opcoes: [
+          { valor: "entrada", texto: "Entrada (dinheiro que voce recebe)" },
+          { valor: "saida",   texto: "Saida (dinheiro que voce gasta)" }
+        ], padrao: tipo || "entrada" },
+      { nome: "descricao", rotulo: "Descricao", tipo: "text" },
+      { nome: "valor",     rotulo: "Valor (R$)", tipo: "number", passo: "0.01", padrao: 0 },
+      { nome: "categoria", rotulo: "Categoria", tipo: "select",
+        opcoes: (ehSaida ? CATEGORIAS_SAIDA : CATEGORIAS_ENTRADA).map(function(c){
+          return { valor: c, texto: c };
+        }), padrao: ehSaida ? "Equipamento" : "UGC Creator" },
+      { nome: "cliente",   rotulo: "Marca ou cliente (opcional)", tipo: "text" },
+      { nome: "data",      rotulo: "Data", tipo: "date" },
+      { nome: "status",    rotulo: "Situacao", tipo: "select", opcoes: [
+          { valor: "recebido", texto: "Recebido" },
+          { valor: "pendente", texto: "Ainda vou receber" },
+          { valor: "pago",     texto: "Pago" },
+          { valor: "a pagar",  texto: "Ainda vou pagar" }
+        ], padrao: ehSaida ? "pago" : "recebido" },
+      { nome: "notas",     rotulo: "Observacao", tipo: "textarea" }
+    ];
+  }
+
+  function nomeMes(mes){
+    var partes = String(mes).split("-");
+    var d = new Date(Number(partes[0]), Number(partes[1]) - 1, 1);
+    var texto = d.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  }
+
+  async function telaFinanceiro(){
+    var rf = await U.ler("financeiro", function(q){ return q.order("data", { ascending: false }); });
+    var rm = await U.ler("metas", null);
+
+    var todas = rf.dados;
+    var metas = {};
+    rm.dados.forEach(function(m){ metas[m.mes] = Number(m.valor) || 0; });
+
+    function doMes(){
+      return todas.filter(function(t){ return String(t.data || "").slice(0, 7) === mesFinanceiro; });
+    }
+
+    function desenhar(){
+      var lista = doMes();
+
+      var entradas = lista.filter(function(t){ return t.tipo === "entrada"; });
+      var saidas   = lista.filter(function(t){ return t.tipo === "saida"; });
+
+      var totalEntrou = entradas.filter(function(t){ return t.status === "recebido"; })
+                                .reduce(function(s, t){ return s + (Number(t.valor) || 0); }, 0);
+      var totalSaiu   = saidas.filter(function(t){ return t.status === "pago"; })
+                              .reduce(function(s, t){ return s + (Number(t.valor) || 0); }, 0);
+      var aReceber    = entradas.filter(function(t){ return t.status === "pendente"; })
+                                .reduce(function(s, t){ return s + (Number(t.valor) || 0); }, 0);
+      var aPagar      = saidas.filter(function(t){ return t.status === "a pagar"; })
+                              .reduce(function(s, t){ return s + (Number(t.valor) || 0); }, 0);
+      var saldo = totalEntrou - totalSaiu;
+
+      var meta = metas[mesFinanceiro] || 0;
+      var pctMeta = Math.round(U.dividir(totalEntrou, meta) * 100);
+      if(pctMeta > 100) pctMeta = 100;
+
+      /* de onde vem o dinheiro */
+      var porCategoria = {};
+      entradas.filter(function(t){ return t.status === "recebido"; }).forEach(function(t){
+        var c = (t.categoria || "").trim() || "Sem categoria";
+        porCategoria[c] = (porCategoria[c] || 0) + (Number(t.valor) || 0);
+      });
+      var categorias = Object.keys(porCategoria).sort(function(a, b){
+        return porCategoria[b] - porCategoria[a];
+      });
+
+      var html = "";
+      html += blocoAviso(rf.erro);
+      html += blocoAviso(rm.erro);
+
+      /* navegacao de mes */
+      html += '<div class="cal-topo">' +
+        '<button class="icone-btn" id="fin-antes" title="Mes anterior">' + icone("esquerda") + '</button>' +
+        '<button class="icone-btn" id="fin-depois" title="Proximo mes">' + icone("direita") + '</button>' +
+        '<div class="cal-mes">' + esc(nomeMes(mesFinanceiro)) + '</div>' +
+        '<button class="btn btn-mini" id="fin-hoje">Este mes</button>' +
+        '<button class="btn btn-mini" id="fin-meta" style="margin-left:auto">' +
+          (meta > 0 ? "Mudar a meta" : "Definir meta") + '</button>' +
+        '<button class="btn btn-cheio" id="fin-nova">' + icone("mais") + 'Nova transacao</button>' +
+      '</div>';
+
+      html += '<div class="faixa-numeros">' +
+        '<div class="num-item"><div class="num-valor">' + U.emReais(totalEntrou) + '</div>' +
+          '<div class="num-rotulo">Entrou</div>' +
+          (aReceber > 0 ? '<div class="num-extra">' + U.emReais(aReceber) + ' ainda vai entrar</div>' : "") + '</div>' +
+        '<div class="num-item"><div class="num-valor">' + U.emReais(totalSaiu) + '</div>' +
+          '<div class="num-rotulo">Saiu</div>' +
+          (aPagar > 0 ? '<div class="num-extra">' + U.emReais(aPagar) + ' ainda vai sair</div>' : "") + '</div>' +
+        '<div class="num-item"><div class="num-valor">' + U.emReais(saldo) + '</div>' +
+          '<div class="num-rotulo">Sobrou no mes</div></div>' +
+        '<div class="num-item"><div class="num-valor">' + (meta > 0 ? pctMeta + "%" : "sem meta") + '</div>' +
+          '<div class="num-rotulo">Da sua meta</div>' +
+          (meta > 0 ? '<div class="num-extra">meta de ' + U.emReais(meta) + '</div>' : "") + '</div>' +
+      '</div>';
+
+      /* barra da meta */
+      if(meta > 0){
+        html += '<div class="progresso-geral" style="margin-bottom:1.4rem">' +
+          '<span>' + U.emReais(totalEntrou) + ' de ' + U.emReais(meta) + '</span>' +
+          '<div class="barra-fundo"><div class="barra-cheia" style="width:' + pctMeta + '%"></div></div>' +
+          '<span>' + pctMeta + '%</span></div>';
+      }
+
+      /* de onde vem o dinheiro */
+      html += '<div class="duas-colunas">';
+      html += '<div class="bloco"><div class="bloco-titulo">De onde veio o dinheiro</div>';
+      if(categorias.length === 0){
+        html += '<div class="vazio">Quando voce registrar a primeira entrada recebida, aparece aqui a divisao por categoria, mostrando de onde vem cada parte do seu faturamento.</div>';
+      } else {
+        var maiorCat = porCategoria[categorias[0]];
+        html += '<div class="lista-origem">';
+        categorias.forEach(function(c){
+          var larg = Math.round(U.dividir(porCategoria[c], maiorCat) * 100);
+          html += '<div>' +
+            '<div class="origem-linha"><span>' + esc(c) + '</span><span>' + U.emReais(porCategoria[c]) + '</span></div>' +
+            '<div class="barra-fundo" style="margin-top:0.25rem"><div class="barra-cheia" style="width:' + larg + '%"></div></div>' +
+          '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
+
+      html += '<div class="bloco"><div class="bloco-titulo">Resumo do mes</div>' +
+        '<div class="lista-origem">' +
+          '<div class="origem-linha"><span>Transacoes</span><span>' + lista.length + '</span></div>' +
+          '<div class="origem-linha"><span>Entradas</span><span>' + entradas.length + '</span></div>' +
+          '<div class="origem-linha"><span>Saidas</span><span>' + saidas.length + '</span></div>' +
+        '</div></div>';
+      html += '</div>';
+
+      /* filtros e tabela */
+      html += '<div class="barra-acoes">' +
+        '<button class="btn' + (filtroFin === "todas" ? " btn-cheio" : "") + '" data-ffin="todas">Todas</button>' +
+        '<button class="btn' + (filtroFin === "entrada" ? " btn-cheio" : "") + '" data-ffin="entrada">Entradas</button>' +
+        '<button class="btn' + (filtroFin === "saida" ? " btn-cheio" : "") + '" data-ffin="saida">Saidas</button>' +
+        '<div class="cresce"></div>' +
+        '<button class="btn" id="fin-csv">' + icone("baixar") + 'Baixar</button>' +
+      '</div>';
+
+      var visiveis = (filtroFin === "todas") ? lista : lista.filter(function(t){ return t.tipo === filtroFin; });
+
+      if(todas.length === 0){
+        html += blocoVazio("Voce ainda nao registrou nenhuma movimentacao. Clique em nova transacao para comecar a acompanhar o seu dinheiro.");
+      } else if(visiveis.length === 0){
+        html += blocoVazio("Nenhuma movimentacao neste mes com esse filtro.");
+      } else {
+        html += '<div class="rolagem"><table><thead><tr>' +
+          '<th>Data</th><th>Descricao</th><th>Categoria</th><th>Marca</th><th>Situacao</th><th style="text-align:right">Valor</th>' +
+          '</tr></thead><tbody>';
+        visiveis.forEach(function(t){
+          var ehEntrada = (t.tipo === "entrada");
+          var pendente = (t.status === "pendente" || t.status === "a pagar");
+          html += '<tr class="clicavel" data-id="' + esc(t.id) + '">' +
+            '<td>' + esc(U.paraBR(t.data)) + '</td>' +
+            '<td>' + esc(t.descricao || "sem descricao") + '</td>' +
+            '<td>' + esc(t.categoria || "") + '</td>' +
+            '<td>' + esc(t.cliente || "") + '</td>' +
+            '<td><span class="pilula ' + (pendente ? "p-lead" : (ehEntrada ? "p-cliente" : "p-parada")) + '">' + esc(t.status) + '</span></td>' +
+            '<td style="text-align:right;white-space:nowrap;color:' + (ehEntrada ? "var(--ok)" : "var(--erro)") + '">' +
+              (ehEntrada ? "+ " : "- ") + esc(U.emReais(t.valor)) + '</td>' +
+          '</tr>';
+        });
+        html += '</tbody></table></div>';
+      }
+
+      painel.innerHTML = html;
+
+      document.getElementById("fin-antes").addEventListener("click", function(){
+        var p = mesFinanceiro.split("-");
+        var d = new Date(Number(p[0]), Number(p[1]) - 2, 1);
+        mesFinanceiro = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+        desenhar();
+      });
+      document.getElementById("fin-depois").addEventListener("click", function(){
+        var p = mesFinanceiro.split("-");
+        var d = new Date(Number(p[0]), Number(p[1]), 1);
+        mesFinanceiro = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+        desenhar();
+      });
+      document.getElementById("fin-hoje").addEventListener("click", function(){
+        var d = new Date();
+        mesFinanceiro = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+        desenhar();
+      });
+
+      Array.prototype.forEach.call(painel.querySelectorAll("[data-ffin]"), function(b){
+        b.addEventListener("click", function(){ filtroFin = b.getAttribute("data-ffin"); desenhar(); });
+      });
+
+      /* definir a meta do mes */
+      document.getElementById("fin-meta").addEventListener("click", function(){
+        var campos = [{ nome: "valor", rotulo: "Meta de faturamento para " + nomeMes(mesFinanceiro) + " (R$)", tipo: "number", passo: "0.01", padrao: meta }];
+        abrirModal("Meta do mes", montarFormulario(campos, { valor: meta }) +
+          '<div class="modal-botoes">' +
+            '<button type="button" class="btn" id="btn-cancelar">Cancelar</button>' +
+            '<button type="button" class="btn btn-cheio" id="btn-salvar">Salvar</button>' +
+          '</div>');
+        document.getElementById("btn-cancelar").addEventListener("click", fecharModal);
+        document.getElementById("btn-salvar").addEventListener("click", async function(){
+          var d = lerFormulario(campos);
+          var r = await U.gravar("metas", function(q){
+            return q.upsert({ mes: mesFinanceiro, valor: d.valor }, { onConflict: "mes" });
+          });
+          if(!r.ok){ falar(r.erro, true); return; }
+          fecharModal();
+          falar("Meta salva.");
+          telaFinanceiro();
+        });
+      });
+
+      /* nova transacao */
+      document.getElementById("fin-nova").addEventListener("click", function(){
+        abrirFormularioFinanceiro(null);
+      });
+
+      Array.prototype.forEach.call(painel.querySelectorAll("tr[data-id]"), function(tr){
+        tr.addEventListener("click", function(){
+          var t = todas.filter(function(x){ return String(x.id) === tr.getAttribute("data-id"); })[0];
+          abrirFormularioFinanceiro(t);
+        });
+      });
+
+      document.getElementById("fin-csv").addEventListener("click", function(){
+        if(visiveis.length === 0){ falar("Nao ha nada para baixar.", true); return; }
+        baixarCSV("meu-financeiro-" + mesFinanceiro + ".csv",
+          ["Data","Tipo","Descricao","Categoria","Marca","Situacao","Valor"],
+          visiveis.map(function(t){
+            return [U.paraBR(t.data), t.tipo, t.descricao, t.categoria, t.cliente, t.status,
+                    String(Number(t.valor) || 0).replace(".", ",")];
+          })
+        );
+        falar("Arquivo baixado.");
+      });
+    }
+
+    /* o formulario muda as categorias conforme entrada ou saida */
+    function abrirFormularioFinanceiro(registro){
+      var tipoAtual = registro ? registro.tipo : "entrada";
+      var valores = registro || { data: hojeISO(), tipo: "entrada", status: "recebido" };
+
+      function montar(){
+        var campos = camposFinanceiro(tipoAtual);
+        var html = montarFormulario(campos, valores) +
+          '<div class="modal-botoes">' +
+            (registro ? '<button type="button" class="btn btn-mini btn-perigo" id="btn-apagar">Apagar</button>' : "") +
+            '<button type="button" class="btn" id="btn-cancelar">Cancelar</button>' +
+            '<button type="button" class="btn btn-cheio" id="btn-salvar">Salvar</button>' +
+          '</div>';
+        abrirModal(registro ? "Editar transacao" : "Nova transacao", html);
+
+        /* ao trocar entrada/saida, as categorias mudam junto */
+        document.getElementById("f-tipo").addEventListener("change", function(e){
+          valores = lerFormulario(campos);
+          tipoAtual = e.target.value;
+          valores.tipo = tipoAtual;
+          valores.categoria = (tipoAtual === "saida") ? "Equipamento" : "UGC Creator";
+          valores.status = (tipoAtual === "saida") ? "pago" : "recebido";
+          montar();
+        });
+
+        document.getElementById("btn-cancelar").addEventListener("click", fecharModal);
+
+        document.getElementById("btn-salvar").addEventListener("click", async function(){
+          var dados = lerFormulario(campos);
+          if(!dados.descricao){ falar("Escreva uma descricao.", true); return; }
+          if(!dados.data){ falar("Escolha a data.", true); return; }
+          var r;
+          if(registro && registro.id){
+            r = await U.gravar("financeiro", function(q){ return q.update(dados).eq("id", registro.id); });
+          } else {
+            r = await U.gravar("financeiro", function(q){ return q.insert(dados); });
+          }
+          if(!r.ok){ falar(r.erro, true); return; }
+          fecharModal();
+          falar("Salvo.");
+          telaFinanceiro();
+        });
+
+        if(registro){
+          document.getElementById("btn-apagar").addEventListener("click", async function(){
+            if(!window.confirm("Apagar de vez? Isso nao volta.")) return;
+            var r = await U.gravar("financeiro", function(q){ return q.delete().eq("id", registro.id); });
+            if(!r.ok){ falar(r.erro, true); return; }
+            fecharModal();
+            falar("Apagado.");
+            telaFinanceiro();
+          });
+        }
+      }
+
+      montar();
+    }
+
+    desenhar();
   }
 
   /* ============================================================
