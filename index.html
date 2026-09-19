@@ -10,14 +10,17 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   /* ===================== VARIÁVEIS ===================== */
+  /* Cores claras: fundo creme, texto vinho.
+     Para voltar ao fundo escuro, troque os valores de
+     --fundo, --superficie, --tinta e --tinta-suave entre si. */
   :root{
-    --fundo: #5B3039;
-    --superficie: #4B2730;
-    --destaque: #EDCBD0;
-    --detalhe: #DFB8C0;
-    --tinta: #FFF8F2;
-    --tinta-suave: #EADCDE;
-    --linha: rgba(255, 248, 242, 0.28);
+    --fundo: #FFF8F2;
+    --superficie: #F6E7E9;
+    --destaque: #5B3039;
+    --detalhe: #8A5560;
+    --tinta: #3D2028;
+    --tinta-suave: #6E4A52;
+    --linha: rgba(91, 48, 57, 0.22);
     --serif: "DM Serif Display", serif;
     --corpo: "Montserrat", sans-serif;
     --max: 1180px;
@@ -127,7 +130,7 @@
     position: fixed;
     top:0; left:0; right:0;
     z-index: 500;
-    background: rgba(91, 48, 57, 0.96);
+    background: rgba(255, 248, 242, 0.96);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--linha);
   }
@@ -251,7 +254,7 @@
   }
 
   .ph-block{
-    background: linear-gradient(155deg, #784550 0%, var(--fundo) 55%, var(--superficie) 100%);
+    background: linear-gradient(155deg, #E8D2D6 0%, var(--superficie) 55%, var(--fundo) 100%);
     border: 1px solid var(--linha);
     display:flex;
     align-items:flex-end;
@@ -377,13 +380,14 @@
     top:50%; left:50%;
     transform: translate(-50%,-50%);
     width: 52px; height: 52px;
-    border: 1px solid var(--tinta);
+    border: 1px solid rgba(255, 248, 242, 0.9);
+    background: rgba(61, 32, 40, 0.45);
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
   }
-  .item-capa .play svg{ width:15px; height:15px; fill: var(--tinta); margin-left:2px; }
+  .item-capa .play svg{ width:15px; height:15px; fill: #FFF8F2; margin-left:2px; }
   .item-corpo{ padding: 1rem 1.1rem 1.2rem; }
   .item-marca{
     font-size: 0.64rem;
@@ -465,7 +469,7 @@
 
   .ambientes{
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
     gap: clamp(1.25rem, 3vw, 2rem);
   }
   .ambiente{ border: 1px solid var(--linha); padding: clamp(1.3rem, 3vw, 1.8rem); }
@@ -698,7 +702,7 @@
       <div class="section-head reveal">
         <span class="eyebrow" data-i18n="fotosEyebrow">02 · Fotos</span>
         <h2 data-i18n="fotosTitulo">Ideias que nascem da minha rotina</h2>
-        <p data-i18n="fotosSub">Uma seleção de fotos que criei com produtos que fazem parte do meu dia a dia. Produções autorais para mostrar meu olhar, minha linguagem e as possibilidades de criação para marcas.</p>
+        <p data-i18n="fotosSub">Produtos que já fazem parte do meu dia a dia viram ponto de partida para criar. Aqui, reúno produções autorais que mostram meu olhar, minha forma de contar histórias e como transformo situações simples em conteúdo para marcas.</p>
       </div>
       <span class="selo-autoral reveal" data-i18n="seloAutoral">Conteúdo autoral, sem parceria com as marcas</span>
       <div class="filtros reveal" id="filtros-fotos" role="group" data-i18n-aria="filtrosAria" aria-label="Filtrar fotos por marca"></div>
@@ -712,7 +716,7 @@
       <div class="section-head reveal">
         <span class="eyebrow" data-i18n="videosEyebrow">03 · Vídeos</span>
         <h2 data-i18n="videosTitulo">Meu olhar em movimento</h2>
-        <p data-i18n="videosSub">Vídeos autorais gravados na minha casa, com produtos da minha rotina. É assim que eu falo de um produto, com a linguagem de quem conta para uma amiga.</p>
+        <p data-i18n="videosSub">Vídeos autorais gravados na minha casa, com produtos que fazem parte da minha rotina. Mostro cada produto em uso, dentro de uma situação real, com uma linguagem próxima, como quem compartilha uma descoberta com uma amiga.</p>
       </div>
       <span class="selo-autoral reveal" data-i18n="seloAutoral">Conteúdo autoral, sem parceria com as marcas</span>
       <div class="filtros reveal" id="filtros-videos" role="group" data-i18n-aria="filtrosAria" aria-label="Filtrar vídeos por marca"></div>
@@ -725,8 +729,8 @@
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow" data-i18n="processoEyebrow">04 · Como eu trabalho</span>
-        <h2 data-i18n="processoTitulo">Do primeiro contato até o arquivo na sua mão</h2>
-        <p data-i18n="processoSub">Sem surpresa no meio do caminho. Você sabe desde o começo o que vai receber, quando e em que formato.</p>
+        <h2 data-i18n="processoTitulo">Do primeiro contato até a entrega</h2>
+        <p data-i18n="processoSub">Um processo simples e transparente. Desde o início, você sabe o que será produzido, como vamos trabalhar e o que recebe no final.</p>
       </div>
 
       <div class="passos reveal" id="passos"></div>
@@ -745,7 +749,7 @@
       <div class="section-head reveal">
         <span class="eyebrow" data-i18n="servicosEyebrow">05 · Serviços</span>
         <h2 data-i18n="servicosTitulo">Como eu te ajudo</h2>
-        <p data-i18n="servicosSub">Seis formatos de entrega para encaixar no que a sua marca precisa agora.</p>
+        <p data-i18n="servicosSub">Formatos de conteúdo que podem ser adaptados ao objetivo, ao produto e ao momento da sua marca.</p>
       </div>
       <div class="servicos-grid reveal" id="servicos-grid"></div>
     </div>
@@ -757,8 +761,8 @@
       <div class="contato-inner">
         <div class="reveal">
           <span class="eyebrow" data-i18n="contatoEyebrow">06 · Contato</span>
-          <h2 data-i18n="contatoTitulo">Bora criar juntos</h2>
-          <p data-i18n="contatoSub">Conta um pouco sobre a sua marca e o que você precisa. Eu respondo rapidinho.</p>
+          <h2 data-i18n="contatoTitulo">Vamos falar sobre o seu projeto</h2>
+          <p data-i18n="contatoSub">Me conta um pouco sobre a sua marca, o produto e o tipo de conteúdo que você precisa. A partir disso, consigo entender a proposta e pensar no melhor formato para a produção.</p>
 
           <form id="form-contato" novalidate>
             <div class="campo">
@@ -791,7 +795,7 @@
           </div>
           <div>
             <span class="eyebrow" data-i18n="localTitulo">Localização</span>
-            <p data-i18n="localTexto">Atendo de forma remota e também em Coimbra, MG.</p>
+            <p data-i18n="localTexto">Atendo marcas de todo o Brasil de forma remota e também realizo produções na região de Ubá, MG.</p>
           </div>
         </div>
       </div>
@@ -866,15 +870,15 @@
   var olhares = [
     {
       nome: { pt: "Casa e decoração", en: "Home and decor" },
-      texto: { pt: "Eu reparo no detalhe que faz o ambiente parecer cuidado. O produto aparece resolvendo alguma coisa, não posando na prateleira.", en: "I notice the detail that makes a room feel looked after. The product shows up solving something, not posing on a shelf." }
+      texto: { pt: "Crio conteúdos mostrando o produto dentro de uma situação real da casa, destacando como ele funciona, o que melhora no ambiente e por que faz sentido na rotina.", en: "I create content showing the product inside a real situation at home, highlighting how it works, what it improves in the space and why it makes sense in the routine." }
     },
     {
       nome: { pt: "Pet", en: "Pet" },
-      texto: { pt: "Mostro o produto na rotina de verdade, com o bicho no meio, do jeito bagunçado que acontece na vida real.", en: "I show the product in a real routine, with the pet in the middle of it, as messy as real life actually is." }
+      texto: { pt: "Crio conteúdos com a Francisca mostrando o produto em uso de verdade, destacando a experiência, os benefícios e a reação dela de um jeito natural, visual e fácil de conectar com quem também vive a rotina com pet.", en: "I create content with Francisca showing the product in real use, highlighting the experience, the benefits and her reaction in a natural, visual way that connects with anyone who also lives a routine with a pet." }
     },
     {
       nome: { pt: "Tech", en: "Tech" },
-      texto: { pt: "Tiro o medo do produto. Falo de tecnologia com a linguagem de quem explica para uma amiga, sem palavra difícil.", en: "I take the fear out of the product. I talk about technology the way you would explain it to a friend, with no jargon." }
+      texto: { pt: "Crio conteúdos que mostram a tecnologia funcionando na prática, traduzindo recursos, benefícios e experiência de uso de um jeito simples, próximo e fácil de entender.", en: "I create content that shows technology working in practice, translating features, benefits and the user experience in a simple, close and easy to understand way." }
     }
   ];
 
@@ -882,23 +886,23 @@
   var passos = [
     {
       numero: "01",
-      titulo: { pt: "A gente conversa sobre o produto", en: "We talk about the product" },
-      desc: { pt: "Você me conta o que quer mostrar e para quem. Eu pergunto o que a sua cliente costuma duvidar antes de comprar.", en: "You tell me what you want to show and to whom. I ask what your customer usually doubts before buying." }
+      titulo: { pt: "Entendo o produto e o objetivo", en: "I understand the product and the goal" },
+      desc: { pt: "Você me conta sobre a marca, o produto, o público e o que precisa comunicar. A partir disso, identifico os pontos que merecem destaque e as dúvidas que o conteúdo precisa ajudar a responder.", en: "You tell me about the brand, the product, the audience and what you need to communicate. From there, I identify the points that deserve attention and the doubts the content needs to help answer." }
     },
     {
       numero: "02",
-      titulo: { pt: "Escrevo o roteiro e você aprova", en: "I write the script and you approve it" },
-      desc: { pt: "Nada é gravado antes de você ler e dizer que está do jeito da sua marca.", en: "Nothing gets filmed before you read it and say it sounds like your brand." }
+      titulo: { pt: "Desenvolvo o roteiro para aprovação", en: "I develop the script for your approval" },
+      desc: { pt: "Transformo o briefing em uma narrativa pensada para o formato e para o objetivo do conteúdo. O roteiro é enviado para sua aprovação antes da gravação.", en: "I turn the brief into a narrative built for the format and the goal of the content. The script is sent for your approval before filming." }
     },
     {
       numero: "03",
-      titulo: { pt: "Gravo com luz natural, em casa", en: "I film at home, with natural light" },
-      desc: { pt: "Uso os ambientes da minha casa e o produto no uso real, do jeito que a sua cliente usaria.", en: "I use the rooms in my home and the product in real use, the way your customer would use it." }
+      titulo: { pt: "Produzo em contexto real", en: "I produce in a real context" },
+      desc: { pt: "Gravo o produto integrado à rotina e aos ambientes da minha casa, priorizando cenas naturais, demonstração de uso e uma comunicação próxima de quem realmente experimentou.", en: "I film the product integrated into the routine and the rooms of my home, favouring natural scenes, real demonstration and the voice of someone who has actually tried it." }
     },
     {
       numero: "04",
-      titulo: { pt: "Entrego com uma rodada de ajuste", en: "I deliver with one round of revisions" },
-      desc: { pt: "Você recebe em até 72 horas úteis e ainda tem direito a um ajuste, sem custo nenhum.", en: "You get it within 72 business hours, with one round of revisions included at no extra cost." }
+      titulo: { pt: "Edito e entrego", en: "I edit and deliver" },
+      desc: { pt: "Você recebe o conteúdo finalizado em até 72 horas úteis após a aprovação do roteiro, com direito a uma rodada de ajustes incluída.", en: "You receive the finished content within 72 business hours after the script is approved, with one round of revisions included." }
     }
   ];
 
@@ -906,27 +910,27 @@
   var entregas = [
     {
       nome: { pt: "Formatos", en: "Formats" },
-      texto: { pt: "Vertical 9:16 para reels e stories, 4:5 para o feed e 1:1 quando a sua campanha pedir.", en: "Vertical 9:16 for reels and stories, 4:5 for the feed and 1:1 when your campaign needs it." }
+      texto: { pt: "Vídeos em 9:16 para Reels, Stories e TikTok, além de versões em 4:5 ou 1:1 quando a campanha precisar.", en: "Videos in 9:16 for Reels, Stories and TikTok, plus 4:5 or 1:1 versions when the campaign needs them." }
     },
     {
       nome: { pt: "Duração", en: "Length" },
-      texto: { pt: "De 15 a 60 segundos, cortado no ritmo da plataforma onde o vídeo vai rodar.", en: "From 15 to 60 seconds, cut to the rhythm of the platform where it will run." }
+      texto: { pt: "Conteúdos de 15 a 60 segundos, editados de acordo com o ritmo e a linguagem da plataforma.", en: "Content from 15 to 60 seconds, edited to match the rhythm and the language of each platform." }
     },
     {
       nome: { pt: "Legenda", en: "Captions" },
-      texto: { pt: "Com legenda na tela ou sem, você escolhe na hora de aprovar o roteiro.", en: "With on screen captions or without, you choose when approving the script." }
+      texto: { pt: "O vídeo pode ser entregue com ou sem legendas na tela, conforme a proposta aprovada.", en: "The video can be delivered with or without on screen captions, according to the approved proposal." }
     },
     {
       nome: { pt: "Prazo", en: "Turnaround" },
-      texto: { pt: "Até 72 horas úteis depois do roteiro aprovado e do produto em mãos.", en: "Up to 72 business hours after the script is approved and the product arrives." }
+      texto: { pt: "Entrega em até 72 horas úteis após a aprovação do roteiro e com o produto em mãos.", en: "Delivery within 72 business hours after the script is approved and the product has arrived." }
     },
     {
       nome: { pt: "Ajuste", en: "Revisions" },
-      texto: { pt: "Uma rodada de ajuste já está inclusa no valor combinado.", en: "One round of revisions is already included in the agreed price." }
+      texto: { pt: "Uma rodada de ajustes está incluída no valor combinado.", en: "One round of revisions is included in the agreed price." }
     },
     {
       nome: { pt: "Uso do material", en: "Usage rights" },
-      texto: { pt: "Combinado por escrito antes de gravar, com prazo e canais definidos.", en: "Agreed in writing before filming, with the time frame and channels defined." }
+      texto: { pt: "Prazo de uso, canais e finalidade do conteúdo são definidos por escrito antes da produção.", en: "Usage period, channels and purpose of the content are defined in writing before production." }
     }
   ];
 
@@ -935,15 +939,23 @@
   var ambientes = [
     {
       nome: { pt: "Sala com luz natural", en: "Living room with natural light" },
-      texto: { pt: "Janela grande com cortina clara, luz difusa e suave durante a manhã inteira.", en: "A large window with a light curtain, giving soft, diffused light all morning." }
+      texto: { pt: "Ambiente claro e amplo, com janela grande e luz suave durante boa parte do dia. Funciona bem para cenas de rotina, decoração e produtos em uso.", en: "A bright, open room with a large window and soft light for most of the day. It works well for routine scenes, decor and products in use." }
     },
     {
       nome: { pt: "Canto de estar", en: "Sitting corner" },
-      texto: { pt: "Sofá claro, plantas e parede neutra, bom para cena de rotina e de conversa.", en: "Light sofa, plants and a neutral wall, good for routine and talking head scenes." }
+      texto: { pt: "Sofá claro, plantas e composição neutra para conteúdos mais próximos, cenas de conversa, lifestyle e demonstrações no dia a dia.", en: "Light sofa, plants and a neutral composition for closer content, talking scenes, lifestyle and everyday demonstrations." }
     },
     {
-      nome: { pt: "Mesa de apoio", en: "Tabletop setup" },
-      texto: { pt: "Superfície limpa para detalhe de produto pequeno, embalagem e textura.", en: "A clean surface for close ups of small products, packaging and texture." }
+      nome: { pt: "Cozinha organizada", en: "Organized kitchen" },
+      texto: { pt: "Cozinha clara, funcional e visualmente limpa, com espaço para cenas de preparo, organização, utilidades domésticas e produtos usados na rotina.", en: "A bright, functional and visually clean kitchen, with room for prep scenes, organization, housewares and products used in the routine." }
+    },
+    {
+      nome: { pt: "Bancada", en: "Tabletop" },
+      texto: { pt: "Uma superfície ampla para demonstrações, detalhes de produto, embalagens, texturas, comparações e cenas gravadas de cima ou mais próximas.", en: "A wide surface for demonstrations, product details, packaging, textures, comparisons and scenes filmed from above or up close." }
+    },
+    {
+      nome: { pt: "Diferentes composições", en: "Different compositions" },
+      texto: { pt: "Os ambientes permitem variar enquadramentos, distâncias e cenários para que o conteúdo não fique com aparência repetitiva, mesmo quando vários vídeos são produzidos no mesmo espaço.", en: "The spaces let me vary framing, distance and setting, so the content does not look repetitive even when several videos are produced in the same place." }
     }
   ];
 
@@ -952,32 +964,32 @@
     {
       numero: "01",
       titulo: { pt: "Vídeo UGC", en: "UGC video" },
-      desc: { pt: "Gravo um vídeo autêntico no formato conversa de amiga, pensado para performar no feed e nos anúncios da sua marca.", en: "I film an authentic video in a friendly, conversational style, built to perform on your feed and in your brand's ads." }
+      desc: { pt: "Conteúdo pensado para apresentar o produto em uma situação real, combinando demonstração, experiência de uso e uma comunicação próxima e natural.", en: "Content built to present the product in a real situation, combining demonstration, real use and a close, natural voice." }
     },
     {
       numero: "02",
-      titulo: { pt: "Corte para anúncio", en: "Ad cutdown" },
-      desc: { pt: "Entrego cortes curtos e diretos, prontos para rodar como anúncio em redes sociais.", en: "I deliver short, direct cutdowns, ready to run as ads on social media." }
+      titulo: { pt: "UGC para anúncios", en: "UGC for ads" },
+      desc: { pt: "Vídeos desenvolvidos com estrutura mais direta para mídia paga, com gancho, benefício, demonstração e chamada para ação pensados para conversão.", en: "Videos built with a more direct structure for paid media, with hook, benefit, demonstration and a call to action designed to convert." }
     },
     {
       numero: "03",
-      titulo: { pt: "Fotos do produto", en: "Product photos" },
-      desc: { pt: "Faço fotos limpas e naturais do seu produto, prontas para loja virtual, catálogo e redes sociais.", en: "I shoot clean, natural photos of your product, ready for your online store, catalog and social media." }
+      titulo: { pt: "Fotos UGC", en: "UGC photos" },
+      desc: { pt: "Fotos do produto em contexto real, com composições naturais e diferentes enquadramentos para redes sociais, campanhas e páginas de produto.", en: "Product photos in a real context, with natural compositions and different framings for social media, campaigns and product pages." }
     },
     {
       numero: "04",
-      titulo: { pt: "Unboxing", en: "Unboxing" },
-      desc: { pt: "Gravo a experiência real de abrir e testar o seu produto, do jeito que a sua cliente faria em casa.", en: "I film the real experience of opening and testing your product, just like your customer would at home." }
+      titulo: { pt: "Unboxing e demonstração", en: "Unboxing and demonstration" },
+      desc: { pt: "Registro da experiência de receber, abrir, conhecer e usar o produto, destacando detalhes que ajudam o consumidor a entender melhor o que está comprando.", en: "A record of receiving, opening, discovering and using the product, highlighting details that help the customer understand what they are buying." }
     },
     {
       numero: "05",
-      titulo: { pt: "Publicação no meu perfil", en: "Post on my profile" },
-      desc: { pt: "Publico o conteúdo no meu Instagram, levando a sua marca até a minha audiência.", en: "I publish the content on my Instagram, bringing your brand to my audience." }
+      titulo: { pt: "Variações de criativo", en: "Creative variations" },
+      desc: { pt: "A partir de um mesmo produto ou conceito, produzo diferentes ganchos, cenas ou versões de edição para a marca testar abordagens e criativos.", en: "From the same product or concept, I produce different hooks, scenes or edit versions so the brand can test approaches and creatives." }
     },
     {
       numero: "06",
-      titulo: { pt: "Pacote mensal", en: "Monthly package" },
-      desc: { pt: "Monto um combo de vídeos e fotos entregues ao longo do mês, ideal para manter a sua marca sempre presente.", en: "I put together a bundle of videos and photos delivered across the month, ideal to keep your brand always present." }
+      titulo: { pt: "Pacotes de conteúdo", en: "Content packages" },
+      desc: { pt: "Combinações de vídeos e fotos planejadas para gerar mais material em uma única produção e manter uma frequência consistente de conteúdo.", en: "Combinations of videos and photos planned to generate more material in a single production and keep a consistent content frequency." }
     }
   ];
 
@@ -1014,10 +1026,10 @@
       olharTitulo: "Meu olhar em cada nicho",
       fotosEyebrow: "02 · Fotos",
       fotosTitulo: "Ideias que nascem da minha rotina",
-      fotosSub: "Uma seleção de fotos que criei com produtos que fazem parte do meu dia a dia. Produções autorais para mostrar meu olhar, minha linguagem e as possibilidades de criação para marcas.",
+      fotosSub: "Produtos que já fazem parte do meu dia a dia viram ponto de partida para criar. Aqui, reúno produções autorais que mostram meu olhar, minha forma de contar histórias e como transformo situações simples em conteúdo para marcas.",
       videosEyebrow: "03 · Vídeos",
       videosTitulo: "Meu olhar em movimento",
-      videosSub: "Vídeos autorais gravados na minha casa, com produtos da minha rotina. É assim que eu falo de um produto, com a linguagem de quem conta para uma amiga.",
+      videosSub: "Vídeos autorais gravados na minha casa, com produtos que fazem parte da minha rotina. Mostro cada produto em uso, dentro de uma situação real, com uma linguagem próxima, como quem compartilha uma descoberta com uma amiga.",
       seloAutoral: "Conteúdo autoral, sem parceria com as marcas",
       notaAutoral: "Conteúdo autoral, sem parceria com a marca.",
       filtrosAria: "Filtrar por marca",
@@ -1027,16 +1039,16 @@
       capaFoto: "foto 4:5",
       capaVideo: "vídeo 9:16",
       processoEyebrow: "04 · Como eu trabalho",
-      processoTitulo: "Do primeiro contato até o arquivo na sua mão",
-      processoSub: "Sem surpresa no meio do caminho. Você sabe desde o começo o que vai receber, quando e em que formato.",
+      processoTitulo: "Do primeiro contato até a entrega",
+      processoSub: "Um processo simples e transparente. Desde o início, você sabe o que será produzido, como vamos trabalhar e o que recebe no final.",
       entregasTitulo: "O que você recebe",
       ambientesTitulo: "Onde eu gravo",
       servicosEyebrow: "05 · Serviços",
       servicosTitulo: "Como eu te ajudo",
-      servicosSub: "Seis formatos de entrega para encaixar no que a sua marca precisa agora.",
+      servicosSub: "Formatos de conteúdo que podem ser adaptados ao objetivo, ao produto e ao momento da sua marca.",
       contatoEyebrow: "06 · Contato",
-      contatoTitulo: "Bora criar juntos",
-      contatoSub: "Conta um pouco sobre a sua marca e o que você precisa. Eu respondo rapidinho.",
+      contatoTitulo: "Vamos falar sobre o seu projeto",
+      contatoSub: "Me conta um pouco sobre a sua marca, o produto e o tipo de conteúdo que você precisa. A partir disso, consigo entender a proposta e pensar no melhor formato para a produção.",
       labelNome: "Nome",
       labelEmail: "E-mail",
       labelMensagem: "Mensagem",
@@ -1047,7 +1059,7 @@
       canaisTitulo: "Fale direto comigo",
       canalEmail: "E-mail",
       localTitulo: "Localização",
-      localTexto: "Atendo de forma remota e também em Coimbra, MG.",
+      localTexto: "Atendo marcas de todo o Brasil de forma remota e também realizo produções na região de Ubá, MG.",
       capturaTitulo: "Quer meu mídia kit completo?",
       capturaTexto: "Deixe seu nome e e-mail que eu envio direitinho.",
       capturaBtn: "Quero receber",
@@ -1082,10 +1094,10 @@
       olharTitulo: "My eye in each niche",
       fotosEyebrow: "02 · Photos",
       fotosTitulo: "Ideas that come from my routine",
-      fotosSub: "A selection of photos I created with products that are part of my everyday life. Independent work to show my eye, my voice and what I can create for brands.",
+      fotosSub: "Products that are already part of my everyday life become the starting point to create. Here I gather independent work that shows my eye, the way I tell stories and how I turn simple situations into content for brands.",
       videosEyebrow: "03 · Videos",
       videosTitulo: "My eye in motion",
-      videosSub: "Independent videos filmed at home, with products from my own routine. This is how I talk about a product, the way you would tell a friend.",
+      videosSub: "Independent videos filmed at home, with products that are part of my routine. I show each product in use, inside a real situation, with a close voice, like someone sharing a discovery with a friend.",
       seloAutoral: "Independent content, not a paid partnership",
       notaAutoral: "Independent content, not a paid partnership.",
       filtrosAria: "Filter by brand",
@@ -1095,16 +1107,16 @@
       capaFoto: "photo 4:5",
       capaVideo: "video 9:16",
       processoEyebrow: "04 · How I work",
-      processoTitulo: "From the first message to the file in your hands",
-      processoSub: "No surprises along the way. You know from the start what you will get, when and in which format.",
+      processoTitulo: "From the first message to the delivery",
+      processoSub: "A simple and transparent process. From the start, you know what will be produced, how we will work and what you receive at the end.",
       entregasTitulo: "What you receive",
       ambientesTitulo: "Where I film",
       servicosEyebrow: "05 · Services",
       servicosTitulo: "How I can help",
-      servicosSub: "Six delivery formats to fit what your brand needs right now.",
+      servicosSub: "Content formats that can be adapted to the goal, the product and the moment your brand is in.",
       contatoEyebrow: "06 · Contact",
-      contatoTitulo: "Let us create together",
-      contatoSub: "Tell me a bit about your brand and what you need. I reply quickly.",
+      contatoTitulo: "Let us talk about your project",
+      contatoSub: "Tell me a bit about your brand, the product and the kind of content you need. From there, I can understand the brief and think about the best format for the production.",
       labelNome: "Name",
       labelEmail: "Email",
       labelMensagem: "Message",
@@ -1115,7 +1127,7 @@
       canaisTitulo: "Talk to me directly",
       canalEmail: "Email",
       localTitulo: "Location",
-      localTexto: "I work remotely and also in Coimbra, Minas Gerais.",
+      localTexto: "I work remotely with brands all over Brazil and also produce on location in the Ubá region, in Minas Gerais.",
       capturaTitulo: "Want my full media kit?",
       capturaTexto: "Leave your name and email and I will send it over.",
       capturaBtn: "Send it to me",
