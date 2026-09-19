@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priscila Honorato | Portfólio UGC Creator</title>
+<meta name="description" content="Portfólio de Priscila Honorato, criadora de conteúdo UGC para marcas de casa e decoração, pet e tech.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===================== VARIÁVEIS ===================== */
+  :root{
+    --areia: #efe9e1;
+    --off-white: #fdfcfa;
+    --marrom: #8a7461;
+    --nude: #c9b5a3;
+    --tinta: #3a332c;
+    --tinta-suave: #6b6058;
+    --linha: rgba(58, 51, 44, 0.18);
+    --serif: "Tenor Sans", serif;
+    --corpo: "Jost", sans-serif;
+    --max: 1180px;
+    --gap: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *,*::before,*::after{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--areia);
+    color: var(--tinta);
+    font-family: var(--corpo);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  h1,h2,h3,h4{
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--tinta);
+    margin: 0 0 0.6em;
+    letter-spacing: 0.02em;
+  }
+
+  p{ margin: 0 0 1em; color: var(--tinta-suave); }
+
+  a{ color: inherit; text-decoration: none; }
+
+  ul{ margin:0; padding:0; list-style:none; }
+
+  .container{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 5vw, 3rem);
+  }
+
+  section{ padding: clamp(4rem, 9vw, 7rem) 0; }
+
+  .eyebrow{
+    display:block;
+    font-family: var(--corpo);
+    font-size: 0.75rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--marrom);
+    margin-bottom: 1.1rem;
+  }
+
+  .section-head{ margin-bottom: clamp(2.25rem, 5vw, 3.5rem); max-width: 640px; }
+  .section-head p{ margin-top: 0.8rem; }
+
+  /* foco visível para acessibilidade */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible{
+    outline: 2px solid var(--marrom);
+    outline-offset: 3px;
+  }
+
+  .skip-link{
+    position:absolute;
+    left: -9999px;
+    top: auto;
+    background: var(--off-white);
+    color: var(--tinta);
+    padding: 0.8em 1.4em;
+    z-index: 999;
+    border: 1px solid var(--marrom);
+  }
+  .skip-link:focus{ left: 1rem; top: 1rem; }
+
+  /* ===================== BOTÕES ===================== */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.5em;
+    padding: 0.95em 2em;
+    border: 1px solid var(--tinta);
+    background: transparent;
+    color: var(--tinta);
+    font-family: var(--corpo);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    white-space: nowrap;
+  }
+  .btn:hover{ background: var(--tinta); color: var(--off-white); }
+  .btn-marrom{ border-color: var(--marrom); color: var(--marrom); }
+  .btn-marrom:hover{ background: var(--marrom); color: var(--off-white); }
+  .btn-small{ padding: 0.7em 1.4em; font-size: 0.7rem; }
+  .btn-block{ width:100%; }
+
+  /* ===================== TOPO / NAV ===================== */
+  .topbar{
+    position: fixed;
+    top:0; left:0; right:0;
+    z-index: 500;
+    background: rgba(253, 252, 250, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--linha);
+  }
+  .topbar-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 1.1rem clamp(1.25rem, 5vw, 3rem);
+  }
+  .logo{
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+  }
+  .nav-links{
+    display:flex;
+    gap: clamp(1.2rem, 2.5vw, 2.2rem);
+  }
+  .nav-links a{
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tinta);
+    padding: 0.3em 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s ease, color 0.25s ease;
+  }
+  .nav-links a:hover{ border-color: var(--marrom); color: var(--marrom); }
+
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--linha);
+    cursor:pointer;
+  }
+  .hamburger span{
+    display:block;
+    width: 18px;
+    height: 1px;
+    background: var(--tinta);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+  .hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+  @media (max-width: 860px){
+    .nav-links{
+      position:absolute;
+      top: 100%;
+      left:0; right:0;
+      flex-direction:column;
+      background: var(--off-white);
+      border-bottom: 1px solid var(--linha);
+      padding: 1.5rem clamp(1.25rem, 5vw, 3rem) 2rem;
+      gap: 1.1rem;
+      transform: translateY(-8px);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .nav-links.is-open{
+      transform: translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+    .hamburger{ display:flex; }
+  }
+
+  /* ===================== CAPA / HERO ===================== */
+  .hero{
+    padding-top: clamp(7.5rem, 14vw, 10rem);
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items:center;
+  }
+  .hero-name{
+    font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+  }
+  .hero-tag{
+    font-size: 1.05rem;
+    max-width: 30em;
+    color: var(--tinta-suave);
+  }
+  .hero-ctas{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 1rem;
+    margin: 2rem 0 3rem;
+  }
+  .ph-block{
+    background: linear-gradient(155deg, var(--nude) 0%, var(--areia) 55%, var(--off-white) 100%);
+    border: 1px solid var(--linha);
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    text-align:center;
+    color: var(--marrom);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-bottom: 1.2rem;
+  }
+  /* Troque este bloco por uma <img> real: <img src="sua-foto.jpg" alt="Priscila Honorato"> */
+  .hero-photo{ aspect-ratio: 4 / 5; width: 100%; }
+
+  .hero-stats{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    padding-top: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid var(--linha);
+  }
+  .stat-num{
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--marrom);
+    margin-bottom: 0.3rem;
+    display:block;
+  }
+  .stat-label{
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  .brand-strip{
+    margin-top: clamp(3rem, 7vw, 5rem);
+    border-top: 1px solid var(--linha);
+    border-bottom: 1px solid var(--linha);
+    padding: 1.6rem 0;
+  }
+  .brand-strip ul{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap: clamp(1.4rem, 4vw, 3rem);
+  }
+  .brand-strip li{
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  @media (max-width: 860px){
+    .hero-inner{ grid-template-columns: 1fr; }
+    .hero-photo{ order:-1; max-width: 320px; margin: 0 auto; }
+    .hero-stats{ grid-template-columns: 1fr 1fr 1fr; }
+  }
+  @media (max-width: 520px){
+    .hero-stats{ grid-template-columns: 1fr; text-align:center; row-gap: 1.5rem; }
+  }
+
+  /* ===================== SOBRE ===================== */
+  #sobre{ background: var(--off-white); }
+  .sobre-inner{
+    display:grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items:center;
+  }
+  .sobre-photo{ aspect-ratio: 4 / 5; }
+  .promessas{ margin: 1.8rem 0; }
+  .promessas li{
+    display:flex;
+    gap: 0.9em;
+    padding: 0.9em 0;
+    border-top: 1px solid var(--linha);
+    color: var(--tinta);
+    font-size: 0.95rem;
+  }
+  .promessas li:last-child{ border-bottom: 1px solid var(--linha); }
+  .promessas .marcador{
+    font-family: var(--serif);
+    color: var(--marrom);
+    flex-shrink:0;
+  }
+  .assinatura{
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
+    color: var(--marrom);
+  }
+
+  @media (max-width: 860px){
+    .sobre-inner{ grid-template-columns: 1fr; }
+    .sobre-photo{ max-width: 320px; margin: 0 auto; }
+  }
+
+  /* ===================== DESTAQUES ===================== */
+  .destaques-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+  .destaque-card{
+    display:block;
+    background: var(--off-white);
+    border: 1px solid var(--linha);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .destaque-card:hover{ transform: translateY(-4px); border-color: var(--marrom); }
+  .destaque-cover{
+    position:relative;
+    aspect-ratio: 9 / 16;
+    overflow:hidden;
+  }
+  .destaque-cover .play{
+    position:absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width: 58px; height: 58px;
+    border: 1px solid var(--off-white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .destaque-cover .play svg{ width:16px; height:16px; fill: var(--off-white); margin-left:2px; }
+  .destaque-body{ padding: 1.4rem; }
+  .destaque-num{
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    color: var(--marrom);
+    display:block;
+  }
+  .destaque-num-label{
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    margin-bottom: 0.8rem;
+    display:block;
+  }
+  .destaque-title{ font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.4rem; }
+  .destaque-context{ font-size: 0.85rem; margin:0; }
+
+  @media (max-width: 860px){
+    .destaques-grid{ grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+  }
+
+  /* ===================== TRABALHOS / FILTRO ===================== */
+  #trabalhos{ background: var(--off-white); }
+  .filtros{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.8rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .filtro-btn{
+    padding: 0.7em 1.5em;
+    border: 1px solid var(--linha);
+    background: transparent;
+    color: var(--tinta-suave);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor:pointer;
+    transition: border-color 0.25s ease, color 0.25s ease;
+  }
+  .filtro-btn:hover{ border-color: var(--marrom); color: var(--marrom); }
+  .filtro-btn[aria-pressed="true"]{
+    border-color: var(--marrom);
+    color: var(--off-white);
+    background: var(--marrom);
+  }
+  .trabalhos-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+  .trabalho-card{
+    background: var(--areia);
+    border: 1px solid var(--linha);
+  }
+  .trabalho-cover{ aspect-ratio: 4 / 5; }
+  .trabalho-info{ padding: 1.2rem 1.3rem 1.4rem; }
+  .trabalho-nicho{
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--marrom);
+    display:block;
+    margin-bottom: 0.4rem;
+  }
+  .trabalho-titulo{ font-family: var(--serif); font-size: 1rem; margin-bottom:0.2rem; }
+  .trabalho-formato{ font-size: 0.8rem; margin:0; color: var(--tinta-suave); }
+  .trabalho-card.is-hidden{ display:none; }
+
+  @media (max-width: 860px){
+    .trabalhos-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px){
+    .trabalhos-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ===================== SERVIÇOS ===================== */
+  .servicos-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+  }
+  .servico-card{
+    background: var(--areia);
+    padding: clamp(1.8rem, 3vw, 2.4rem);
+  }
+  .servico-num{
+    font-family: var(--serif);
+    color: var(--nude);
+    font-size: 1.6rem;
+    display:block;
+    margin-bottom: 1rem;
+  }
+  .servico-titulo{ font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .servico-desc{ font-size: 0.88rem; margin:0; }
+
+  @media (max-width: 860px){
+    .servicos-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px){
+    .servicos-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ===================== NÚMEROS E DEPOIMENTOS ===================== */
+  #numeros{ background: var(--off-white); }
+  .metricas-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    text-align:center;
+  }
+  .metrica-item{ padding: 1.5rem 0.5rem; border: 1px solid var(--linha); }
+  .metrica-valor{
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.4vw, 2.8rem);
+    color: var(--marrom);
+    display:block;
+    margin-bottom: 0.4rem;
+  }
+  .metrica-label{
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  .subtitulo-bloco{
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--marrom);
+    margin-bottom: 1.6rem;
+  }
+
+  .resultados-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .resultado-card{
+    border: 1px solid var(--linha);
+    padding: clamp(1.6rem, 3vw, 2.2rem);
+  }
+  .resultado-marca{
+    font-family: var(--serif);
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
+  .resultado-valor{
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    color: var(--marrom);
+    display:block;
+    margin-bottom: 0.4rem;
+  }
+  .resultado-desc{ font-size: 0.85rem; margin:0; }
+
+  .depoimentos-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+  .depoimento-card{
+    background: var(--areia);
+    border: 1px solid var(--linha);
+    padding: clamp(1.6rem, 3vw, 2.2rem);
+  }
+  .depoimento-texto{
+    font-style: italic;
+    color: var(--tinta);
+    margin-bottom: 1.2rem;
+  }
+  .depoimento-autor{ font-size: 0.8rem; letter-spacing: 0.06em; }
+  .depoimento-autor strong{ font-weight: 500; color: var(--tinta); }
+
+  @media (max-width: 860px){
+    .metricas-grid{ grid-template-columns: repeat(2, 1fr); }
+    .resultados-grid{ grid-template-columns: 1fr; }
+    .depoimentos-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ===================== CONTATO ===================== */
+  .contato-inner{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+  .campo{ margin-bottom: 1.4rem; }
+  .campo label{
+    display:block;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    margin-bottom: 0.6rem;
+  }
+  .campo input,
+  .campo textarea{
+    width:100%;
+    padding: 0.9em 1em;
+    background: var(--off-white);
+    border: 1px solid var(--linha);
+    color: var(--tinta);
+    font-family: var(--corpo);
+    font-size: 0.95rem;
+  }
+  .campo textarea{ resize: vertical; min-height: 120px; }
+  .campo input::placeholder,
+  .campo textarea::placeholder{ color: var(--tinta-suave); opacity: 0.6; }
+
+  .contato-canais{ display:flex; flex-direction:column; gap: 3rem; }
+  .canais-lista{ display:flex; flex-wrap:wrap; gap: 1rem; }
+  .form-confirmacao{
+    display:none;
+    border: 1px solid var(--marrom);
+    padding: 1.6rem;
+    color: var(--marrom);
+    font-size: 0.9rem;
+  }
+  .form-confirmacao.is-visible{ display:block; }
+  #form-contato.is-hidden{ display:none; }
+
+  @media (max-width: 860px){
+    .contato-inner{ grid-template-columns: 1fr; }
+  }
+
+  /* ===================== RODAPÉ ===================== */
+  footer{
+    border-top: 1px solid var(--linha);
+    padding: clamp(2.5rem, 6vw, 3.5rem) 0;
+  }
+  .footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap: 1.5rem;
+  }
+  .footer-nome{ font-family: var(--serif); font-size: 1.1rem; }
+  .footer-redes{ display:flex; gap: 1.6rem; }
+  .footer-redes a{
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    border-bottom: 1px solid transparent;
+  }
+  .footer-redes a:hover{ color: var(--marrom); border-color: var(--marrom); }
+  .footer-ano{ font-size: 0.75rem; color: var(--tinta-suave); width:100%; text-align:center; margin-top: 1rem; }
+
+  /* ===================== ANIMAÇÃO DE ENTRADA ===================== */
+  .reveal{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible{ opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ===================== CARD DE CAPTURA (MODAL) ===================== */
+  .capture-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(58, 51, 44, 0.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 1.5rem;
+    z-index: 900;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.3s ease;
+  }
+  .capture-overlay.is-open{ opacity:1; pointer-events:auto; }
+  .capture-card{
+    position:relative;
+    background: var(--off-white);
+    border: 1px solid var(--linha);
+    max-width: 420px;
+    width:100%;
+    padding: clamp(2rem, 5vw, 2.8rem);
+  }
+  .capture-close{
+    position:absolute;
+    top: 1rem; right: 1rem;
+    width: 32px; height: 32px;
+    background: transparent;
+    border: 1px solid var(--linha);
+    color: var(--tinta);
+    cursor:pointer;
+    font-size: 1rem;
+    line-height:1;
+  }
+  .capture-title{ font-size: 1.4rem; margin-bottom: 0.6rem; padding-right: 2rem; }
+  .capture-card p{ margin-bottom: 1.4rem; }
+  .capture-card .campo{ margin-bottom: 1rem; }
+
+  /* ===================== UTILITÁRIOS ===================== */
+  .sr-only{
+    position:absolute;
+    width:1px; height:1px;
+    padding:0; margin:-1px;
+    overflow:hidden;
+    clip: rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+</style>
+</head>
+<body>
+
+<a href="#capa" class="skip-link">Pular para o conteúdo</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#capa" class="logo">Priscila Honorato</a>
+    <nav class="nav-links" id="nav-links" aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
+      <a href="#destaques">Destaques</a>
+      <a href="#trabalhos">Trabalhos</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#numeros">Números</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="capa">
+
+  <!-- ===================== CAPA / HERO ===================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <h1 class="hero-name">Priscila Honorato</h1>
+          <p class="hero-tag">Eu gravo como quem conversa com uma amiga. Crio conteúdo UGC para marcas de casa e decoração, pet e tech.</p>
+          <div class="hero-ctas">
+            <a class="btn" href="#contato">Falar comigo</a>
+            <a class="btn btn-marrom" href="#trabalhos">Ver os trabalhos</a>
+          </div>
+        </div>
+        <!-- Troque por uma foto real: <img class="hero-photo" src="foto-priscila.jpg" alt="Priscila Honorato sorrindo para a câmera"> -->
+        <div class="ph-block hero-photo" role="img" aria-label="Foto da creator Priscila Honorato, proporção 4 por 5">foto da creator 4:5</div>
+      </div>
+
+      <div class="hero-stats reveal">
+        <div>
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Vídeos entregues</span>
+        </div>
+        <div>
+          <span class="stat-num">4+</span>
+          <span class="stat-label">Marcas atendidas</span>
+        </div>
+        <div>
+          <span class="stat-num">12M+</span>
+          <span class="stat-label">Views somadas</span>
+        </div>
+      </div>
+
+      <div class="brand-strip reveal">
+        <ul id="brand-strip-list"><!-- preenchido via JavaScript a partir do array "marcas" --></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 01 SOBRE MIM ===================== -->
+  <section id="sobre">
+    <div class="container">
+      <div class="sobre-inner">
+        <!-- Troque por uma foto real: <img class="sobre-photo" src="foto-sobre.jpg" alt="Priscila Honorato em ambiente de gravação"> -->
+        <div class="ph-block sobre-photo reveal" role="img" aria-label="Foto da creator Priscila Honorato, proporção 4 por 5">foto da creator 4:5</div>
+        <div class="reveal">
+          <span class="eyebrow">01 · Sobre mim</span>
+          <h2>Prazer, eu sou a Priscila</h2>
+          <p>Eu gravo como quem conversa com uma amiga. Moro em Coimbra, MG, e transformo o dia a dia com um produto em conteúdo leve, verdadeiro e que faz a pessoa do outro lado confiar na sua marca. Gosto de entender o produto antes de ligar a câmera, porque um vídeo bom começa com uma boa conversa.</p>
+          <ul class="promessas">
+            <li><span class="marcador">01</span> Roteiro aprovado por você antes de eu gravar</li>
+            <li><span class="marcador">02</span> Uma rodada de ajuste incluída no valor</li>
+            <li><span class="marcador">03</span> Entrega em até 72 horas úteis</li>
+          </ul>
+          <p class="assinatura">Priscila Honorato</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 02 CONTEÚDOS DE DESTAQUE ===================== -->
+  <section id="destaques">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">02 · Destaques</span>
+        <h2>Conteúdos de destaque</h2>
+        <p>Três vídeos que mostram como eu conto a história de um produto.</p>
+      </div>
+      <div class="destaques-grid" id="destaques-grid">
+        <!-- preenchido via JavaScript a partir do array "destaques" -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 03 TRABALHOS POR NICHO ===================== -->
+  <section id="trabalhos">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">03 · Trabalhos</span>
+        <h2>Trabalhos por nicho</h2>
+        <p>Filtre por área para ver os projetos que já fiz para cada tipo de marca.</p>
+      </div>
+      <div class="filtros reveal" id="filtros" role="group" aria-label="Filtrar trabalhos por nicho">
+        <!-- preenchido via JavaScript a partir do array "nichos" -->
+      </div>
+      <div class="trabalhos-grid" id="trabalhos-grid">
+        <!-- preenchido via JavaScript a partir do array "trabalhos" -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 COMO EU TE AJUDO ===================== -->
+  <section id="servicos">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">04 · Serviços</span>
+        <h2>Como eu te ajudo</h2>
+        <p>Seis formatos de entrega para encaixar no que a sua marca precisa agora.</p>
+      </div>
+      <div class="servicos-grid reveal" id="servicos-grid">
+        <!-- preenchido via JavaScript a partir do array "servicos" -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 05 NÚMEROS E DEPOIMENTOS ===================== -->
+  <section id="numeros">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">05 · Números e depoimentos</span>
+        <h2>Resultados que sustentam o trabalho</h2>
+        <p>Os números do meu trabalho, os resultados de campanha e o que as marcas dizem depois de trabalhar comigo.</p>
+      </div>
+
+      <div class="metricas-grid" id="metricas-grid">
+        <!-- preenchido via JavaScript a partir do array "metricas", com contador animado -->
+      </div>
+
+      <span class="subtitulo-bloco reveal">Resultados de campanha</span>
+      <div class="resultados-grid reveal" id="resultados-grid">
+        <!-- preenchido via JavaScript a partir do array "resultadosCampanha" -->
+      </div>
+
+      <span class="subtitulo-bloco reveal">Depoimentos</span>
+      <div class="depoimentos-grid reveal" id="depoimentos-grid">
+        <!-- preenchido via JavaScript a partir do array "depoimentos" -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 06 BORA CRIAR JUNTOS ===================== -->
+  <section id="contato">
+    <div class="container">
+      <div class="contato-inner">
+        <div class="reveal">
+          <span class="eyebrow">06 · Contato</span>
+          <h2>Bora criar juntos</h2>
+          <p>Conta um pouco sobre a sua marca e o que você precisa. Eu respondo rapidinho.</p>
+
+          <form id="form-contato" novalidate>
+            <div class="campo">
+              <label for="campo-nome">Nome</label>
+              <input type="text" id="campo-nome" name="nome" placeholder="Seu nome" required>
+            </div>
+            <div class="campo">
+              <label for="campo-email">E-mail</label>
+              <input type="email" id="campo-email" name="email" placeholder="seuemail@email.com" required>
+            </div>
+            <div class="campo">
+              <label for="campo-mensagem">Mensagem</label>
+              <textarea id="campo-mensagem" name="mensagem" placeholder="Conte sobre a sua marca e o que você precisa" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-marrom btn-block">Enviar mensagem</button>
+          </form>
+          <div class="form-confirmacao" id="form-confirmacao" role="status">
+            Mensagem recebida! Obrigada pelo contato, eu respondo em breve por e-mail ou WhatsApp.
+          </div>
+        </div>
+
+        <div class="contato-canais reveal">
+          <div>
+            <span class="eyebrow">Fale direto comigo</span>
+            <div class="canais-lista">
+              <a class="btn btn-marrom" href="https://wa.me/5532987112913" target="_blank" rel="noopener">WhatsApp</a>
+              <a class="btn btn-marrom" href="mailto:bypriscilahonorato.contato@gmail.com">E-mail</a>
+              <a class="btn btn-marrom" href="https://instagram.com/bypriscilahonorato" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+          <div>
+            <span class="eyebrow">Localização</span>
+            <p>Atendo de forma remota e também em Coimbra, MG.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== RODAPÉ ===================== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-nome">Priscila Honorato</span>
+      <div class="footer-redes">
+        <a href="https://instagram.com/bypriscilahonorato" target="_blank" rel="noopener">@bypriscilahonorato</a>
+        <a href="https://wa.me/5532987112913" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="mailto:bypriscilahonorato.contato@gmail.com">E-mail</a>
+      </div>
+      <span class="footer-ano" id="footer-ano"></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== CARD DE CAPTURA ===================== -->
+<div class="capture-overlay" id="capture-overlay" role="dialog" aria-modal="true" aria-labelledby="capture-title">
+  <div class="capture-card">
+    <button class="capture-close" id="capture-close" aria-label="Fechar">&times;</button>
+    <h3 class="capture-title" id="capture-title">Quer meu mídia kit completo?</h3>
+    <p>Deixe seu nome e e-mail que eu envio direitinho.</p>
+    <form id="form-captura">
+      <div class="campo">
+        <label for="captura-nome" class="sr-only">Nome</label>
+        <input type="text" id="captura-nome" name="nome" placeholder="Seu nome" required>
+      </div>
+      <div class="campo">
+        <label for="captura-email" class="sr-only">E-mail</label>
+        <input type="email" id="captura-email" name="email" placeholder="seuemail@email.com" required>
+      </div>
+      <button type="submit" class="btn btn-marrom btn-block">Quero receber</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     DADOS — edite os arrays abaixo para atualizar o site
+     sem precisar mexer no HTML.
+  ========================================================= */
+
+  // Marcas que aparecem na faixa fina do topo (capa)
+  var marcas = [
+    "Camicado",
+    "Brastemp",
+    "Matos e Lopes",
+    "Tokstok",
+    "Pet love",
+    "Petiko"
+  ];
+
+  // Conteúdos de destaque (seção 02).
+  // link: para onde o card leva ao ser clicado (troque o "#" pelo link real do vídeo).
+  // capa: deixe em branco ("") para usar o bloco de degradê, ou informe uma imagem em "capaImg".
+  var destaques = [
+    {
+      link: "https://youtube.com/shorts/Bpw2nVF-T7E?feature=share",
+      capaImg: "",
+      numero: "+1,2M",
+      numeroLabel: "views no youtube shorts",
+      titulo: "Título do vídeo 01",
+      contexto: "Escreva aqui uma linha curta de contexto sobre este conteúdo."
+    },
+    {
+      link: "#",
+      capaImg: "",
+      numero: "+000K",
+      numeroLabel: "views no reels",
+      titulo: "Título do vídeo 02",
+      contexto: "Escreva aqui uma linha curta de contexto sobre este conteúdo."
+    },
+    {
+      link: "#",
+      capaImg: "",
+      numero: "+000K",
+      numeroLabel: "views no tiktok",
+      titulo: "Título do vídeo 03",
+      contexto: "Escreva aqui uma linha curta de contexto sobre este conteúdo."
+    }
+  ];
+
+  // Nichos usados nos filtros da galeria (seção 03)
+  var nichos = ["Todos", "Casa e decoração", "Pet", "Tech"];
+
+  // Trabalhos da galeria (seção 03). "nicho" precisa bater com um item do array "nichos".
+  var trabalhos = [
+    { marca: "Camicado", nicho: "Casa e decoração", titulo: "Vídeo de organização da casa", formato: "vídeo 9:16" },
+    { marca: "Tokstok", nicho: "Casa e decoração", titulo: "Unboxing de decoração", formato: "vídeo 9:16" },
+    { marca: "Matos e Lopes", nicho: "Casa e decoração", titulo: "Fotos do produto em ambiente", formato: "foto 4:5" },
+    { marca: "Brastemp", nicho: "Casa e decoração", titulo: "Vídeo de eletrodoméstico em uso", formato: "vídeo 9:16" },
+    { marca: "Pet love", nicho: "Pet", titulo: "Rotina com o pet", formato: "vídeo 9:16" },
+    { marca: "Petiko", nicho: "Pet", titulo: "Unboxing de produto para pet", formato: "vídeo 9:16" },
+    { marca: "Marca 01", nicho: "Tech", titulo: "Review de produto de tecnologia", formato: "vídeo 9:16" },
+    { marca: "Marca 02", nicho: "Tech", titulo: "Unboxing de acessório de tech", formato: "vídeo 9:16" }
+  ];
+
+  // Serviços oferecidos (seção 04)
+  var servicos = [
+    { numero: "01", titulo: "Vídeo UGC", desc: "Gravo um vídeo autêntico no formato conversa de amiga, pensado para performar no feed e nos anúncios da sua marca." },
+    { numero: "02", titulo: "Corte para anúncio", desc: "Entrego cortes curtos e diretos, prontos para rodar como anúncio em redes sociais." },
+    { numero: "03", titulo: "Fotos do produto", desc: "Faço fotos limpas e naturais do seu produto, prontas para loja virtual, catálogo e redes sociais." },
+    { numero: "04", titulo: "Unboxing", desc: "Gravo a experiência real de abrir e testar o seu produto, do jeito que a sua cliente faria em casa." },
+    { numero: "05", titulo: "Publicação no meu perfil", desc: "Publico o conteúdo no meu Instagram, levando a sua marca até a minha audiência." },
+    { numero: "06", titulo: "Pacote mensal", desc: "Monto um combo de vídeos e fotos entregues ao longo do mês, ideal para manter a sua marca sempre presente." }
+  ];
+
+  // Métricas com contador animado (seção 05).
+  // valor deve ser um número inteiro; sufixo é o texto que aparece depois do número (M+, +, %, etc).
+  var metricas = [
+    { valor: 10, sufixo: "+", label: "Vídeos entregues" },
+    { valor: 4, sufixo: "+", label: "Marcas atendidas" },
+    { valor: 12, sufixo: "M+", label: "Views somadas" },
+    { valor: 0, sufixo: "", label: "Sua métrica" } // placeholder: troque valor e label pela quarta métrica real
+  ];
+
+  // Resultados de campanha (seção 05)
+  var resultadosCampanha = [
+    { marca: "Marca 01", valor: "+000%", desc: "Descreva aqui o resultado desta campanha." },
+    { marca: "Marca 02", valor: "+000%", desc: "Descreva aqui o resultado desta campanha." },
+    { marca: "Marca 03", valor: "+000%", desc: "Descreva aqui o resultado desta campanha." }
+  ];
+
+  // Depoimentos (seção 05)
+  var depoimentos = [
+    { texto: "Escreva aqui o depoimento do Cliente 01 sobre o trabalho da Priscila.", nome: "Cliente 01", empresa: "Empresa 01" },
+    { texto: "Escreva aqui o depoimento do Cliente 02 sobre o trabalho da Priscila.", nome: "Cliente 02", empresa: "Empresa 02" },
+    { texto: "Escreva aqui o depoimento do Cliente 03 sobre o trabalho da Priscila.", nome: "Cliente 03", empresa: "Empresa 03" },
+    { texto: "Escreva aqui o depoimento do Cliente 04 sobre o trabalho da Priscila.", nome: "Cliente 04", empresa: "Empresa 04" }
+  ];
+
+  /* =========================================================
+     RENDERIZAÇÃO
+  ========================================================= */
+
+  function el(tag, className, html){
+    var node = document.createElement(tag);
+    if(className) node.className = className;
+    if(html !== undefined) node.innerHTML = html;
+    return node;
+  }
+
+  function playIcon(){
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg>';
+  }
+
+  function phBlock(label){
+    return '<div class="ph-block" style="width:100%;height:100%;" role="img" aria-label="' + label + '">' + label + '</div>';
+  }
+
+  // Faixa de marcas
+  (function renderMarcas(){
+    var lista = document.getElementById("brand-strip-list");
+    marcas.forEach(function(nome){
+      var li = document.createElement("li");
+      li.textContent = nome;
+      lista.appendChild(li);
+    });
+  })();
+
+  // Destaques
+  (function renderDestaques(){
+    var grid = document.getElementById("destaques-grid");
+    destaques.forEach(function(item){
+      var card = el("a", "destaque-card reveal");
+      card.href = item.link;
+      if(item.link && item.link.indexOf("http") === 0){
+        card.target = "_blank";
+        card.rel = "noopener";
+      }
+      card.setAttribute("aria-label", item.titulo + ", " + item.numero + " " + item.numeroLabel);
+
+      var cover = el("div", "destaque-cover");
+      if(item.capaImg){
+        var img = el("img");
+        img.src = item.capaImg;
+        img.alt = "Capa do vídeo: " + item.titulo;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        cover.appendChild(img);
+      } else {
+        cover.innerHTML = phBlock("capa vertical 9:16");
+      }
+      var play = el("span", "play");
+      play.innerHTML = playIcon();
+      play.setAttribute("aria-hidden", "true");
+      cover.appendChild(play);
+
+      var body = el("div", "destaque-body");
+      body.innerHTML =
+        '<span class="destaque-num">' + item.numero + '</span>' +
+        '<span class="destaque-num-label">' + item.numeroLabel + '</span>' +
+        '<h3 class="destaque-title">' + item.titulo + '</h3>' +
+        '<p class="destaque-context">' + item.contexto + '</p>';
+
+      card.appendChild(cover);
+      card.appendChild(body);
+      grid.appendChild(card);
+    });
+  })();
+
+  // Filtros de nicho
+  var trabalhosGrid = document.getElementById("trabalhos-grid");
+  var filtrosWrap = document.getElementById("filtros");
+  var filtroAtual = "Todos";
+
+  function renderTrabalhos(){
+    trabalhosGrid.innerHTML = "";
+    trabalhos.forEach(function(t){
+      var visivel = (filtroAtual === "Todos" || t.nicho === filtroAtual);
+      var card = el("article", "trabalho-card reveal is-visible" + (visivel ? "" : " is-hidden"));
+      card.setAttribute("data-nicho", t.nicho);
+      card.innerHTML =
+        '<div class="trabalho-cover">' + phBlock(t.formato) + '</div>' +
+        '<div class="trabalho-info">' +
+          '<span class="trabalho-nicho">' + t.nicho + '</span>' +
+          '<h3 class="trabalho-titulo">' + t.marca + '</h3>' +
+          '<p class="trabalho-formato">' + t.titulo + '</p>' +
+        '</div>';
+      trabalhosGrid.appendChild(card);
+    });
+  }
+
+  (function renderFiltros(){
+    nichos.forEach(function(nicho, i){
+      var btn = el("button", "filtro-btn");
+      btn.type = "button";
+      btn.textContent = nicho;
+      btn.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+      btn.addEventListener("click", function(){
+        filtroAtual = nicho;
+        Array.prototype.forEach.call(filtrosWrap.querySelectorAll(".filtro-btn"), function(b){
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+        renderTrabalhos();
+      });
+      filtrosWrap.appendChild(btn);
+    });
+    renderTrabalhos();
+  })();
+
+  // Serviços
+  (function renderServicos(){
+    var grid = document.getElementById("servicos-grid");
+    servicos.forEach(function(s){
+      var card = el("div", "servico-card reveal");
+      card.innerHTML =
+        '<span class="servico-num">' + s.numero + '</span>' +
+        '<h3 class="servico-titulo">' + s.titulo + '</h3>' +
+        '<p class="servico-desc">' + s.desc + '</p>';
+      grid.appendChild(card);
+    });
+  })();
+
+  // Métricas (contador)
+  (function renderMetricas(){
+    var grid = document.getElementById("metricas-grid");
+    metricas.forEach(function(m){
+      var item = el("div", "metrica-item reveal");
+      item.innerHTML =
+        '<span class="metrica-valor" data-valor="' + m.valor + '" data-sufixo="' + m.sufixo + '">0</span>' +
+        '<span class="metrica-label">' + m.label + '</span>';
+      grid.appendChild(item);
+    });
+  })();
+
+  // Resultados de campanha
+  (function renderResultados(){
+    var grid = document.getElementById("resultados-grid");
+    resultadosCampanha.forEach(function(r){
+      var card = el("div", "resultado-card reveal");
+      card.innerHTML =
+        '<h3 class="resultado-marca">' + r.marca + '</h3>' +
+        '<span class="resultado-valor">' + r.valor + '</span>' +
+        '<p class="resultado-desc">' + r.desc + '</p>';
+      grid.appendChild(card);
+    });
+  })();
+
+  // Depoimentos
+  (function renderDepoimentos(){
+    var grid = document.getElementById("depoimentos-grid");
+    depoimentos.forEach(function(d){
+      var card = el("div", "depoimento-card reveal");
+      card.innerHTML =
+        '<p class="depoimento-texto">' + d.texto + '</p>' +
+        '<p class="depoimento-autor"><strong>' + d.nome + '</strong>, ' + d.empresa + '</p>';
+      grid.appendChild(card);
+    });
+  })();
+
+  /* =========================================================
+     ANO AUTOMÁTICO NO RODAPÉ
+  ========================================================= */
+  document.getElementById("footer-ano").textContent = "© " + new Date().getFullYear() + " Priscila Honorato";
+
+  /* =========================================================
+     MENU SANDUÍCHE
+  ========================================================= */
+  var hamburger = document.getElementById("hamburger");
+  var navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", function(){
+    var aberto = hamburger.getAttribute("aria-expanded") === "true";
+    hamburger.setAttribute("aria-expanded", String(!aberto));
+    hamburger.setAttribute("aria-label", aberto ? "Abrir menu" : "Fechar menu");
+    navLinks.classList.toggle("is-open", !aberto);
+  });
+
+  Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function(link){
+    link.addEventListener("click", function(){
+      hamburger.setAttribute("aria-expanded", "false");
+      hamburger.setAttribute("aria-label", "Abrir menu");
+      navLinks.classList.remove("is-open");
+    });
+  });
+
+  /* =========================================================
+     ANIMAÇÃO DE ENTRADA AO ROLAR
+  ========================================================= */
+  var prefereReduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if(prefereReduzido){
+    Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function(node){
+      node.classList.add("is-visible");
+    });
+  } else if("IntersectionObserver" in window){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function(node){
+      revealObserver.observe(node);
+    });
+  } else {
+    Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function(node){
+      node.classList.add("is-visible");
+    });
+  }
+
+  /* =========================================================
+     CONTADOR ANIMADO DAS MÉTRICAS
+  ========================================================= */
+  function animarContador(node){
+    var alvo = parseInt(node.getAttribute("data-valor"), 10) || 0;
+    var sufixo = node.getAttribute("data-sufixo") || "";
+
+    if(prefereReduzido){
+      node.textContent = alvo + sufixo;
+      return;
+    }
+
+    var duracao = 1400;
+    var inicio = null;
+
+    function passo(timestamp){
+      if(inicio === null) inicio = timestamp;
+      var progresso = Math.min((timestamp - inicio) / duracao, 1);
+      var valorAtual = Math.floor(progresso * alvo);
+      node.textContent = valorAtual + sufixo;
+      if(progresso < 1){
+        window.requestAnimationFrame(passo);
+      } else {
+        node.textContent = alvo + sufixo;
+      }
+    }
+    window.requestAnimationFrame(passo);
+  }
+
+  if("IntersectionObserver" in window){
+    var metricaObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          animarContador(entry.target);
+          metricaObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    Array.prototype.forEach.call(document.querySelectorAll(".metrica-valor"), function(node){
+      metricaObserver.observe(node);
+    });
+  } else {
+    Array.prototype.forEach.call(document.querySelectorAll(".metrica-valor"), function(node){
+      animarContador(node);
+    });
+  }
+
+  /* =========================================================
+     FORMULÁRIO DE CONTATO
+  ========================================================= */
+  var formContato = document.getElementById("form-contato");
+  var confirmacao = document.getElementById("form-confirmacao");
+
+  formContato.addEventListener("submit", function(e){
+    e.preventDefault();
+    formContato.classList.add("is-hidden");
+    confirmacao.classList.add("is-visible");
+  });
+
+  /* =========================================================
+     CARD DE CAPTURA (mídia kit)
+  ========================================================= */
+  var overlay = document.getElementById("capture-overlay");
+  var captureClose = document.getElementById("capture-close");
+  var formCaptura = document.getElementById("form-captura");
+  var CHAVE_SESSAO = "midiaKitExibido";
+
+  function abrirCaptura(){
+    if(sessionStorage.getItem(CHAVE_SESSAO)) return;
+    overlay.classList.add("is-open");
+    sessionStorage.setItem(CHAVE_SESSAO, "1");
+  }
+
+  function fecharCaptura(){
+    overlay.classList.remove("is-open");
+  }
+
+  try {
+    if(!sessionStorage.getItem(CHAVE_SESSAO)){
+      window.setTimeout(abrirCaptura, 7000);
+    }
+  } catch(err){
+    window.setTimeout(function(){
+      overlay.classList.add("is-open");
+    }, 7000);
+  }
+
+  captureClose.addEventListener("click", fecharCaptura);
+  overlay.addEventListener("click", function(e){
+    if(e.target === overlay) fecharCaptura();
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && overlay.classList.contains("is-open")) fecharCaptura();
+  });
+  formCaptura.addEventListener("submit", function(e){
+    e.preventDefault();
+    fecharCaptura();
+  });
+
+})();
+</script>
+</body>
+</html>
