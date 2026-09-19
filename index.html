@@ -14,13 +14,13 @@
      Para voltar ao fundo escuro, troque os valores de
      --fundo, --superficie, --tinta e --tinta-suave entre si. */
   :root{
-    --fundo: #FFF8F2;
-    --superficie: #F6E7E9;
+    --fundo: #F2EEE7;
+    --superficie: #FAF8F4;
     --destaque: #5B3039;
-    --detalhe: #8A5560;
-    --tinta: #3D2028;
-    --tinta-suave: #6E4A52;
-    --linha: rgba(91, 48, 57, 0.22);
+    --detalhe: #5B3039;
+    --tinta: #34302E;
+    --tinta-suave: #6B655F;
+    --linha: rgba(52, 48, 46, 0.18);
     --serif: "DM Serif Display", serif;
     --corpo: "Montserrat", sans-serif;
     --max: 1180px;
@@ -130,7 +130,7 @@
     position: fixed;
     top:0; left:0; right:0;
     z-index: 500;
-    background: rgba(255, 248, 242, 0.96);
+    background: rgba(242, 238, 231, 0.96);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--linha);
   }
@@ -254,7 +254,7 @@
   }
 
   .ph-block{
-    background: linear-gradient(155deg, #E8D2D6 0%, var(--superficie) 55%, var(--fundo) 100%);
+    background: linear-gradient(155deg, #E3DCD1 0%, var(--fundo) 55%, var(--superficie) 100%);
     border: 1px solid var(--linha);
     display:flex;
     align-items:flex-end;
@@ -316,7 +316,13 @@
     color: var(--destaque);
     margin-bottom: 0.6rem;
   }
-  .olhar-texto{ font-size: 0.9rem; margin: 0; }
+  .olhar-texto{ font-size: 0.9rem; margin: 0 0 1.1rem; }
+  .olhar-foto{
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    object-fit: cover;
+    border: 1px solid var(--linha);
+  }
   @media (max-width: 760px){ .olhares{ grid-template-columns: 1fr; } }
 
   /* ===================== GALERIAS ===================== */
@@ -681,12 +687,6 @@
           <h2 data-i18n="sobreTitulo">Prazer, eu sou a Priscila</h2>
           <p data-i18n="sobreTexto">Sou a Priscila e trago um olhar de mulher madura para as escolhas do dia a dia. Entre a casa, a decoração, os cuidados com os pets e a tecnologia, gosto de descobrir o que torna a rotina mais gostosa, prática e cheia de personalidade, e transformar essas experiências em histórias para compartilhar.</p>
           <p data-i18n="sobreTexto2">Antes de gravar, gosto de experimentar e encontrar os detalhes que merecem ser mostrados. Assim, crio conteúdo com minhas próprias palavras, cuidado em cada cena e a naturalidade de quem tem uma experiência para contar.</p>
-          <ul class="promessas">
-            <li><span class="marcador">01</span> <span data-i18n="promessa1">Roteiro aprovado por você antes de eu gravar</span></li>
-            <li><span class="marcador">02</span> <span data-i18n="promessa2">Uma rodada de ajuste incluída no valor</span></li>
-            <li><span class="marcador">03</span> <span data-i18n="promessa3">Entrega em até 72 horas úteis</span></li>
-          </ul>
-          <p class="assinatura">Priscila Honorato</p>
         </div>
       </div>
 
@@ -866,19 +866,27 @@
   var fotos = [];
   var videos = [];
 
-  /* O seu olhar em cada nicho (aparece no fim do Sobre mim) */
+  /* O seu olhar em cada nicho (aparece no fim do Sobre mim).
+
+     Para colocar a foto de cada nicho, salve a imagem na pasta
+     fotos do projeto e escreva o nome do arquivo no campo
+     "imagem" logo abaixo. Exemplo: imagem: "casa.jpg"
+     Enquanto estiver vazio, aparece um espaço reservado. */
   var olhares = [
     {
       nome: { pt: "Casa e decoração", en: "Home and decor" },
-      texto: { pt: "Crio conteúdos mostrando o produto dentro de uma situação real da casa, destacando como ele funciona, o que melhora no ambiente e por que faz sentido na rotina.", en: "I create content showing the product inside a real situation at home, highlighting how it works, what it improves in the space and why it makes sense in the routine." }
+      texto: { pt: "Crio conteúdos mostrando o produto dentro de uma situação real da casa, destacando como ele funciona, o que melhora no ambiente e por que faz sentido na rotina.", en: "I create content showing the product inside a real situation at home, highlighting how it works, what it improves in the space and why it makes sense in the routine." },
+      imagem: ""
     },
     {
       nome: { pt: "Pet", en: "Pet" },
-      texto: { pt: "Crio conteúdos com a Francisca mostrando o produto em uso de verdade, destacando a experiência, os benefícios e a reação dela de um jeito natural, visual e fácil de conectar com quem também vive a rotina com pet.", en: "I create content with Francisca showing the product in real use, highlighting the experience, the benefits and her reaction in a natural, visual way that connects with anyone who also lives a routine with a pet." }
+      texto: { pt: "Crio conteúdos com a Francisca mostrando o produto em uso de verdade, destacando a experiência, os benefícios e a reação dela de um jeito natural, visual e fácil de conectar com quem também vive a rotina com pet.", en: "I create content with Francisca showing the product in real use, highlighting the experience, the benefits and her reaction in a natural, visual way that connects with anyone who also lives a routine with a pet." },
+      imagem: ""
     },
     {
       nome: { pt: "Tech", en: "Tech" },
-      texto: { pt: "Crio conteúdos que mostram a tecnologia funcionando na prática, traduzindo recursos, benefícios e experiência de uso de um jeito simples, próximo e fácil de entender.", en: "I create content that shows technology working in practice, translating features, benefits and the user experience in a simple, close and easy to understand way." }
+      texto: { pt: "Crio conteúdos que mostram a tecnologia funcionando na prática, traduzindo recursos, benefícios e experiência de uso de um jeito simples, próximo e fácil de entender.", en: "I create content that shows technology working in practice, translating features, benefits and the user experience in a simple, close and easy to understand way." },
+      imagem: ""
     }
   ];
 
@@ -1020,10 +1028,8 @@
       sobreTitulo: "Prazer, eu sou a Priscila",
       sobreTexto: "Sou a Priscila e trago um olhar de mulher madura para as escolhas do dia a dia. Entre a casa, a decoração, os cuidados com os pets e a tecnologia, gosto de descobrir o que torna a rotina mais gostosa, prática e cheia de personalidade, e transformar essas experiências em histórias para compartilhar.",
       sobreTexto2: "Antes de gravar, gosto de experimentar e encontrar os detalhes que merecem ser mostrados. Assim, crio conteúdo com minhas próprias palavras, cuidado em cada cena e a naturalidade de quem tem uma experiência para contar.",
-      promessa1: "Roteiro aprovado por você antes de eu gravar",
-      promessa2: "Uma rodada de ajuste incluída no valor",
-      promessa3: "Entrega em até 72 horas úteis",
       olharTitulo: "Meu olhar em cada nicho",
+      espacoFoto: "espaço para foto 4:3",
       fotosEyebrow: "02 · Fotos",
       fotosTitulo: "Ideias que nascem da minha rotina",
       fotosSub: "Produtos que já fazem parte do meu dia a dia viram ponto de partida para criar. Aqui, reúno produções autorais que mostram meu olhar, minha forma de contar histórias e como transformo situações simples em conteúdo para marcas.",
@@ -1088,10 +1094,8 @@
       sobreTitulo: "Hi, I am Priscila",
       sobreTexto: "I'm Priscila, and I bring a mature woman's perspective to everyday choices. From home and décor to pet care and technology, I love discovering what makes daily life more enjoyable, practical, and full of personality, and turning those experiences into stories to share.",
       sobreTexto2: "Before filming, I like to try things out and find the details worth showing. That's how I create content in my own words, with care in every scene and the ease of someone sharing a firsthand experience.",
-      promessa1: "Script approved by you before I film",
-      promessa2: "One round of revisions included",
-      promessa3: "Delivery within 72 business hours",
       olharTitulo: "My eye in each niche",
+      espacoFoto: "photo space 4:3",
       fotosEyebrow: "02 · Photos",
       fotosTitulo: "Ideas that come from my routine",
       fotosSub: "Products that are already part of my everyday life become the starting point to create. Here I gather independent work that shows my eye, the way I tell stories and how I turn simple situations into content for brands.",
@@ -1270,8 +1274,12 @@
   function renderOlhares(){
     var caixa = document.getElementById("olhares");
     caixa.innerHTML = olhares.map(function(o){
+      var imagem = enderecoImagem(o.imagem);
+      var foto = imagem
+        ? '<img class="olhar-foto" src="' + esc(imagem) + '" alt="' + esc(txt(o.nome)) + '" loading="lazy">'
+        : '<div class="ph-block olhar-foto" role="img" aria-label="' + esc(t("espacoFoto")) + '">' + esc(t("espacoFoto")) + '</div>';
       return '<div><div class="olhar-nome">' + esc(txt(o.nome)) + '</div>' +
-             '<p class="olhar-texto">' + esc(txt(o.texto)) + '</p></div>';
+             '<p class="olhar-texto">' + esc(txt(o.texto)) + '</p>' + foto + '</div>';
     }).join("");
   }
 
