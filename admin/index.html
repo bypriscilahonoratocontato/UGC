@@ -579,9 +579,31 @@
     justify-content:center;
     font-size: 2rem;
   }
+  .cartao-ref.minha{ border-color: var(--linha-forte); }
   .ref-corpo{ padding: 0.6rem 0.7rem 0.8rem; }
   .ref-titulo{ font-size: 0.8rem; font-weight: 500; margin-bottom: 0.25rem; }
   .ref-meta{ font-size: 0.66rem; color: var(--tinta-suave); }
+  .ref-capa{ position:relative; }
+  .ref-selo{
+    position:absolute;
+    top: 0.45rem;
+    left: 0.45rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--destaque);
+    border: 1px solid var(--destaque);
+    padding: 0.2em 0.45em;
+    background: rgba(20, 8, 12, 0.35);
+  }
+  .grupo-ref{
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    margin: 1.6rem 0 0.8rem;
+  }
+  .grupo-ref:first-child{ margin-top: 0; }
 
   .bloco-tempo{ display:flex; gap: 0.8rem; padding: 0.55em 0; border-top: 1px solid var(--linha); }
   .bloco-t{
@@ -643,6 +665,14 @@
     text-transform: uppercase;
     color: var(--tinta-suave);
     margin-bottom: 0.35rem;
+  }
+  .campo-dica{
+    font-size: 0.7rem;
+    line-height: 1.5;
+    color: var(--tinta-suave);
+    text-transform:none;
+    letter-spacing:0;
+    margin: -0.1rem 0 0.35rem;
   }
   .modal-linha-check{ display:flex; align-items:center; gap: 0.5rem; }
   .modal-linha-check input{ width:15px; height:15px; accent-color: #EDCBD0; }
@@ -876,6 +906,11 @@
     return '<div class="vazio">' + esc(texto) + '</div>';
   }
 
+  /* Linha de explicacao embaixo do titulo do campo. */
+  function dicaDoCampo(c){
+    return c.dica ? '<div class="campo-dica">' + esc(c.dica) + '</div>' : "";
+  }
+
   /* Formulario generico usado por videos, marcas, calendario, campanhas e ideias */
   function montarFormulario(campos, valores){
     valores = valores || {};
@@ -888,7 +923,7 @@
                 '<input type="checkbox" id="f-' + c.nome + '" name="' + c.nome + '"' + (v ? " checked" : "") + '>' +
                 '<label for="f-' + c.nome + '">' + esc(c.rotulo) + '</label></div></div>';
       } else if(c.tipo === "select"){
-        html += '<div class="modal-campo"><label for="f-' + c.nome + '">' + esc(c.rotulo) + '</label>' +
+        html += '<div class="modal-campo"><label for="f-' + c.nome + '">' + esc(c.rotulo) + '</label>' + dicaDoCampo(c) +
                 '<select id="f-' + c.nome + '" name="' + c.nome + '">';
         c.opcoes.forEach(function(op){
           var valor = (typeof op === "object") ? op.valor : op;
@@ -897,11 +932,14 @@
         });
         html += '</select></div>';
       } else if(c.tipo === "textarea"){
-        html += '<div class="modal-campo"><label for="f-' + c.nome + '">' + esc(c.rotulo) + '</label>' +
-                '<textarea id="f-' + c.nome + '" name="' + c.nome + '">' + esc(v) + '</textarea></div>';
+        html += '<div class="modal-campo"><label for="f-' + c.nome + '">' + esc(c.rotulo) + '</label>' + dicaDoCampo(c) +
+                '<textarea id="f-' + c.nome + '" name="' + c.nome + '"' +
+                (c.alto ? ' style="min-height:150px"' : "") +
+                (c.exemplo ? ' placeholder="' + esc(c.exemplo) + '"' : "") + '>' + esc(v) + '</textarea></div>';
       } else {
-        html += '<div class="modal-campo"><label for="f-' + c.nome + '">' + esc(c.rotulo) + '</label>' +
+        html += '<div class="modal-campo"><label for="f-' + c.nome + '">' + esc(c.rotulo) + '</label>' + dicaDoCampo(c) +
                 '<input type="' + (c.tipo || "text") + '" id="f-' + c.nome + '" name="' + c.nome + '" value="' + esc(v) + '"' +
+                (c.exemplo ? ' placeholder="' + esc(c.exemplo) + '"' : "") +
                 (c.passo ? ' step="' + c.passo + '"' : "") + '></div>';
       }
     });
@@ -2416,6 +2454,47 @@
   var marcadosMapa = {};
   var roteiroRascunho="";
 
+  /* Os campos de uma referencia de video que voce mesma guarda. */
+  var CAMPOS_REFERENCIA = [
+    { nome: "titulo", rotulo: "Nome da referencia", tipo: "text",
+      dica: "Como voce quer achar esse video depois. Por exemplo: React com prova real.",
+      exemplo: "React com prova real" },
+    { nome: "emoji", rotulo: "Emoji da capa", tipo: "text", padrao: "🎬",
+      dica: "Um emoji que lembre o video de bate pronto." },
+    { nome: "estilo", rotulo: "Estilo", tipo: "text",
+      dica: "React, Encenacao, Rotina, Tutorial, Antes e depois, Unboxing, Lista.",
+      exemplo: "React" },
+    { nome: "duracao", rotulo: "Duracao", tipo: "text",
+      dica: "Quanto tempo o video tem.", exemplo: "55s" },
+    { nome: "marca", rotulo: "Marca do video", tipo: "text",
+      dica: "De quem e o produto que aparece.", exemplo: "Creamy" },
+    { nome: "link", rotulo: "Link do video", tipo: "text",
+      dica: "Cole o endereco do Instagram, TikTok ou YouTube. Vira o botao Assistir.",
+      exemplo: "https://" },
+    { nome: "gancho", rotulo: "Gancho", tipo: "textarea",
+      dica: "As primeiras palavras do video, do jeito que sao ditas." },
+    { nome: "porque", rotulo: "Por que funciona", tipo: "textarea",
+      dica: "O que esse video faz com quem assiste, e por que prende." },
+    { nome: "diferencial", rotulo: "O diferencial", tipo: "textarea",
+      dica: "O que esse video faz que a maioria nao faz." },
+    { nome: "erro", rotulo: "O erro comum", tipo: "textarea",
+      dica: "O que costuma dar errado quando alguem tenta copiar esse formato." },
+    { nome: "roteiro", rotulo: "O roteiro", tipo: "textarea", alto: true,
+      dica: "Um pedaco do video por linha, com o tempo, uma barra em pe e o que acontece.",
+      exemplo: "0 a 5s | Entra no meio de uma cena, sem se apresentar\n5 a 12s | A pergunta que abre o loop\n12 a 20s | Mostra o proprio problema antes do produto" }
+  ];
+
+  /* Quebra o texto do roteiro em blocos de tempo. */
+  function blocosDoRoteiro(texto){
+    return String(texto || "").split(/\r?\n/).map(function(linha){
+      var pedacos = linha.split("|");
+      if(pedacos.length >= 2){
+        return { t: pedacos.shift().trim(), o: pedacos.join("|").trim() };
+      }
+      return { t: "", o: linha.trim() };
+    }).filter(function(b){ return b.t || b.o; });
+  }
+
   async function telaChecklist(){
     var B = window.Biblioteca;
     if(!B){
@@ -2427,6 +2506,10 @@
     if(abaAtual!=="checklist")return;
     marcadosMapa = {};
     rm.dados.forEach(function(m){ if(m.marcado) marcadosMapa[m.chave] = true; });
+
+    var rr = await U.ler("referencias", function(q){ return q.order("criado_em", { ascending: false }); });
+    if(abaAtual!=="checklist")return;
+    var minhasRefs = rr.dados;
 
     function desenhar(){
       var abas = [
@@ -2511,39 +2594,115 @@
       return html;
     }
 
+    /* Desenha um cartao, tanto das minhas quanto das da biblioteca. */
+    function cartaoReferencia(r, minha){
+      return '<button class="cartao-ref' + (minha ? " minha" : "") + '" data-ref="' + esc(r.id) + '"' +
+          (minha ? ' data-minha="1"' : "") + '>' +
+        '<div class="ref-capa">' + (minha ? '<span class="ref-selo">minha</span>' : "") +
+          esc(r.emoji || "🎬") + '</div>' +
+        '<div class="ref-corpo">' +
+          '<div class="ref-titulo">' + esc(r.titulo) + '</div>' +
+          '<div class="ref-meta">' + esc(r.estilo) + (r.estilo && r.duracao ? ' &middot; ' : "") + esc(r.duracao) + '</div>' +
+          '<div class="ref-meta">' + esc(r.marca) + '</div>' +
+        '</div></button>';
+    }
+
     function htmlReferencias(B){
-      var html = '<div class="grade-cartoes">';
-      B.REFERENCIAS.forEach(function(r){
-        html += '<button class="cartao-ref" data-ref="' + esc(r.id) + '">' +
-          '<div class="ref-capa">' + r.emoji + '</div>' +
-          '<div class="ref-corpo">' +
-            '<div class="ref-titulo">' + esc(r.titulo) + '</div>' +
-            '<div class="ref-meta">' + esc(r.estilo) + ' &middot; ' + esc(r.duracao) + '</div>' +
-            '<div class="ref-meta">' + esc(r.marca) + '</div>' +
-          '</div></button>';
-      });
+      var html = blocoAviso(rr.erro);
+
+      html += '<div class="barra-acoes">' +
+        '<div class="cresce" style="font-size:0.78rem;color:var(--tinta-suave);line-height:1.6">' +
+          'Guarde aqui os videos que voce estuda, destrinchados pedaco por pedaco. ' +
+          'Na hora de escrever o seu roteiro, e so abrir e seguir a estrutura.' +
+        '</div>' +
+        '<button class="btn btn-cheio" id="btn-nova-ref">' + icone("mais") + 'Adicionar referencia</button>' +
+      '</div>';
+
+      html += '<div class="grupo-ref">Minhas referencias</div>';
+      if(minhasRefs.length === 0){
+        html += blocoVazio("Voce ainda nao guardou nenhuma. Quando ver um video que prendeu voce ate o fim, clique em Adicionar referencia e destrinche ele enquanto esta fresco na cabeca.");
+      } else {
+        html += '<div class="grade-cartoes">';
+        minhasRefs.forEach(function(r){ html += cartaoReferencia(r, true); });
+        html += '</div>';
+      }
+
+      html += '<div class="grupo-ref">Da biblioteca</div>';
+      html += '<div class="grade-cartoes">';
+      B.REFERENCIAS.forEach(function(r){ html += cartaoReferencia(r, false); });
       html += '</div>';
       return html;
     }
 
+    /* A tela de detalhe, igual para as duas. So as minhas tem o botao de editar.
+       O texto da biblioteca ja vem com negrito e italico prontos, por isso ele
+       entra sem escapar. O meu texto sempre entra escapado. */
+    function abrirDetalheRef(r, minha){
+      var meta = [r.estilo, r.duracao, r.marca].filter(function(x){ return String(x || "").trim(); });
+      var h = '<div class="ref-meta" style="margin-bottom:0.8rem">' + esc(meta.join(" · ")) + '</div>';
+
+      function parte(titulo, texto){
+        if(!String(texto || "").trim()) return "";
+        return '<div class="bloco-titulo">' + titulo + '</div><p>' + esc(texto) + '</p>';
+      }
+      h += parte("Gancho", r.gancho);
+      h += parte("Por que funciona", r.porque);
+      h += parte("O diferencial", r.diferencial);
+      h += parte("O erro comum", r.erro);
+
+      var blocos = minha ? blocosDoRoteiro(r.roteiro) : (r.roteiro || []);
+      if(blocos.length){
+        h += '<div class="bloco-titulo">O roteiro</div>';
+        blocos.forEach(function(b2){
+          h += '<div class="bloco-tempo"><div class="bloco-t">' + esc(b2.t) + '</div>' +
+               '<div class="bloco-o">' + (minha ? esc(b2.o) : b2.o) + '</div></div>';
+        });
+      }
+
+      var link = minha ? U.urlSegura(r.link) : r.youtube;
+      var botoes = "";
+      if(minha) botoes += '<button type="button" class="btn btn-mini" id="btn-editar-ref" style="margin-right:auto">Editar</button>';
+      if(link)  botoes += '<a class="btn btn-cheio" href="' + esc(link) + '" target="_blank" rel="noopener">Assistir</a>';
+      if(botoes) h += '<div class="modal-botoes">' + botoes + '</div>';
+
+      abrirModal(r.titulo, h, true);
+
+      var editar = document.getElementById("btn-editar-ref");
+      if(editar){
+        editar.addEventListener("click", function(){
+          abrirFormulario({
+            titulo: "Editar referencia",
+            tabela: "referencias",
+            campos: CAMPOS_REFERENCIA,
+            registro: r,
+            antesDeSalvar: function(d){ if(!d.titulo) return "Escreva o nome da referencia."; },
+            depois: telaChecklist
+          });
+        });
+      }
+    }
+
     function ligarReferencias(B){
+      var botaoNovo = document.getElementById("btn-nova-ref");
+      if(botaoNovo){
+        botaoNovo.addEventListener("click", function(){
+          abrirFormulario({
+            titulo: "Nova referencia",
+            tabela: "referencias",
+            campos: CAMPOS_REFERENCIA,
+            antesDeSalvar: function(d){ if(!d.titulo) return "Escreva o nome da referencia."; },
+            depois: telaChecklist
+          });
+        });
+      }
+
       Array.prototype.forEach.call(painel.querySelectorAll("[data-ref]"), function(b){
         b.addEventListener("click", function(){
-          var r = B.REFERENCIAS.filter(function(x){ return x.id === b.getAttribute("data-ref"); })[0];
-          if(!r) return;
-          var h = '<div class="ref-meta" style="margin-bottom:0.8rem">' + esc(r.estilo) + ' &middot; ' + esc(r.duracao) + ' &middot; ' + esc(r.marca) + '</div>';
-          h += '<div class="bloco-titulo">Gancho</div><p>' + esc(r.gancho) + '</p>';
-          h += '<div class="bloco-titulo">Por que funciona</div><p>' + esc(r.porque) + '</p>';
-          h += '<div class="bloco-titulo">O diferencial</div><p>' + esc(r.diferencial) + '</p>';
-          h += '<div class="bloco-titulo">O erro comum</div><p>' + esc(r.erro) + '</p>';
-          h += '<div class="bloco-titulo">O roteiro</div>';
-          r.roteiro.forEach(function(b2){
-            h += '<div class="bloco-tempo"><div class="bloco-t">' + esc(b2.t) + '</div><div class="bloco-o">' + b2.o + '</div></div>';
-          });
-          if(r.youtube){
-            h += '<div class="modal-botoes"><a class="btn btn-cheio" href="' + esc(r.youtube) + '" target="_blank" rel="noopener">Assistir</a></div>';
-          }
-          abrirModal(r.titulo, h, true);
+          var id = b.getAttribute("data-ref");
+          var minha = b.getAttribute("data-minha") === "1";
+          var lista = minha ? minhasRefs : B.REFERENCIAS;
+          var r = lista.filter(function(x){ return String(x.id) === id; })[0];
+          if(r) abrirDetalheRef(r, minha);
         });
       });
     }
