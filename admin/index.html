@@ -408,7 +408,8 @@
     gap: 0.6rem;
     margin-bottom: 0.9rem;
   }
-  .cal-mes{ font-size: 0.92rem; font-weight: 500; min-width: 165px; text-transform: capitalize; }
+  /* sem capitalize, senao o "de" de "setembro de 2026" fica maiusculo */
+  .cal-mes{ font-size: 0.92rem; font-weight: 500; min-width: 165px; }
   .cal-grade{
     display:grid;
     grid-template-columns: repeat(7, 1fr);
@@ -1511,6 +1512,7 @@
       var hoje = hojeISO();
 
       var nomeMes = primeiro.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+      nomeMes = nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1);
 
       var html = "";
       html += blocoAviso(rc.erro);
