@@ -2173,31 +2173,98 @@
         { valor: "tech", texto: "Tech" },
         { valor: "",     texto: "Sem nicho" }
       ], padrao: "casa" },
-    { nome: "status",    rotulo: "Situacao",   tipo: "select", opcoes: [
-        { valor: "nova",      texto: "Nova" },
-        { valor: "gravando",  texto: "Gravando" },
-        { valor: "publicada", texto: "Publicada" },
-        { valor: "descartada",texto: "Descartada" }
-      ], padrao: "nova" }
+    { nome: "status",    rotulo: "Em que etapa esta", tipo: "select", opcoes: [] , padrao: "ideia" }
   ];
+
+  /* As etapas espelham as listas do seu quadro no Trello,
+     na mesma ordem do seu fluxo de producao. */
+  var ETAPAS_IDEIA = [
+    { valor: "ideia",     texto: "Ideia" },
+    { valor: "texto",     texto: "Texto para post" },
+    { valor: "roteiro",   texto: "Em roteiro" },
+    { valor: "gravar",    texto: "Pronto para gravar" },
+    { valor: "gravado",   texto: "Gravado" },
+    { valor: "edicao",    texto: "Em edicao" },
+    { valor: "revisao",   texto: "Revisao e decisao" },
+    { valor: "publicar",  texto: "Pronto para publicar" },
+    { valor: "publicado", texto: "Publicado" },
+    { valor: "analisado", texto: "Analisado" },
+    { valor: "parado",    texto: "Aguardando ou parado" }
+  ];
+  CAMPOS_IDEIA[3].opcoes = ETAPAS_IDEIA;
+
+  function nomeEtapa(valor){
+    var e = ETAPAS_IDEIA.filter(function(x){ return x.valor === valor; })[0];
+    return e ? e.texto : (valor || "");
+  }
+
+  /* Le o nome da lista do Trello e descobre a etapa correspondente,
+     sem depender do emoji nem da acentuacao. */
+  function etapaPelaLista(nomeLista){
+    var n = String(nomeLista || "").toUpperCase();
+    if(n.indexOf("TEXTO") >= 0)     return "texto";
+    if(n.indexOf("ROTEIRO") >= 0)   return "roteiro";
+    if(n.indexOf("GRAVAR") >= 0)    return "gravar";
+    if(n.indexOf("GRAVADO") >= 0)   return "gravado";
+    if(n.indexOf("EDI") >= 0)       return "edicao";
+    if(n.indexOf("REVIS") >= 0)     return "revisao";
+    if(n.indexOf("PUBLICAR") >= 0)  return "publicar";
+    if(n.indexOf("PUBLICADO") >= 0) return "publicado";
+    if(n.indexOf("ANALISADO") >= 0) return "analisado";
+    if(n.indexOf("AGUARDANDO") >= 0 || n.indexOf("BLOQUEADO") >= 0) return "parado";
+    return "ideia";
+  }
+
+  /* Descobre o nicho pela etiqueta que voce usa no titulo do card. */
+  function nichoPeloTitulo(titulo){
+    var t = String(titulo || "").toUpperCase();
+    if(/\[(CASA|M[ÓO]VEIS|DECORA|BEBIDAS)/.test(t)) return "casa";
+    if(/\[PET/.test(t)) return "pet";
+    if(/\[(APPS|FINTECH)/.test(t)) return "tech";
+    return "";
+  }
+
+  var filtroEtapa = "todas";
 
   async function telaIdeias(){
     var r = await U.ler("ideias", function(q){ return q.order("criado_em", { ascending: false }); });
     if(abaAtual!=="ideias")return;
-    var lista = r.dados;
+    var todasIdeias = r.dados;
+    var lista = (filtroEtapa === "todas")
+      ? todasIdeias
+      : todasIdeias.filter(function(i){ return i.status === filtroEtapa; });
 
     var html = blocoAviso(r.erro);
+
+    /* quantas ideias em cada etapa do seu fluxo */
+    if(todasIdeias.length > 0){
+      var porEtapa = {};
+      todasIdeias.forEach(function(i){
+        porEtapa[i.status] = (porEtapa[i.status] || 0) + 1;
+      });
+      html += '<div class="barra-acoes">' +
+        '<button class="btn' + (filtroEtapa === "todas" ? " btn-cheio" : "") + '" data-etapa="todas">' +
+          'Todas ' + todasIdeias.length + '</button>';
+      ETAPAS_IDEIA.forEach(function(e){
+        if(!porEtapa[e.valor]) return;
+        html += '<button class="btn' + (filtroEtapa === e.valor ? " btn-cheio" : "") + '" data-etapa="' + e.valor + '">' +
+                esc(e.texto) + ' ' + porEtapa[e.valor] + '</button>';
+      });
+      html += '</div>';
+    }
 
     html += '<div class="barra-acoes"><div class="cresce">' +
       '<div class="topo-sub">Guarde aqui as ideias que aparecem no meio do dia. Importe o arquivo do Trello para trazer títulos e descrições sem duplicar ideias. A atualização é feita quando você importa um novo arquivo.</div>' +
       '</div><button class="btn btn-cheio" id="btn-nova-ideia">' + icone("mais") + 'Nova ideia</button></div>';
 
     html += '<div class="barra-acoes"><label class="btn" for="trello-arquivo">Importar ideias do Trello</label><input id="trello-arquivo" type="file" accept=".json,application/json" hidden><a class="btn" href="https://trello.com/b/1J5KLxi2/bypriscila-producao-de-conteudo" target="_blank" rel="noopener">Abrir meu Trello</a></div><p class="topo-sub">Escolha ideias-trello.json ou uma exportação JSON do seu quadro. Você escolhe quais listas importar. Os dados ficam na sua área privada.</p>';
-    if(lista.length === 0){
+    if(todasIdeias.length === 0){
       html += blocoVazio("Nenhuma ideia guardada ainda. Clique em nova ideia para escrever a primeira.");
+    } else if(lista.length === 0){
+      html += blocoVazio("Nenhuma ideia nesta etapa.");
     } else {
       html += '<div class="rolagem"><table><thead><tr>' +
-        '<th>Ideia</th><th>Nicho</th><th>Situacao</th><th>Origem</th><th>Guardada em</th>' +
+        '<th>Ideia</th><th>Nicho</th><th>Etapa</th><th>Origem</th><th>Guardada em</th>' +
         '</tr></thead><tbody>';
       var nomeNicho = { casa: "Casa e decoracao", pet: "Pet", tech: "Tech" };
       lista.forEach(function(i){
@@ -2205,7 +2272,7 @@
           '<td>' + esc(i.titulo || "sem titulo") +
             (i.descricao ? '<div class="lista-gancho">' + esc(String(i.descricao).slice(0, 70)) + (String(i.descricao).length > 70 ? "..." : "") + '</div>' : "") + '</td>' +
           '<td>' + esc(nomeNicho[i.nicho] || i.nicho || "") + '</td>' +
-          '<td><span class="pilula p-status">' + esc(i.status) + '</span></td>' +
+          '<td><span class="pilula p-status">' + esc(nomeEtapa(i.status)) + '</span></td>' +
           '<td>' + esc(i.origem) + (i.trello_lista ? '<div class="lista-gancho">'+esc(i.trello_lista)+'</div>':'') + (U.urlSegura(i.trello_url)?'<a href="'+esc(U.urlSegura(i.trello_url))+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">Ver cartão</a>':'') + '</td>' +
           '<td>' + esc(U.paraBR(i.criado_em)) + '</td>' +
         '</tr>';
@@ -2214,6 +2281,13 @@
     }
 
     painel.innerHTML = html;
+
+    Array.prototype.forEach.call(painel.querySelectorAll("[data-etapa]"), function(b){
+      b.addEventListener("click", function(){
+        filtroEtapa = b.getAttribute("data-etapa");
+        telaIdeias();
+      });
+    });
 
     document.getElementById('trello-arquivo').addEventListener('change',async function(){
       const arquivo=this.files[0];if(!arquivo)return;
@@ -2227,9 +2301,14 @@
           this.disabled=true;
           const selecionadas=Array.from(modalCorpo.querySelectorAll('[data-lista]:checked')).map(el=>listas[Number(el.dataset.lista)]);
           if(!selecionadas.length){falar('Escolha pelo menos uma lista.',true);this.disabled=false;return;}
-          const registros=dados.cards.filter(c=>!c.closed&&selecionadas.some(l=>l.id===c.idList)).map(c=>({
-            titulo:String(c.name||'Sem título'),descricao:String(c.desc||''),nicho:'',status:'nova',origem:'trello',trello_id:String(c.id),trello_url:U.urlSegura(c.url||c.shortUrl),trello_lista:String((listas.find(l=>l.id===c.idList)||{}).name||'')
-          }));
+          const registros=dados.cards.filter(c=>!c.closed&&selecionadas.some(l=>l.id===c.idList)).map(function(c){
+            var nomeLista=String((listas.find(l=>l.id===c.idList)||{}).name||'');
+            return {
+              titulo:String(c.name||'Sem título'),descricao:String(c.desc||''),
+              nicho:nichoPeloTitulo(c.name),status:etapaPelaLista(nomeLista),origem:'trello',
+              trello_id:String(c.id),trello_url:U.urlSegura(c.url||c.shortUrl),trello_lista:nomeLista
+            };
+          });
           let feitos=0;
           for(let i=0;i<registros.length;i+=100){const resultado=await U.gravar('ideias',q=>q.upsert(registros.slice(i,i+100),{onConflict:'trello_id'}));if(!resultado.ok){falar(resultado.erro,true);this.disabled=false;return;}feitos+=Math.min(100,registros.length-i);}
           fecharModal();falar(feitos+' ideias importadas.');telaIdeias();
