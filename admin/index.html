@@ -651,6 +651,40 @@
   .btn-perigo{ border-color: var(--erro); color: var(--erro); margin-right:auto; }
   .btn-perigo:hover{ background: var(--erro); color: var(--superficie); }
 
+  /* Importar planilha */
+  .imp-texto{ font-size: 0.8rem; line-height: 1.75; color: var(--tinta-suave); margin-bottom: 1rem; }
+  .imp-texto strong{ color: var(--tinta); font-weight: 400; }
+  .imp-area{
+    border: 1px dashed var(--linha-forte);
+    padding: 1.4rem 1rem;
+    text-align:center;
+    margin-bottom: 0.9rem;
+    transition: border-color .2s, background .2s;
+  }
+  .imp-area.por-cima{ border-color: var(--destaque); background: var(--suave); }
+  .imp-area input[type="file"]{ display:none; }
+  .imp-area p{ font-size: 0.75rem; color: var(--tinta-suave); margin-top: 0.7rem; }
+  .imp-nome-arquivo{ font-size: 0.78rem; color: var(--destaque); margin-top: 0.7rem; word-break: break-all; }
+  .imp-mapa{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .imp-mapa label{
+    display:block;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    margin-bottom: 0.3rem;
+  }
+  .imp-mapa select{ width:100%; }
+  .imp-resumo{ display:flex; flex-wrap:wrap; gap: 0.45rem; margin-bottom: 1rem; }
+  .imp-previa table{ font-size: 0.72rem; }
+  .imp-previa td{ max-width: 190px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .imp-rodape{ font-size: 0.72rem; color: var(--tinta-suave); margin-top: 0.6rem; }
+
   .recado{
     position:fixed;
     bottom: 1.1rem;
@@ -824,6 +858,7 @@
       olho:      '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
       olhoOff:   '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>',
       baixar:    '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+      subir:     '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 8 12 3 17 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
       zap:       '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 20.5l1.6-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/>',
       link:      '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
       arrasta:   '<circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/>',
@@ -958,6 +993,116 @@
     a.click();
     document.body.removeChild(a);
     setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+  }
+
+  /* ------------------------------------------------------------
+     LER PLANILHA (CSV colado ou em arquivo)
+     ------------------------------------------------------------ */
+
+  /* Tira acento, maiuscula e pontuacao, para comparar textos com folga. */
+  function semAcento(texto){
+    var t = String(texto === null || texto === undefined ? "" : texto);
+    if(t.normalize) t = t.normalize("NFD").replace(/[̀-ͯ]/g, "");
+    return t.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  }
+
+  /* Descobre sozinho se a planilha usa ponto e virgula, virgula ou tabulacao. */
+  function separadorDaPlanilha(texto){
+    var primeira = String(texto).split(/\r?\n/)[0] || "";
+    var contas = { ";": 0, ",": 0, "\t": 0 };
+    var aspas = false;
+    for(var i = 0; i < primeira.length; i++){
+      var c = primeira.charAt(i);
+      if(c === '"') aspas = !aspas;
+      else if(!aspas && contas[c] !== undefined) contas[c]++;
+    }
+    var melhor = ";", maior = 0;
+    Object.keys(contas).forEach(function(s){ if(contas[s] > maior){ maior = contas[s]; melhor = s; } });
+    return maior > 0 ? melhor : ";";
+  }
+
+  /* Devolve a planilha como lista de linhas, cada linha uma lista de celulas. */
+  function lerPlanilha(texto){
+    texto = String(texto || "").replace(/^﻿/, "");
+    var sep = separadorDaPlanilha(texto);
+    var linhas = [], atual = [], campo = "", aspas = false;
+    for(var i = 0; i < texto.length; i++){
+      var c = texto.charAt(i);
+      if(aspas){
+        if(c === '"'){
+          if(texto.charAt(i + 1) === '"'){ campo += '"'; i++; }
+          else aspas = false;
+        } else campo += c;
+      } else if(c === '"'){
+        aspas = true;
+      } else if(c === sep){
+        atual.push(campo); campo = "";
+      } else if(c === "\n"){
+        atual.push(campo); linhas.push(atual); atual = []; campo = "";
+      } else if(c !== "\r"){
+        campo += c;
+      }
+    }
+    atual.push(campo);
+    linhas.push(atual);
+    return linhas
+      .map(function(l){ return l.map(function(cel){ return String(cel).replace(/^'/, "").trim(); }); })
+      .filter(function(l){ return l.join("") !== ""; });
+  }
+
+  /* Le o arquivo respeitando o acento, mesmo quando o Excel salvou no padrao antigo. */
+  function lerArquivoTexto(arquivo){
+    return new Promise(function(resolve, reject){
+      var leitor = new FileReader();
+      leitor.onerror = function(){ reject(new Error("Nao consegui abrir o arquivo.")); };
+      leitor.onload = function(){
+        try {
+          var bytes = new Uint8Array(leitor.result);
+          if(bytes[0] === 0x50 && bytes[1] === 0x4B){
+            reject(new Error("Esse arquivo e do Excel (xlsx). No Excel, use Arquivo, Salvar como e escolha CSV."));
+            return;
+          }
+          var texto = "";
+          if(window.TextDecoder){
+            texto = new TextDecoder("utf-8").decode(bytes);
+            if(texto.indexOf("�") >= 0){
+              try { texto = new TextDecoder("windows-1252").decode(bytes); } catch(e2){}
+            }
+          } else {
+            texto = String.fromCharCode.apply(null, bytes);
+          }
+          resolve(texto);
+        } catch(err){
+          reject(new Error("Nao consegui ler o conteudo do arquivo."));
+        }
+      };
+      leitor.readAsArrayBuffer(arquivo);
+    });
+  }
+
+  /* Converte 1.500,00 ou R$ 1500 em numero. */
+  function numeroDaPlanilha(valor){
+    var t = String(valor === null || valor === undefined ? "" : valor).replace(/[^\d,.\-]/g, "");
+    if(!t) return 0;
+    if(t.indexOf(",") >= 0) t = t.replace(/\./g, "").replace(",", ".");
+    var n = Number(t);
+    return isFinite(n) ? n : 0;
+  }
+
+  /* Converte 12/03/2025, 12-03-25 ou 2025-03-12 na data do banco. */
+  function dataDaPlanilha(valor){
+    var t = String(valor === null || valor === undefined ? "" : valor).trim();
+    if(!t) return null;
+    var m = t.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
+    if(m){
+      var ano = m[3].length === 2 ? "20" + m[3] : m[3];
+      var mes = ("0" + m[2]).slice(-2), dia = ("0" + m[1]).slice(-2);
+      if(Number(mes) < 1 || Number(mes) > 12 || Number(dia) < 1 || Number(dia) > 31) return null;
+      return ano + "-" + mes + "-" + dia;
+    }
+    m = t.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if(m) return m[1] + "-" + ("0" + m[2]).slice(-2) + "-" + ("0" + m[3]).slice(-2);
+    return null;
   }
 
   function hojeISO(){ return U.paraISO(new Date()); }
@@ -1285,6 +1430,339 @@
     { nome: "notas_internas",   rotulo: "Notas internas (so voce ve)", tipo: "textarea" }
   ];
 
+  /* ------------------------------------------------------------
+     IMPORTAR PLANILHA DE MARCAS
+
+     Cada campo do painel com os nomes de coluna que costumam
+     aparecer numa planilha de leads. Serve so para adivinhar,
+     e ela pode corrigir na tela antes de gravar.
+     ------------------------------------------------------------ */
+  var COLUNAS_MARCA = [
+    { campo: "nome",             rotulo: "Marca",          dicas: ["marca","nome","empresa","loja","negocio","razao social","nome da marca","nome da empresa"], fracas: ["cliente"] },
+    { campo: "responsavel",      rotulo: "Quem cuida la",  dicas: ["responsavel","quem cuida","atendimento","representante","nome do contato","pessoa de contato","falar com"], fracas: ["contato","pessoa"] },
+    { campo: "instagram",        rotulo: "Instagram",      dicas: ["instagram","insta","arroba","perfil","usuario","ig","rede social"] },
+    { campo: "email",            rotulo: "E-mail",         dicas: ["email","e mail","mail","correio","endereco de email"] },
+    { campo: "telefone",         rotulo: "Telefone",       dicas: ["telefone","whatsapp","zap","celular","fone","tel","numero","contato telefone"] },
+    { campo: "situacao",         rotulo: "Situacao",       dicas: ["situacao","status","etapa","estagio","fase","resultado","resposta"] },
+    { campo: "valor_potencial",  rotulo: "Pode render",    dicas: ["valor","cache","orcamento","proposta","preco","potencial","ticket","pode render","quanto pode render","quanto rende"] },
+    { campo: "ultimo_contato",   rotulo: "Ultimo contato", dicas: ["ultimo contato","data do contato","data de contato","data do envio","enviado em","ultima conversa","ultima mensagem","ultimo email","data"], fracas: ["conversa"] },
+    { campo: "proximo_followup", rotulo: "Voltar a falar", dicas: ["proximo contato","voltar a falar","retorno","retomar","proximo","follow up","followup"] },
+    { campo: "obs",              rotulo: "Observacao",     dicas: ["observacao","obs","comentario","anotacao","descricao","detalhes","historico"] },
+    { campo: "notas_internas",   rotulo: "Notas internas", dicas: ["nota interna","notas internas","interno","particular","lembrete"] }
+  ];
+
+  /* Olha a linha de titulos e chuta qual coluna e qual campo.
+     Ganha sempre a dica mais especifica, para "data do proximo contato"
+     nao virar "ultimo contato" so porque tem a palavra data.
+     As dicas "fracas" sao palavras genericas, tipo contato, que so
+     valem quando nenhum outro campo combinou melhor com a coluna. */
+  /* Deixa singular para "Anotacoes" achar "anotacao" e "Detalhes" achar "detalhe". */
+  function chaveDeColuna(texto){
+    return semAcento(texto).split(" ").map(function(p){
+      p = p.replace(/coes$/, "cao").replace(/oes$/, "ao").replace(/ais$/, "al").replace(/eis$/, "el");
+      if(p.length > 3 && p.charAt(p.length - 1) === "s") p = p.slice(0, -1);
+      return p;
+    }).join(" ").trim();
+  }
+
+  function adivinharColunas(cabecalho){
+    var pares = [];
+    cabecalho.forEach(function(titulo, indice){
+      var t = chaveDeColuna(titulo);
+      if(!t) return;
+      COLUNAS_MARCA.forEach(function(c){
+        var melhor = 0;
+        function pesar(dica, teto){
+          var d = chaveDeColuna(dica);
+          var ponto = 0;
+          if(t === d) ponto = 3;
+          else if((" " + t + " ").indexOf(" " + d + " ") >= 0) ponto = 2;
+          else if(t.indexOf(d) >= 0 || d.indexOf(t) >= 0) ponto = 1;
+          if(ponto > teto) ponto = teto;
+          if(ponto > 0) melhor = Math.max(melhor, ponto * 100 + d.length);
+        }
+        c.dicas.forEach(function(d){ pesar(d, 3); });
+        (c.fracas || []).forEach(function(d){ pesar(d, 1); });
+        if(melhor > 0) pares.push({ campo: c.campo, indice: indice, nota: melhor });
+      });
+    });
+    pares.sort(function(a, b){ return b.nota - a.nota || a.indice - b.indice; });
+    var mapa = {}, usados = {};
+    pares.forEach(function(p){
+      if(mapa[p.campo] !== undefined || usados[p.indice]) return;
+      mapa[p.campo] = p.indice;
+      usados[p.indice] = true;
+    });
+    return mapa;
+  }
+
+  /* Transforma uma linha da planilha numa marca do jeito que o banco espera. */
+  function linhaParaMarca(linha, mapa){
+    function pega(campo){
+      var i = mapa[campo];
+      if(i === undefined || i === null || i < 0) return "";
+      return String(linha[i] === undefined ? "" : linha[i]).trim();
+    }
+
+    var insta = pega("instagram");
+    var achou = insta.match(/instagram\.com\/([^\/?#\s]+)/i);
+    if(achou) insta = achou[1];
+    insta = insta.replace(/^@+/, "").replace(/\/+$/, "").replace(/\s+/g, "");
+
+    var email = (pega("email").toLowerCase().split(/[\s,;]+/)[0] || "");
+    if(email.indexOf("@") < 0) email = "";
+
+    /* A negativa vem primeiro, senao "nao respondeu" viraria "respondeu". */
+    var sit = semAcento(pega("situacao"));
+    var situacao = "lead";
+    if(/(^| )nao( |$)|parad|perdid|recus|sem retorno|sem resposta|encerrad|descartad|arquivad|desistiu|ignor|frio/.test(sit)) situacao = "parada";
+    else if(/client|fechad|aprovad|parceria|contratad|ativa/.test(sit)) situacao = "cliente";
+    else if(/convers|negoci|proposta|andamento|aberto|respondeu|falando|contato feito|retorn/.test(sit)) situacao = "conversando";
+
+    return {
+      nome:             pega("nome"),
+      responsavel:      pega("responsavel"),
+      instagram:        insta ? "@" + insta : "",
+      email:            email,
+      telefone:         pega("telefone"),
+      situacao:         situacao,
+      valor_potencial:  numeroDaPlanilha(pega("valor_potencial")),
+      ultimo_contato:   dataDaPlanilha(pega("ultimo_contato")),
+      proximo_followup: dataDaPlanilha(pega("proximo_followup")),
+      obs:              pega("obs"),
+      notas_internas:   pega("notas_internas")
+    };
+  }
+
+  /* Tela de importar, em dois passos: escolher o arquivo e conferir. */
+  function abrirImportarMarcas(jaExistentes, depois){
+    var textoDoArquivo = "";
+
+    var html =
+      '<div class="imp-texto">' +
+        'Suba aqui a sua planilha de marcas em <strong>CSV</strong> e eu jogo tudo para dentro da aba Marcas.<br>' +
+        'No Excel ou no Google Planilhas: Arquivo, depois Baixar ou Salvar como, e escolha <strong>CSV</strong>.<br>' +
+        'A primeira linha precisa ter o titulo de cada coluna. Eu descubro sozinha o que e nome, e-mail, telefone e o resto, e voce confere tudo antes de gravar.' +
+      '</div>' +
+      '<div class="imp-area" id="imp-area">' +
+        '<input type="file" id="imp-arquivo" accept=".csv,.txt,text/csv,text/plain">' +
+        '<button type="button" class="btn btn-cheio" id="imp-escolher">Escolher a planilha</button>' +
+        '<p>ou arraste o arquivo para dentro desta caixa</p>' +
+        '<div class="imp-nome-arquivo" id="imp-nome"></div>' +
+      '</div>' +
+      '<div class="modal-campo"><label for="imp-colar">Ou cole aqui as linhas copiadas direto da planilha</label>' +
+        '<textarea id="imp-colar" rows="4" placeholder="Cole com a linha de titulos em cima"></textarea></div>' +
+      '<div class="modal-botoes">' +
+        '<button type="button" class="btn btn-mini" id="imp-modelo" style="margin-right:auto">Baixar planilha modelo</button>' +
+        '<button type="button" class="btn" id="imp-cancelar">Cancelar</button>' +
+        '<button type="button" class="btn btn-cheio" id="imp-continuar">Continuar</button>' +
+      '</div>';
+
+    abrirModal("Importar planilha de marcas", html, true);
+
+    var area      = document.getElementById("imp-area");
+    var entrada   = document.getElementById("imp-arquivo");
+    var nomeAlvo  = document.getElementById("imp-nome");
+    var colar     = document.getElementById("imp-colar");
+
+    document.getElementById("imp-escolher").addEventListener("click", function(){ entrada.click(); });
+    document.getElementById("imp-cancelar").addEventListener("click", fecharModal);
+
+    document.getElementById("imp-modelo").addEventListener("click", function(){
+      baixarCSV("modelo-marcas.csv",
+        ["Marca","Quem cuida do assunto la","Instagram","E-mail","Telefone","Situacao","Pode render","Ultimo contato","Voltar a falar","Observacao"],
+        [["Nome da marca","Nome da pessoa","@perfildamarca","contato@marca.com.br","32988887777","Lead","1500,00","01/09/2026","15/09/2026","Onde voce conheceu essa marca"]]
+      );
+      falar("Modelo baixado. Preencha e volte aqui.");
+    });
+
+    async function receberArquivo(arquivo){
+      if(!arquivo) return;
+      nomeAlvo.textContent = "Lendo " + arquivo.name + "...";
+      try {
+        textoDoArquivo = await lerArquivoTexto(arquivo);
+        nomeAlvo.textContent = arquivo.name;
+        colar.value = "";
+      } catch(err){
+        textoDoArquivo = "";
+        nomeAlvo.textContent = "";
+        falar(err.message, true);
+      }
+    }
+
+    entrada.addEventListener("change", function(){ receberArquivo(entrada.files[0]); });
+
+    ["dragenter","dragover"].forEach(function(evento){
+      area.addEventListener(evento, function(e){ e.preventDefault(); area.classList.add("por-cima"); });
+    });
+    ["dragleave","drop"].forEach(function(evento){
+      area.addEventListener(evento, function(e){ e.preventDefault(); area.classList.remove("por-cima"); });
+    });
+    area.addEventListener("drop", function(e){
+      if(e.dataTransfer && e.dataTransfer.files) receberArquivo(e.dataTransfer.files[0]);
+    });
+
+    document.getElementById("imp-continuar").addEventListener("click", function(){
+      var bruto = textoDoArquivo || colar.value;
+      if(!String(bruto).trim()){ falar("Escolha a planilha ou cole as linhas primeiro.", true); return; }
+      var linhas = lerPlanilha(bruto);
+      if(linhas.length < 2){ falar("Preciso da linha de titulos e de pelo menos uma marca embaixo.", true); return; }
+      passoConferir(linhas);
+    });
+
+    /* Passo dois: mostra o que entendeu, deixa corrigir e grava. */
+    function passoConferir(linhas){
+      var cabecalho = linhas[0];
+      var corpo     = linhas.slice(1);
+      var mapa      = adivinharColunas(cabecalho);
+      var pular     = true;
+
+      var existentes = {};
+      (jaExistentes || []).forEach(function(m){
+        var n = semAcento(m.nome);
+        if(n) existentes["n:" + n] = true;
+        var e = String(m.email || "").toLowerCase().trim();
+        if(e) existentes["e:" + e] = true;
+      });
+
+      function preparar(){
+        var vistos = {}, novas = [], repetidas = 0, semNome = 0;
+        corpo.forEach(function(linha){
+          var m = linhaParaMarca(linha, mapa);
+          if(!m.nome){ semNome++; return; }
+          var chaveN = "n:" + semAcento(m.nome);
+          var chaveE = m.email ? "e:" + m.email : "";
+          var repetida = vistos[chaveN] || (chaveE && vistos[chaveE]) ||
+                         existentes[chaveN] || (chaveE && existentes[chaveE]);
+          vistos[chaveN] = true;
+          if(chaveE) vistos[chaveE] = true;
+          if(repetida){
+            repetidas++;
+            if(pular) return;
+          }
+          novas.push(m);
+        });
+        return { novas: novas, repetidas: repetidas, semNome: semNome };
+      }
+
+      function desenharConferir(){
+        var r = preparar();
+
+        function opcoesColuna(escolhida){
+          var s = '<option value="-1">nao usar</option>';
+          cabecalho.forEach(function(t, i){
+            s += '<option value="' + i + '"' + (Number(escolhida) === i ? " selected" : "") + '>' +
+                 esc(t || ("coluna " + (i + 1))) + '</option>';
+          });
+          return s;
+        }
+
+        var h = '<div class="imp-texto">Li <strong>' + corpo.length + ' linha' + (corpo.length === 1 ? "" : "s") + '</strong> da sua planilha. ' +
+                'Confira se cada coluna caiu no campo certo. Se alguma estiver trocada, e so mudar aqui embaixo.</div>';
+
+        h += '<div class="imp-mapa">';
+        COLUNAS_MARCA.forEach(function(c){
+          h += '<div><label for="map-' + c.campo + '">' + esc(c.rotulo) + '</label>' +
+               '<select id="map-' + c.campo + '" data-campo="' + c.campo + '">' +
+               opcoesColuna(mapa[c.campo] === undefined ? -1 : mapa[c.campo]) + '</select></div>';
+        });
+        h += '</div>';
+
+        h += '<div class="imp-resumo">' +
+          '<span class="pilula">' + r.novas.length + ' para importar</span>' +
+          (r.repetidas ? '<span class="pilula etiqueta-alerta">' + r.repetidas +
+            (r.repetidas === 1 ? ' ja esta na base' : ' ja estao na base') + '</span>' : "") +
+          (r.semNome ? '<span class="pilula etiqueta-erro">' + r.semNome +
+            (r.semNome === 1 ? ' linha sem nome de marca' : ' linhas sem nome de marca') + '</span>' : "") +
+        '</div>';
+
+        h += '<div class="modal-campo"><div class="modal-linha-check">' +
+          '<input type="checkbox" id="imp-pular"' + (pular ? " checked" : "") + '>' +
+          '<label for="imp-pular">Nao importar quem ja esta na minha base</label></div></div>';
+
+        if(r.novas.length > 0){
+          var mostrar = r.novas.slice(0, 6);
+          h += '<div class="rolagem imp-previa"><table><thead><tr>' +
+            '<th>Marca</th><th>Quem cuida</th><th>Instagram</th><th>E-mail</th><th>Telefone</th><th>Situacao</th><th>Pode render</th>' +
+            '</tr></thead><tbody>';
+          mostrar.forEach(function(m){
+            var s = SITUACOES.filter(function(x){ return x.valor === m.situacao; })[0];
+            h += '<tr>' +
+              '<td>' + esc(m.nome) + '</td>' +
+              '<td>' + esc(m.responsavel) + '</td>' +
+              '<td>' + esc(m.instagram) + '</td>' +
+              '<td>' + esc(m.email) + '</td>' +
+              '<td>' + esc(m.telefone) + '</td>' +
+              '<td><span class="pilula p-' + esc(m.situacao) + '">' + esc(s ? s.texto : m.situacao) + '</span></td>' +
+              '<td>' + (m.valor_potencial > 0 ? esc(U.emReais(m.valor_potencial)) : "") + '</td>' +
+            '</tr>';
+          });
+          h += '</tbody></table></div>';
+          if(r.novas.length > mostrar.length){
+            h += '<div class="imp-rodape">Estou mostrando as ' + mostrar.length + ' primeiras. As outras ' +
+                 (r.novas.length - mostrar.length) + ' entram do mesmo jeito.</div>';
+          }
+        } else {
+          h += blocoVazio("Nao sobrou nenhuma linha para importar. Confira se a coluna da marca esta escolhida certo aqui em cima.");
+        }
+
+        h += '<div class="modal-botoes">' +
+          '<button type="button" class="btn btn-mini" id="imp-voltar" style="margin-right:auto">Escolher outra planilha</button>' +
+          '<button type="button" class="btn" id="imp-cancelar2">Cancelar</button>' +
+          '<button type="button" class="btn btn-cheio" id="imp-gravar"' + (r.novas.length ? "" : " disabled") + '>' +
+            'Importar ' + r.novas.length + ' marca' + (r.novas.length === 1 ? "" : "s") + '</button>' +
+        '</div>';
+
+        abrirModal("Conferir antes de importar", h, true);
+
+        Array.prototype.forEach.call(modalCorpo.querySelectorAll("[data-campo]"), function(sel){
+          sel.addEventListener("change", function(){
+            var campo = sel.getAttribute("data-campo");
+            var valor = Number(sel.value);
+            if(valor < 0){
+              delete mapa[campo];
+            } else {
+              Object.keys(mapa).forEach(function(k){ if(k !== campo && mapa[k] === valor) delete mapa[k]; });
+              mapa[campo] = valor;
+            }
+            desenharConferir();
+          });
+        });
+
+        document.getElementById("imp-pular").addEventListener("change", function(e){
+          pular = e.target.checked;
+          desenharConferir();
+        });
+
+        document.getElementById("imp-voltar").addEventListener("click", function(){
+          abrirImportarMarcas(jaExistentes, depois);
+        });
+        document.getElementById("imp-cancelar2").addEventListener("click", fecharModal);
+
+        var botao = document.getElementById("imp-gravar");
+        botao.addEventListener("click", async function(){
+          var lista = preparar().novas;
+          if(lista.length === 0) return;
+          botao.disabled = true;
+          var gravadas = 0, falha = null;
+          for(var i = 0; i < lista.length; i += 100){
+            var lote = lista.slice(i, i + 100);
+            botao.textContent = "Gravando " + (i + lote.length) + " de " + lista.length;
+            var res = await U.gravar("marcas", function(q){ return q.insert(lote); });
+            if(!res.ok){ falha = res.erro; break; }
+            gravadas += lote.length;
+          }
+          fecharModal();
+          if(falha) falar("Importei " + gravadas + " e parei. " + falha, true);
+          else falar(gravadas + (gravadas === 1 ? " marca importada." : " marcas importadas."));
+          if(depois) depois();
+        });
+      }
+
+      desenharConferir();
+    }
+  }
+
   var marcasBusca = "", marcasFiltro = "todas";
 
   async function telaMarcas(){
@@ -1347,6 +1825,7 @@
         SITUACOES.map(function(s){ return '<option value="' + s.valor + '"' + (marcasFiltro === s.valor ? " selected" : "") + '>' + s.texto + '</option>'; }).join("") +
         '</select>' +
         '<button class="btn" id="btn-csv-marcas">' + icone("baixar") + 'Baixar CSV</button>' +
+        '<button class="btn" id="btn-importar-marcas">' + icone("subir") + 'Importar planilha</button>' +
         '<button class="btn btn-cheio" id="btn-nova-marca">' + icone("mais") + 'Adicionar marca</button>' +
       '</div>';
 
@@ -1422,6 +1901,10 @@
           })
         );
         falar("Arquivo baixado.");
+      });
+
+      document.getElementById("btn-importar-marcas").addEventListener("click", function(){
+        abrirImportarMarcas(todas, telaMarcas);
       });
 
       function abrirMarca(id){
