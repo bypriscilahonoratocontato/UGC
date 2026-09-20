@@ -51,7 +51,7 @@ window.BancoUtil = {
         dados=dados.concat(data||[]);
         if(!data || data.length<1000) break;
       }
-      const campos={videos:['titulo','link','nicho','formato','marca','destaque','ordem','visivel'],marcas:['nome','instagram','email','telefone','situacao','obs','ultimo_contato'],calendario:['titulo','marca','tipo','data','status'],campanhas:['campanha','cliente','tipo','status','qtd','valor','prazo','pagamento','ativa','favorita'],marcados:['chave','marcado'],visitas:['data','pagina','origem'],ideias:['titulo','descricao','nicho','status','origem','trello_id']};
+      const campos={videos:['titulo','link','nicho','formato','marca','destaque','ordem','visivel'],marcas:['nome','instagram','email','telefone','situacao','obs','ultimo_contato'],calendario:['titulo','marca','tipo','data','status'],campanhas:['campanha','cliente','tipo','status','qtd','valor','prazo','pagamento','ativa','favorita'],marcados:['chave','marcado'],visitas:['data','pagina','origem'],ideias:['titulo','descricao','nicho','status','origem','trello_id'],referencias:['titulo','estilo','duracao','marca','link','gancho','porque','diferencial','erro','roteiro']};
       const faltam=dados.length?(campos[tabela]||[]).filter(c=>!(c in dados[0])):[];
       return {dados,erro:faltam.length?'Faltam campos em '+tabela+': '+faltam.join(', ')+'. As outras abas continuam disponíveis.':null};
     } catch(err){
@@ -78,8 +78,12 @@ window.BancoUtil = {
     const texto = String((erro && (erro.message || erro.hint || erro.details)) || erro || "");
     const codigo = (erro && erro.code) || "";
 
+    /* Algumas listas nasceram depois e tem o seu proprio arquivo curto. */
+    const arquivos = { referencias: "banco-referencias.sql" };
+
     if(codigo === "42P01" || codigo === "PGRST205" || /not find the table/i.test(texto)){
-      return "A tabela \"" + tabela + "\" ainda nao existe no banco. Rode o arquivo banco.sql no Supabase.";
+      return "A lista \"" + tabela + "\" ainda nao existe no banco. Rode o arquivo " +
+             (arquivos[tabela] || "banco.sql") + " no Supabase, em SQL Editor.";
     }
     if(codigo === "42703" || codigo === "PGRST204" || /column .* does not exist/i.test(texto)){
       return "Falta uma coluna na tabela \"" + tabela + "\". Confira a atualização da estrutura no arquivo banco.sql.";
