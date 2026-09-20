@@ -314,6 +314,40 @@ alter table public.ideias add column if not exists trello_url text default '';
 alter table public.ideias add column if not exists trello_lista text default '';
 create unique index if not exists ideias_trello_unico on public.ideias(trello_id);
 
+-- Suas referencias de video, na aba Checklist.
+-- Sao videos de outras pessoas que voce estudou e quer guardar
+-- destrinchados, para consultar na hora de escrever o seu roteiro.
+-- "roteiro" guarda um pedaco por linha, no formato "0 a 5s | o que acontece".
+create table if not exists public.referencias (
+  id           uuid primary key default gen_random_uuid(),
+  titulo       text not null default '',
+  emoji        text default '',
+  estilo       text default '',
+  duracao      text default '',
+  marca        text default '',
+  link         text default '',
+  gancho       text default '',
+  porque       text default '',
+  diferencial  text default '',
+  erro         text default '',
+  roteiro      text default '',
+  criado_em    timestamptz not null default now()
+);
+
+-- Completa campos de uma instalação anterior, preservando os registros.
+alter table public.referencias add column if not exists titulo      text not null default '';
+alter table public.referencias add column if not exists emoji       text default '';
+alter table public.referencias add column if not exists estilo      text default '';
+alter table public.referencias add column if not exists duracao     text default '';
+alter table public.referencias add column if not exists marca       text default '';
+alter table public.referencias add column if not exists link        text default '';
+alter table public.referencias add column if not exists gancho      text default '';
+alter table public.referencias add column if not exists porque      text default '';
+alter table public.referencias add column if not exists diferencial text default '';
+alter table public.referencias add column if not exists erro        text default '';
+alter table public.referencias add column if not exists roteiro     text default '';
+alter table public.referencias add column if not exists criado_em   timestamptz not null default now();
+
 -- ============================================================
 -- BLOCO 3: INDICES
 -- Só deixam as buscas mais rapidas quando a base crescer.
@@ -326,6 +360,7 @@ create index if not exists campanhas_prazo_idx   on public.campanhas (prazo);
 create index if not exists visitas_data_idx      on public.visitas (data);
 create index if not exists financeiro_data_idx   on public.financeiro (data);
 create index if not exists marcas_followup_idx   on public.marcas (proximo_followup);
+create index if not exists referencias_data_idx  on public.referencias (criado_em);
 
 
 -- ============================================================
@@ -337,8 +372,8 @@ create index if not exists marcas_followup_idx   on public.marcas (proximo_follo
 
 -- Apenas as tabelas deste painel recebem permissões.
 grant usage on schema public to anon, authenticated;
-revoke all on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias,public.financeiro,public.metas from public,anon,authenticated;
-grant select,insert,update,delete on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias,public.financeiro,public.metas to authenticated;
+revoke all on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias,public.financeiro,public.metas,public.referencias from public,anon,authenticated;
+grant select,insert,update,delete on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias,public.financeiro,public.metas,public.referencias to authenticated;
 grant select on public.videos,public.marcas,public.calendario,public.campanhas,public.marcados,public.visitas,public.ideias to anon;
 grant insert on public.marcas,public.visitas to anon;
 grant usage on sequence public.visitas_id_seq to anon,authenticated;
@@ -352,7 +387,7 @@ grant execute on function public.e_dona() to anon,authenticated;
 do $$
 declare t text; p record;
 begin
-  foreach t in array array['videos','marcas','calendario','campanhas','marcados','visitas','ideias','financeiro','metas'] loop
+  foreach t in array array['videos','marcas','calendario','campanhas','marcados','visitas','ideias','financeiro','metas','referencias'] loop
     execute format('alter table public.%I enable row level security',t);
     for p in select policyname from pg_policies where schemaname='public' and tablename=t loop
       execute format('drop policy %I on public.%I',p.policyname,t);
@@ -434,6 +469,14 @@ create policy "financeiro dona total" on public.financeiro
 -- METAS
 drop policy if exists "metas dona total" on public.metas;
 create policy "metas dona total" on public.metas
+  for all to authenticated
+  using (public.e_dona())
+  with check (public.e_dona());
+
+-- REFERENCIAS
+-- O seu estudo de videos dos outros. So voce le e so voce grava.
+drop policy if exists "referencias dona total" on public.referencias;
+create policy "referencias dona total" on public.referencias
   for all to authenticated
   using (public.e_dona())
   with check (public.e_dona());
